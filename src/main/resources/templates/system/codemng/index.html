@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HyperMSLK 서비스</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/ionicons/2.0.1/css/ionicons.min.css">-->
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="/webjars/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jqvmap/jqvmap.min.css">
+
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/summernote/summernote-bs4.min.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <div th:insert="com/header.html" id="header"></div>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <div th:insert="com/leftmenuAdminMain.html" id="leftMenu"></div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">HyperMSLK 서비스 <small>Version 1.0</small></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">CODE 관리</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>150</h3>
+
+                            <p>restapi 등록 수</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="/hyperrest/list" class="small-box-footer">More info <i
+                                class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>53</h3>
+
+                            <p>DashBoard 등록 건수</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>44</h3>
+
+                            <p>User Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>65</h3>
+
+                            <p>Unique Visitors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- /.card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> CODE 관리</h3>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    목록 : [[${postsTotalCount}]] 건
+                                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
+                                            data-target="#modal-xl"><i class="far fas fa-search"></i> 조회
+                                    </button>
+                                    <button type="button" class="btn btn-secondary float-right"
+                                            style="margin-right: 5px;" id="list">
+                                        <i class=" far fa-plus-square"></i> 목록
+                                    </button>
+                                    <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                            id="delete">
+                                        <i class="fas fa-copy"></i> 삭제
+                                    </button>
+                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                            data-target="#modal-lg" style="margin-right: 5px;">
+                                        <i class="fas fa-edit"></i> 등록
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th width="5%">
+                                        <input type="checkbox" id="chkAll">
+                                    </th>
+                                    <th width="5%">번호</th>
+                                    <th>CODE TYPE</th>
+                                    <th>CODE 용도</th>
+                                    <th>CODE Group</th>
+                                    <th>CODE 업무명</th>
+                                    <th>CODE 이름</th>
+                                    <th>Code 비고</th>
+                                    <th>사용 유무</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- CONTENTS !-->
+                                <tr th:each="codeMngList ,i : ${codeMngList}">
+                                    <td width="5%">
+                                        <input type="checkbox" class="chk" th:value="${codeMngList.id}">
+                                    </td>
+                                    <td width="5%"><span th:text="${codeMngList.id}"></span></td>
+                                    <td><span th:text="${codeMngList.codeType}"></span></td>
+                                    <td><span th:text="${codeMngList.codeEu}"></span></td>
+                                    <td><span th:text="${codeMngList.codeGm}"></span></td>
+                                    <td><span th:text="${codeMngList.codeWm}"></span></td>
+                                    <td><span th:text="${codeMngList.codeNm}"></span></td>
+                                    <td><span th:text="${codeMngList.codeNote}"></span></td>
+                                    <td><span th:text="${codeMngList.seTf}"></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+
+                        <span th:if="${postsTotalCount} > 0 "> Pages:</span>
+                        <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
+
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=1'}">&laquo;</a>
+                            </li>
+                            <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
+                                <a class="page-link"
+                                   th:href="@{'/admin/codemnglist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- FOOTER -->
+    <div th:insert="com/footer.html" id="footer"></div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+
+<!-- /.modal
+<div class="modal fade" id="modal-lg">
+  <div class="modal-dialog modal-lg">-->
+<div class="modal fade" id="modal-xl">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Search</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/egnmetapost" id="app_search" method="POST">
+                    <input type="hidden" name="_method" value="post"/>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>META TYPE 정보</label>
+                                        <input class="form-control" name="metaType" type="text" placeholder="Meta Type을 입력해주세요">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>META Host 업무명</label>
+                                        <input class="form-control" name="restFunction" type="text" placeholder="REST_FUNCTION을 입력해주세요">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label>META 이름</label>
+                                        <input class="form-control" name="restFunction" type="text" placeholder="REST_FUNCTION을 입력해주세요">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;"
+                                    onclick="document.getElementById('app_search').reset();">
+                                <i class="fas fa-ellipsis-h"></i> 초기화
+                            </button>
+                            <button type="button" onclick="document.getElementById('app_search').submit();"
+                                    class="btn btn-primary float-right" style="margin-right: 5px;"><i
+                                    class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Code 관리</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/codemngpost" method="post" id="app_brd" class="form-horizontal">
+                    <input type="hidden" name="_method" value="post"/>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE TYPE </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeType" value="EGM" placeholder="CODE TYPE">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE 용도 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeEu" value="CODE 용도" placeholder="CODE 용도">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE Group</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeGm" value="CODE Group" placeholder="CODE Group">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE 업무명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeWm" value="CODE 업무명" placeholder="CODE 업무명">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE 이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeNm" value="CODE 이름" placeholder="CODE 이름">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">CODE 값</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeVm" value="CODE 값" placeholder="CODE 값">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Code 비고</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="codeNote" value="Code 비고" placeholder="Code 비고">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">사용유무</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="seTf" style="width: 100%;">
+                                <option selected="selected" value="Y">사용</option>
+                                <option value="N">미사용</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- div class="form-group row">
+                      <label class="col-sm-2 col-form-label">작성자</label>
+                      <div class="col-sm-10">
+                      <select class="form-control select2" name="restType" style="width: 100%;">
+                                <option selected="selected" value="batch">배치</option>
+                                <option value="real">실시간</option>
+                            </select>
+                        <input type="text" class="form-control" name="writer" placeholder="작성자" value='<span sec:authentication="name"></span>'>
+                      </div>
+                    </div -->
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="button" onclick="document.getElementById('app_brd').submit();"
+                                    class="btn btn-primary float-right" style="margin-right: 5px;"><i
+                                    class="fas fa-search"></i> 등록
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="/webjars/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="/webjars/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="/webjars/AdminLTE/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
+
+<!-- Page specific script -->
+
+<script>
+    $(function () {
+
+
+    });
+
+    //전체체크 클릭 시
+    $("#chkAll").click(function () {
+
+        if ($("#chkAll").is(":checked")) {
+            $(".chk").prop("checked", true);
+        } else {
+            $(".chk").prop("checked", false);
+        }
+
+    });
+    $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
+
+        location.href = "/admin/codemnglist";
+
+    });
+
+    $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
+        var chk_id = [];
+
+        $(".chk:checked").each(function () {
+            var id = $(this).val();
+            chk_id.push(id);
+        });
+
+        if (chk_id == "") {
+            alert("삭제하고자 하는 EG Manager 자원을 선택하세요 ?")
+        } else {
+            location.href = "/admin/codemngdel?idx=" + chk_id;
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

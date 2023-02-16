@@ -1,0 +1,257 @@
+---
+spring:
+  profiles:
+    group:
+      local: common, locdb, loc
+      localssl: common, locdb, locssl
+      dev: common, devdb, develop
+      prod: common, devdb, prodop
+---
+spring:
+  config:
+    activate:
+      on-profile: common
+  pid:
+    file: ./pid/hyperuis.pid
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+  thymeleaf:
+    cache: false
+    prefix:
+     classpath: /templates/
+  web:
+    resources:
+      static-locations:
+        classpath: /static/
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  jpa:
+    hibernate:
+      connection:
+        provider_class: com.zaxxer.hikari.hibernate.HikariConnectionProvider
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  datasource:
+    hikari:
+      type: com.zaxxer.hikari.HikariDataSource
+      idle-timeout: 10000
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+server:
+  servlet:
+    session:
+      #      session delete when app restart
+      persistent: false
+      cookie:
+        name: hypergit
+        max-age: 3660
+        http-only: true
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      directory: logs
+      prefix: access_log
+      buffered: false
+      suffix: .log
+      file-date-format: .yyyy-MM-dd
+  error:
+    include-exception: true # 오류 응답에 exception의 내용을 포함할지 여부
+    include-stacktrace: always # 오류 응답에 stacktrace 내용을 포함할 지 여부
+
+logging:
+  level:
+    root: INFO
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: trace
+    org.thymeleaf: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: loc
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 9000
+  tomcat:
+    accesslog:
+      enabled: false
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+  address: 127.0.0.1
+
+---
+spring:
+  config:
+    activate:
+      on-profile: locssl
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 9000
+  ssl:
+    key-store: classpath:lhlee-keystore.p12
+    key-store-type: PKCS12
+    key-store-password: lyijun!@09
+    key-alias: localhost
+    http2:
+      enabled: true
+  tomcat:
+    accesslog:
+      enabled: false
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+  address: 127.0.0.1
+
+---
+spring:
+  config:
+    activate:
+      on-profile: develop
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 9000
+  ssl:
+   key-store: classpath:/static/ssl/uiscloud_keystore.p12
+   key-store-type: PKCS12
+   key-store-password: Goodmit0802!
+   key-alias: uiscloud_tomcat
+  http2:
+   enabled: true
+  tomcat:
+    accesslog:
+      enabled: false
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+#  address: 10.11.10.200
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prodop
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+server:
+  port: 80
+  tomcat:
+    accesslog:
+      enabled: false
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+#  address: 10.11.10.200
+---
+spring:
+  config:
+    activate:
+      on-profile: locdb
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: hyperg
+    password: dldPwns!@09
+
+---
+spring:
+  config:
+    activate:
+      on-profile: devdb
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: hyperg
+    password: dldPwns!@09
+---
+spring:
+  config:
+    activate:
+      on-profile: h2db
+  datasource:
+    url: jdbc:h2:mem:test
+    username: rockgis
+    password: dldPwns!@09
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
