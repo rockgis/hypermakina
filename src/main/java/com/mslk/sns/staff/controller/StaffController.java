@@ -37,7 +37,7 @@ public class StaffController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "sns/stafflist";
+        return "sns/staff/list";
     }
 
 
@@ -46,7 +46,7 @@ public class StaffController {
         StaffDto staffDto = staffService.getPost(no);
 
         model.addAttribute("staffDto", staffDto);
-        return "sns/staffread";
+        return "sns/staff/read";
     }
 
     @PutMapping("/snsad/post/edit/{no}")
@@ -120,11 +120,10 @@ public class StaffController {
         model.addAttribute("gitta0001List", gitta0001DtoList);
         model.addAttribute("pageList", postsTotalCount);
         model.addAttribute("postsTotalCount", postsTotalCount);
-
          */
 
 
-        return "sns/stafflist";
+        return "sns/staff/list";
     }
 
 }
