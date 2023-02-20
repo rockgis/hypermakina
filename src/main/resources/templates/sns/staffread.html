@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hypermakina 서비스</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="/webjars/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bs-stepper/css/bs-stepper.min.css">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/dropzone/min/dropzone.min.css">
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <div th:insert="com/header.html" id="header"></div>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <div th:insert="com/leftmenuAdminSnsMain.html" id="leftMenu"></div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Hypermakina 서비스 <small>Version 1.0</small></h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">사용자 관리</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Horizontal Form -->
+            <!-- /.card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/snsad/post/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                        <input type="hidden" name="_method" value="post"/>
+                        <input type="hidden" name="id" id="id" th:value="${staffDto.id}"/>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">아이디 </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="uid" th:value="${staffDto.uid}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>부서</label>
+                                    <input type="text" class="form-control" name="name" th:value="${staffDto.name}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>사원 번호</label>
+                                    <input type="text" class="form-control" name="identityNo" th:value="${staffDto.identityNo}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>이름</label>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" name="lName" th:value="${staffDto.lName}">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="fName" th:value="${staffDto.fName}">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="fullName" th:value="${staffDto.fullName}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>성별</label>
+                                    <select class="form-control select2" name="sex" style="width: 100%;">
+                                        <option selected="selected" value="남">남</option>
+                                        <option value="여">여</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">직급 ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="rankId" th:value="${staffDto.rankId}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">직책 ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="positionId" th:value="${staffDto.positionId}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">부서 ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="departmentId" th:value="${staffDto.departmentId}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">부서장 유무</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" name="head" style="width: 100%;">
+                                    <option selected="selected" value="1">True</option>
+                                    <option value="0">False</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">사용자 유형</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" name="utype" style="width: 100%;">
+                                    <option selected="selected" value="USER">User</option>
+                                    <option value="ADMIN">Admin</option>
+                                    <option value="OP">OP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">사용자 권한</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" name="auth" style="width: 100%;">
+                                    <option selected="selected" value="S">S</option>
+                                    <option value="R">R</option>
+                                    <option value="L">L</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">겸직</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">겸직 사용자 ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="userId" th:value="${staffDto.userId}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">이메일</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="eMail" th:value="${staffDto.eMail}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">연락처</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="hP" th:value="${staffDto.hP}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">순서</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="seq" th:value="${staffDto.seq}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">동기화 유무 </label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" name="syncUse" style="width: 100%;">
+                                    <option selected="selected" value="1">True</option>
+                                    <option value="0">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">동기화시스템</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="syncSystem" th:value="${staffDto.syncSystem}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">지문정보</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="fingerPrint" th:value="${staffDto.fingerPrint}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">카드정보</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="cardNo" th:value="${staffDto.cardNo}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">memo</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="memo" th:value="${staffDto.memo}">
+                            </div>
+                        </div>
+                    </form>
+
+                 </div>
+                    <!-- /.card-body -->
+                 <div class="card-footer clearfix">
+                     <div class="row">
+                         <div class="col-md-12 ">
+                             <div class="form-group">
+                                 <button type="button" class="btn btn-secondary float-right"
+                                         style="margin-right: 5px;" id="list">
+                                     <i class=" far fa-plus-square"></i> 목록
+                                 </button>
+                                 <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                         id="delete">
+                                     <i class="fas fa-copy"></i> 완전삭제
+                                 </button>
+                                 <button type="button" class="btn btn-primary float-right"
+                                         onclick="document.getElementById('app_brd').submit();"
+                                         style="margin-right: 5px;">
+                                     <i class="fas fa-edit"></i> 수정
+                                 </button>
+
+                             </div>
+
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- FOOTER -->
+    <div th:insert="com/footer.html" id="footer"></div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="/webjars/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="/webjars/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="/webjars/AdminLTE/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
+
+<!-- Page specific script -->
+
+<script>
+    $(function () {
+
+
+    });
+
+    $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
+
+        location.href = "/snsad/stafflist";
+
+    });
+
+    $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
+        var chk_id = $("#id").val();
+        alert(chk_id);
+        //location.href = "/snsad/staffdel?idx=" + chk_id;
+
+
+    });
+</script>
+</body>
+</html>

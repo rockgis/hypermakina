@@ -106,33 +106,42 @@
                                         <input type="checkbox" id="chkAll">
                                     </th>
                                     <th width="5%">번호</th>
-                                    <th>부서</th>
+                                    <th>사원 번호</th>
                                     <th>이름</th>
-                                    <th>사번</th>
+                                    <th>login ID</th>
                                     <th>이메일</th>
-                                    <th>관리공간 IP</th>
-                                    <th>공용계정 사용 여부</th>
-                                    <th>수정일</th>
-                                    <th>수정자</th>
+                                    <th>부서명</th>
+                                    <th>연락처</th>
+                                    <th>생성일</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="gitta0001 : ${gitta0001List}">
+                                <tr th:each="staff : ${staffList}">
                                     <td width="5%">
-                                        <input type="checkbox" class="chk" th:value="${gitta0001.id}">
+                                        <input type="checkbox" class="chk" th:value="${staff.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${gitta0001.id}"></span></td>
-                                    <td><span th:text="${gitta0001.dcd}"></span></td>
-                                    <td><span th:text="${gitta0001.usrNm}"></span></td>
-                                    <td><span th:text="${gitta0001.usrEn}"></span></td>
-                                    <td><span th:text="${gitta0001.emNm}"></span></td>
-                                    <td><span th:text="${gitta0001.nrIpAr}"></span></td>
-                                    <td><span th:text="${gitta0001.earEhf}"></span></td>
+                                    <td width="5%"><span th:text="${staff.id}"></span></td>
+                                    <td><a th:href="@{'/snsad/post/' + ${staff.id}}">
+                                        <span th:text="${staff.identityNo}"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/snsad/post/' + ${staff.id}}">
+                                            <span th:text="${staff.fullName}"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/snsad/post/' + ${staff.id}}">
+                                            <span th:text="${staff.uid}"></span>
+                                        </a>
+                                    </td>
+                                    <td><span th:text="${staff.eMail}"></span></td>
+                                    <td><span th:text="${staff.name}"></span></td>
+                                    <td><span th:text="${staff.hP}"></span></td>
                                     <td><span
-                                            th:text="${#temporals.format(gitta0001.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                            th:text="${#temporals.format(staff.createdDate, 'yyyy-MM-dd')}"></span>
                                     </td>
-                                    <td><span th:text="${gitta0001.rgEn}"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -145,13 +154,15 @@
                         <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
 
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/admin/userlist?page=1'}">&laquo;</a>
+                            <li class="page-item"><a class="page-link"
+                                                     th:href="@{'/snsad/stafflist?page=1'}">&laquo;</a>
                             </li>
                             <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
                                 <a class="page-link"
-                                   th:href="@{'/admin/userlist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                                   th:href="@{'/snsad/stafflist?page=' + ${pageNum}}">[[${pageNum}]]</a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="@{'/snsad/stafflist?page=0'}">&raquo;</a>
+                            </li>
                         </ul>
 
                     </div>
@@ -187,7 +198,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/admin/usersearch" id="app_search" method="POST">
+                <form action="/snsad/staffsearch" id="app_search" method="POST">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="row">
                         <div class="col-md-12 ">
@@ -285,63 +296,186 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/admin/userpost" method="post" id="app_brd" class="form-horizontal">
+                <form action="/snsad/staffpost" method="post" id="app_brd" class="form-horizontal">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">부서 </label>
+                        <label class="col-sm-2 col-form-label">아이디 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="dcd" placeholder="부서명">
+                            <input type="text" class="form-control" name="uid" placeholder="로그인 아이디">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">이름</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="usrNm" placeholder="이름">
+                        <label class="col-sm-2 col-form-label">비밀번호</label>
+                        <div class="col-sm-5">
+                            <input type="password" class="form-control" name="pw" placeholder="password">
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="password" class="form-control" name="pw1" placeholder="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>부서</label>
+                                <input type="text" class="form-control" name="name" placeholder="부서명">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>사원 번호</label>
+                                <input type="text" class="form-control" name="identityNo" placeholder="사번">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>이름</label>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" name="lName" placeholder="성">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="fName" placeholder="이름">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" name="fullName" placeholder="전체 이름">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>성별</label>
+                                <select class="form-control select2" name="sex" style="width: 100%;">
+                                    <option selected="selected" value="남">남</option>
+                                    <option value="여">여</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">사번 </label>
+                        <label class="col-sm-2 col-form-label">직급 ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="usrEn" placeholder="사번">
+                            <input type="text" class="form-control" name="rankId" placeholder="직급 ID">
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">직책 ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="positionId" placeholder="직책 ID">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">부서 ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="departmentId" placeholder="부서 ID">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">부서장 유무</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="head" style="width: 100%;">
+                                <option selected="selected" value="1">True</option>
+                                <option value="0">False</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">사용자 유형</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="utype" style="width: 100%;">
+                                <option selected="selected" value="USER">User</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="OP">OP</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">사용자 권한</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="auth" style="width: 100%;">
+                                <option selected="selected" value="S">S</option>
+                                <option value="R">R</option>
+                                <option value="L">L</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">겸직</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="concurrentPosition" placeholder="겸직">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">겸직 사용자 ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="userId" placeholder="겸직 사용자 아이디">
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">이메일</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="emNm" placeholder="이메일">
+                            <input type="text" class="form-control" name="eMail" placeholder="이메일">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">관리공간 IP</label>
+                        <label class="col-sm-2 col-form-label">연락처</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="nrIpAr" placeholder="관리공간 IP">
+                            <input type="text" class="form-control" name="hP" placeholder="연락처">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">공용 계정 사용여부 </label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="earEhf" style="width: 100%;">
-                                <option selected="selected" value="Y">기본사용</option>
-                                <option value="N">사용불가</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">관리자 여부 </label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="adTf" style="width: 100%;">
-                                <option value="Y">관리자</option>
-                                <option selected="selected" value="N">사용자</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- div class="form-group row">
-                      <label class="col-sm-2 col-form-label">작성자</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="writer" placeholder="작성자" value='<span sec:authentication="name"></span>'>
-                      </div>
-                    </div -->
 
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">순서</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="seq" placeholder="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">동기화 유무 </label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="syncUse" style="width: 100%;">
+                                <option selected="selected" value="1">True</option>
+                                <option value="0">False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">동기화시스템</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="syncSystem" placeholder="동기화시스템">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">지문정보</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="fingerPrint" placeholder="지문정보">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">카드정보</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="cardNo" placeholder="카드정보">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">memo</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="memo" placeholder="memo">
+                        </div>
+                    </div>
                 </form>
 
             </div>
@@ -404,7 +538,7 @@
     });
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/admin/userlist";
+        location.href = "/snsad/stafflist";
 
     });
 
@@ -419,7 +553,7 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 사용자를 선택하세요 ?")
         } else {
-            location.href = "/admin/userdel?idx=" + chk_id;
+            location.href = "/snsad/staffdel?idx=" + chk_id;
         }
 
     });

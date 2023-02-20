@@ -1,8 +1,8 @@
-package com.mslk.hypermakina.user.service;
+package com.mslk.sns.staff.service;
 
-import com.mslk.hypermakina.user.domain.entity.Gitta0001Entity;
-import com.mslk.hypermakina.user.domain.repository.Gitta0001Repository;
-import com.mslk.hypermakina.user.dto.Gitta0001Dto;
+import com.mslk.sns.staff.domain.entity.StaffEntity;
+import com.mslk.sns.staff.domain.repository.StaffRepository;
+import com.mslk.sns.staff.dto.StaffDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,52 +16,52 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class Gitta0001Service {
+public class StaffService {
 
-    private Gitta0001Repository gitta0001Repository;
+    private StaffRepository staffRepository;
 
     private static final int BLOCK_PAGE_NUM_COUNT = 10;  // 블럭에 존재하는 페이지 번호 수
     private static final int PAGE_POST_COUNT = 10;       // 한 페이지에 존재하는 게시글 수
 
     @Transactional
-    public List<Gitta0001Dto> getGitta0001list(Integer pageNum) {
-        Page<Gitta0001Entity> page = gitta0001Repository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+    public List<StaffDto> getStafflist(Integer pageNum) {
+        Page<StaffEntity> page = staffRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
 
-        List<Gitta0001Entity> gitta0001Entities = page.getContent();
-        List<Gitta0001Dto> gitta0001DtoList = new ArrayList<>();
+        List<StaffEntity> staffEntities = page.getContent();
+        List<StaffDto> staffDtotoList = new ArrayList<>();
 
-        for (Gitta0001Entity gitta0001Entity : gitta0001Entities) {
-            gitta0001DtoList.add(this.convertEntityToDto(gitta0001Entity));
+        for (StaffEntity staffEntity : staffEntities) {
+            staffDtotoList.add(this.convertEntityToDto(staffEntity));
         }
 
-        return gitta0001DtoList;
+        return staffDtotoList;
     }
 
     @Transactional
-    public Long getGitta001Count() {
-        return gitta0001Repository.count();
+    public Long getStaffCount() {
+        return staffRepository.count();
     }
 
     @Transactional
-    public Gitta0001Dto getPost(Long id) {
-        Optional<Gitta0001Entity> gitta0001EntityWrapper = gitta0001Repository.findById(id);
-        Gitta0001Entity gitta0001Entity = gitta0001EntityWrapper.get();
+    public StaffDto getPost(Long id) {
+        Optional<StaffEntity> staffEntityWrapper = staffRepository.findById(id);
+        StaffEntity staffEntity = staffEntityWrapper.get();
 
-        return this.convertEntityToDto(gitta0001Entity);
+        return this.convertEntityToDto(staffEntity);
     }
 
     @Transactional
-    public Long savePost(Gitta0001Dto gitta0001Dto) {
-        return gitta0001Repository.save(gitta0001Dto.toEntity()).getId();
+    public Long savePost(StaffDto staffDto) {
+        return staffRepository.save(staffDto.toEntity()).getId();
     }
 
     @Transactional
     public void deletePost(Long id) {
-        gitta0001Repository.deleteById(id);
+        staffRepository.deleteById(id);
     }
 
-    @Transactional
-    public List<Gitta0001Dto> searchPosts(Gitta0001Dto gitta0001Dto) {
+    /* @Transactional
+    public List<StaffDto> searchPosts(StaffDto staffDto) {
 
         String dcd = gitta0001Dto.getDcd();
         String usrNm =  gitta0001Dto.getUsrNm();
@@ -77,7 +77,7 @@ public class Gitta0001Service {
         System.out.println(nrIpAr);
         System.out.println(earEhf);
 
-        List<Gitta0001Entity> gitta0001Entities = null;
+        List<StaffEntity> gitta0001Entities = null;
 
         if(!dcd.isEmpty()){
             gitta0001Entities = gitta0001Repository.findByDcdContaining(dcd);
@@ -109,9 +109,11 @@ public class Gitta0001Service {
         return gitta0001DtoList;
     }
 
+     */
+
     public Integer[] getPageList(Integer curPageNum) {
         // 총 게시글 갯수
-        Double postsTotalCount = Double.valueOf(this.getGitta001Count());
+        Double postsTotalCount = Double.valueOf(this.getStaffCount());
 
         // 총 게시글 기준으로 계산한 마지막 페이지 번호 계산
         Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
@@ -134,19 +136,37 @@ public class Gitta0001Service {
         return pageList;
     }
 
-    private Gitta0001Dto convertEntityToDto(Gitta0001Entity gitta0001Entity) {
-        return Gitta0001Dto.builder()
-                .id(gitta0001Entity.getId())
-                .dcd(gitta0001Entity.getDcd())
-                .usrNm(gitta0001Entity.getUsrNm())
-                .usrEn(gitta0001Entity.getUsrEn())
-                .emNm(gitta0001Entity.getEmNm())
-                .earEhf(gitta0001Entity.getEarEhf())
-                .adTf(gitta0001Entity.getAdTf())
-                .nrIpAr(gitta0001Entity.getNrIpAr())
-                .rgEn(gitta0001Entity.getRgEn())
-                .createdDate(gitta0001Entity.getCreatedDate())
+    private StaffDto convertEntityToDto(StaffEntity staffEntity) {
+        return StaffDto.builder()
+                .id(staffEntity.getId())
+                .uid(staffEntity.getUid())
+                .name(staffEntity.getName())
+                .fName(staffEntity.getFName())
+                .lName(staffEntity.getLName())
+                .fullName(staffEntity.getFullName())
+                .identityNo(staffEntity.getIdentityNo())
+                .pw(staffEntity.getPw())
+                .sex(staffEntity.getSex())
+                .rankId(staffEntity.getRankId())
+                .positionId(staffEntity.getPositionId())
+                .departmentId(staffEntity.getDepartmentId())
+                .head(staffEntity.getHead())
+                .utype(staffEntity.getUtype())
+                .auth(staffEntity.getAuth())
+                .concurrentPosition(staffEntity.getConcurrentPosition())
+                .userId(staffEntity.getUserId())
+                .eMail(staffEntity.getEMail())
+                .hP(staffEntity.getHP())
+                .seq(staffEntity.getSeq())
+                .syncUse(staffEntity.getSyncUse())
+                .syncSystem(staffEntity.getSyncSystem())
+                .fingerPrint(staffEntity.getFingerPrint())
+                .cardNo(staffEntity.getCardNo())
+                .del(staffEntity.getDel())
+                .memo(staffEntity.getMemo())
+                .createdDate(staffEntity.getCreatedDate())
+                .modifiedDate(staffEntity.getModifiedDate())
+                .deleteDate(staffEntity.getDeleteDate())
                 .build();
-
     }
 }

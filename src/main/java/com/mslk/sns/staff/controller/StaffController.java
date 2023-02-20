@@ -1,9 +1,8 @@
 package com.mslk.sns.staff.controller;
 
-import com.mslk.hypermakina.user.dto.Gitta0001Dto;
-import com.mslk.hypermakina.user.dto.Gitta0002Dto;
-import com.mslk.hypermakina.user.service.Gitta0001Service;
-import com.mslk.hypermakina.user.service.Gitta0002Service;
+import com.mslk.hypermakina.board.dto.BoardDto;
+import com.mslk.sns.staff.dto.StaffDto;
+import com.mslk.sns.staff.service.StaffService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,36 +20,64 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class StaffController {
-    private Gitta0001Service gitta0001Service;
+    private StaffService staffService;
 
 
     /* 게시글 목록 */
 
     @GetMapping("/snsad/stafflist")
     public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(pageNum);
-        Integer[] pageList = gitta0001Service.getPageList(pageNum);
+        List<StaffDto> staffList = staffService.getStafflist(pageNum);
+        Integer[] pageList = staffService.getPageList(pageNum);
 
-        double  count = Double.valueOf(gitta0001Service.getGitta001Count());
+        double  count = Double.valueOf(staffService.getStaffCount());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("gitta0001List", gitta0001List);
+        model.addAttribute("staffList", staffList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
         return "sns/stafflist";
     }
 
+
+    @GetMapping("/snsad/post/{no}")
+    public String staffdetail(@PathVariable("no") Long no, Model model) {
+        StaffDto staffDto = staffService.getPost(no);
+
+        model.addAttribute("staffDto", staffDto);
+        return "sns/staffread";
+    }
+
+    @PutMapping("/snsad/post/edit/{no}")
+    public String update(StaffDto staffDto) {
+        staffService.savePost(staffDto);
+
+        return "redirect:/snsad/stafflist";
+    }
+
     @PostMapping("/snsad/staffpost")
-    public String userpost(Principal principal, Gitta0001Dto gitta0001Dto) {
+    public String userpost(Principal principal, StaffDto staffDto) {
 
         LocalDateTime now = LocalDateTime.now();
 
-        gitta0001Dto.setRgEn(principal.getName());
-
         // System.out.println(now);
 
-        gitta0001Service.savePost(gitta0001Dto);
+        staffService.savePost(staffDto);
+
+        return "redirect:/snsad/stafflist";
+    }
+
+
+
+    @PostMapping("/snsad/staffuppost")
+    public String uppost(Principal principal, StaffDto staffDto) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        staffDto.setModifiedDate(now);
+
+        staffService.savePost(staffDto);
 
         return "redirect:/snsad/stafflist";
     }
@@ -69,13 +96,13 @@ public class StaffController {
 
             for(String s : ArraysStr){
                 no = Long.parseLong(s);
-                gitta0001Service.deletePost(no);
+                staffService.deletePost(no);
             }
 
         }else{
 
             no = Long.parseLong(idx);
-            gitta0001Service.deletePost(no);
+            staffService.deletePost(no);
 
         }
         return "redirect:/snsad/stafflist";
@@ -83,9 +110,9 @@ public class StaffController {
 
 
     @PostMapping("/snsad/staffsearch")
-    public String usersearch(Gitta0001Dto gitta0001Dto, Model model) {
+    public String usersearch(StaffDto staffDto, Model model) {
 
-        List<Gitta0001Dto> gitta0001DtoList = gitta0001Service.searchPosts(gitta0001Dto);
+        /* List<StaffDto> gitta0001DtoList = staffService.searchPosts(gitta0001Dto);
 
         double  count = Double.valueOf(gitta0001DtoList.size());
         Integer postsTotalCount = (int) count;
@@ -93,6 +120,8 @@ public class StaffController {
         model.addAttribute("gitta0001List", gitta0001DtoList);
         model.addAttribute("pageList", postsTotalCount);
         model.addAttribute("postsTotalCount", postsTotalCount);
+
+         */
 
 
         return "sns/stafflist";
