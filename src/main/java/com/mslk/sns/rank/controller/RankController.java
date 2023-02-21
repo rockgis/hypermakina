@@ -1,13 +1,11 @@
 package com.mslk.sns.rank.controller;
 
-import com.mslk.hypermakina.user.dto.Gitta0001Dto;
-import com.mslk.hypermakina.user.service.Gitta0001Service;
+import com.mslk.sns.rank.dto.RankDto;
+import com.mslk.sns.rank.service.RankService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -16,36 +14,48 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class RankController {
-    private Gitta0001Service gitta0001Service;
+    private RankService rankService;
 
 
     /* 게시글 목록 */
 
     @GetMapping("/snsad/ranklist")
     public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(pageNum);
-        Integer[] pageList = gitta0001Service.getPageList(pageNum);
+        List<RankDto> ranklist = rankService.getRanklist(pageNum);
+        Integer[] pageList = rankService.getPageList(pageNum);
 
-        double  count = Double.valueOf(gitta0001Service.getGitta001Count());
+        double  count = Double.valueOf(rankService.getRankCount());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("gitta0001List", gitta0001List);
+        model.addAttribute("ranklist", ranklist);
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "sns/ranklist";
+        return "sns/rank/list";
     }
 
     @PostMapping("/snsad/rankpost")
-    public String userpost(Principal principal, Gitta0001Dto gitta0001Dto) {
+    public String positiopost(Principal principal, RankDto rankDto) {
 
         LocalDateTime now = LocalDateTime.now();
 
-        gitta0001Dto.setRgEn(principal.getName());
 
-        // System.out.println(now);
+        rankService.savePost(rankDto);
 
-        gitta0001Service.savePost(gitta0001Dto);
+        return "redirect:/snsad/ranklist";
+    }
+
+    @GetMapping("/snsad/rankpost/{no}")
+    public String rankdetail(@PathVariable("no") Long no, Model model) {
+        RankDto rankDto = rankService.getPost(no);
+
+        model.addAttribute("rankDto", rankDto);
+        return "sns/rank/read";
+    }
+
+    @PutMapping("/snsad/rankpost/edit/{no}")
+    public String update(RankDto rankDto) {
+        rankService.savePost(rankDto);
 
         return "redirect:/snsad/ranklist";
     }
@@ -64,13 +74,13 @@ public class RankController {
 
             for(String s : ArraysStr){
                 no = Long.parseLong(s);
-                gitta0001Service.deletePost(no);
+                rankService.deletePost(no);
             }
 
         }else{
 
             no = Long.parseLong(idx);
-            gitta0001Service.deletePost(no);
+            rankService.deletePost(no);
 
         }
         return "redirect:/snsad/ranklist";
@@ -78,19 +88,9 @@ public class RankController {
 
 
     @PostMapping("/snsad/ranksearch")
-    public String usersearch(Gitta0001Dto gitta0001Dto, Model model) {
-
-        List<Gitta0001Dto> gitta0001DtoList = gitta0001Service.searchPosts(gitta0001Dto);
-
-        double  count = Double.valueOf(gitta0001DtoList.size());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("gitta0001List", gitta0001DtoList);
-        model.addAttribute("pageList", postsTotalCount);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+    public String usersearch(RankDto gitta0001Dto, Model model) {
 
 
-        return "sns/ranklist";
+        return "sns/rank/list";
     }
-
 }
