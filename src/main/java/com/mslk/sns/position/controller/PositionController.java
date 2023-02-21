@@ -1,13 +1,12 @@
 package com.mslk.sns.position.controller;
 
-import com.mslk.hypermakina.user.dto.Gitta0001Dto;
-import com.mslk.hypermakina.user.service.Gitta0001Service;
+import com.mslk.sns.department.dto.DepartmentDto;
+import com.mslk.sns.position.dto.PositionDto;
+import com.mslk.sns.position.service.PositionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -16,36 +15,48 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class PositionController {
-    private Gitta0001Service gitta0001Service;
+    private PositionService positionService;
 
 
     /* 게시글 목록 */
 
     @GetMapping("/snsad/positionlist")
     public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(pageNum);
-        Integer[] pageList = gitta0001Service.getPageList(pageNum);
+        List<PositionDto> positionlist = positionService.getPositionlist(pageNum);
+        Integer[] pageList = positionService.getPageList(pageNum);
 
-        double  count = Double.valueOf(gitta0001Service.getGitta001Count());
+        double  count = Double.valueOf(positionService.getPositionCount());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("gitta0001List", gitta0001List);
+        model.addAttribute("positionlist", positionlist);
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "sns/positionlist";
+        return "sns/position/list";
     }
 
     @PostMapping("/snsad/positionpost")
-    public String userpost(Principal principal, Gitta0001Dto gitta0001Dto) {
+    public String positiopost(Principal principal, PositionDto positionDto) {
 
         LocalDateTime now = LocalDateTime.now();
 
-        gitta0001Dto.setRgEn(principal.getName());
 
-        // System.out.println(now);
+        positionService.savePost(positionDto);
 
-        gitta0001Service.savePost(gitta0001Dto);
+        return "redirect:/snsad/positionlist";
+    }
+
+    @GetMapping("/snsad/positionpost/{no}")
+    public String positiondetail(@PathVariable("no") Long no, Model model) {
+        PositionDto positionDto = positionService.getPost(no);
+
+        model.addAttribute("positionDto", positionDto);
+        return "sns/position/read";
+    }
+
+    @PutMapping("/snsad/positionpost/edit/{no}")
+    public String update(PositionDto positionDto) {
+        positionService.savePost(positionDto);
 
         return "redirect:/snsad/positionlist";
     }
@@ -64,13 +75,13 @@ public class PositionController {
 
             for(String s : ArraysStr){
                 no = Long.parseLong(s);
-                gitta0001Service.deletePost(no);
+                positionService.deletePost(no);
             }
 
         }else{
 
             no = Long.parseLong(idx);
-            gitta0001Service.deletePost(no);
+            positionService.deletePost(no);
 
         }
         return "redirect:/snsad/positionlist";
@@ -78,19 +89,10 @@ public class PositionController {
 
 
     @PostMapping("/snsad/positionsearch")
-    public String usersearch(Gitta0001Dto gitta0001Dto, Model model) {
-
-        List<Gitta0001Dto> gitta0001DtoList = gitta0001Service.searchPosts(gitta0001Dto);
-
-        double  count = Double.valueOf(gitta0001DtoList.size());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("gitta0001List", gitta0001DtoList);
-        model.addAttribute("pageList", postsTotalCount);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+    public String usersearch(PositionDto gitta0001Dto, Model model) {
 
 
-        return "sns/positionlist";
+        return "sns/position/list";
     }
 
 }
