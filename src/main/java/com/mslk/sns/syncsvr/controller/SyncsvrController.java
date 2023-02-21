@@ -1,13 +1,11 @@
 package com.mslk.sns.syncsvr.controller;
 
-import com.mslk.hypermakina.user.dto.Gitta0001Dto;
-import com.mslk.hypermakina.user.service.Gitta0001Service;
+import com.mslk.sns.syncsvr.dto.SyncsvrDto;
+import com.mslk.sns.syncsvr.service.SyncsvrService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -16,36 +14,50 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class SyncsvrController {
-    private Gitta0001Service gitta0001Service;
+    private SyncsvrService syncsvrService;
 
 
     /* 게시글 목록 */
 
     @GetMapping("/snsad/syncsvrlist")
     public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(pageNum);
-        Integer[] pageList = gitta0001Service.getPageList(pageNum);
+        List<SyncsvrDto> syncsvrlist = syncsvrService.getSyncsvrlist(pageNum);
+        Integer[] pageList = syncsvrService.getPageList(pageNum);
 
-        double  count = Double.valueOf(gitta0001Service.getGitta001Count());
+        double  count = Double.valueOf(syncsvrService.getSyncsvrCount());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("gitta0001List", gitta0001List);
+        model.addAttribute("syncsvrlist", syncsvrlist);
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "sns/syncsvrlist";
+        return "sns/syncsvr/list";
     }
 
     @PostMapping("/snsad/syncsvrpost")
-    public String userpost(Principal principal, Gitta0001Dto gitta0001Dto) {
+    public String positiopost(Principal principal, SyncsvrDto syncsvrDto) {
 
         LocalDateTime now = LocalDateTime.now();
 
-        gitta0001Dto.setRgEn(principal.getName());
+        syncsvrDto.setModiId(principal.getName());
 
-        // System.out.println(now);
+        syncsvrService.savePost(syncsvrDto);
 
-        gitta0001Service.savePost(gitta0001Dto);
+        return "redirect:/snsad/syncsvrlist";
+    }
+
+    @GetMapping("/snsad/syncsvrpost/{no}")
+    public String syncsvrdetail(@PathVariable("no") Long no, Model model) {
+        SyncsvrDto syncsvrDto = syncsvrService.getPost(no);
+
+        model.addAttribute("syncsvrDto", syncsvrDto);
+
+        return "sns/syncsvr/read";
+    }
+
+    @PutMapping("/snsad/syncsvrpost/edit/{no}")
+    public String update(SyncsvrDto syncsvrDto) {
+        syncsvrService.savePost(syncsvrDto);
 
         return "redirect:/snsad/syncsvrlist";
     }
@@ -64,13 +76,13 @@ public class SyncsvrController {
 
             for(String s : ArraysStr){
                 no = Long.parseLong(s);
-                gitta0001Service.deletePost(no);
+                syncsvrService.deletePost(no);
             }
 
         }else{
 
             no = Long.parseLong(idx);
-            gitta0001Service.deletePost(no);
+            syncsvrService.deletePost(no);
 
         }
         return "redirect:/snsad/syncsvrlist";
@@ -78,19 +90,10 @@ public class SyncsvrController {
 
 
     @PostMapping("/snsad/syncsvrsearch")
-    public String usersearch(Gitta0001Dto gitta0001Dto, Model model) {
-
-        List<Gitta0001Dto> gitta0001DtoList = gitta0001Service.searchPosts(gitta0001Dto);
-
-        double  count = Double.valueOf(gitta0001DtoList.size());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("gitta0001List", gitta0001DtoList);
-        model.addAttribute("pageList", postsTotalCount);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+    public String usersearch(SyncsvrDto gitta0001Dto, Model model) {
 
 
-        return "sns/syncsvrlist";
+        return "sns/syncsvr/list";
     }
 
 }
