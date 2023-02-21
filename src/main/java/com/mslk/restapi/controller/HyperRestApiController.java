@@ -46,7 +46,7 @@ public class HyperRestApiController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "restapimng/index.html";
+        return "manager/restapimng/index.html";
     }
 
 
@@ -105,7 +105,7 @@ public class HyperRestApiController {
         model.addAttribute("postsTotalCount", postsTotalCount);
 
 
-        return "restapimng/index.html";
+        return "manager/restapimng/index.html";
     }
 
 

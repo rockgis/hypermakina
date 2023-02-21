@@ -30,14 +30,14 @@ public class PermissionmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "permissionmng/main.html";
+        return "manager/permissionmng/main.html";
     }
 
     @GetMapping("/admin/permissionmng/search")
     public String search(@RequestParam(value="keyword") String keyword, Model model) {
         //List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
 
-        return "permissionmng/main.html";
+        return "manager/permissionmng/main.html";
     }
 
     @PostMapping("/admin/permissionpost")

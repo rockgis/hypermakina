@@ -42,7 +42,7 @@ public class InspectionmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "inspectionmng/main.html";
+        return "manager/inspectionmng/main.html";
     }
 
     /* 계정감사 */
@@ -58,7 +58,7 @@ public class InspectionmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "accountaudit/main.html";
+        return "manager/accountaudit/main.html";
     }
 
     /* 권한감사 */
@@ -74,7 +74,7 @@ public class InspectionmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "authorityaudit/main.html";
+        return "manager/authorityaudit/main.html";
     }
 
     /* 앱점속감사 */
@@ -90,7 +90,7 @@ public class InspectionmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "appstoreaudit/main.html";
+        return "manager/appstoreaudit/main.html";
     }
 
 }

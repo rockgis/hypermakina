@@ -28,7 +28,7 @@ public class LogmngController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "logmng/main.html";
+        return "manager/logmng/main.html";
     }
 
 }

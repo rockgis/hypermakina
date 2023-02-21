@@ -31,7 +31,7 @@ public class IpusenmController {
         model.addAttribute("postsTotalCount", postsTotalCount);
 
 
-        return "ipusenm/main.html";
+        return "manager/ipusenm/main.html";
     }
 
     @PostMapping("/admin/ipusenmpost")

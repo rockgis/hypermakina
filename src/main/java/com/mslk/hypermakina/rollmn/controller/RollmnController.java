@@ -31,7 +31,7 @@ public class RollmnController {
         model.addAttribute("pageList", pageList);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "rollmn/main.html";
+        return "manager/rollmn/main.html";
     }
 
     @PostMapping("/admin/rollmnpost")
