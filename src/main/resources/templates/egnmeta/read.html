@@ -51,7 +51,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Hypermakina 서비스 <small>Version 1.0</small></h1>
+                        <h1>HyperMSLK 서비스 <small>Version 1.0</small></h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -150,12 +150,30 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">META Host 비고</label>
+                            <label class="col-sm-2 col-form-label">자원 Host 비고</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="metaNote" th:value="${egmMetaDto.metaNote}">
                             </div>
                         </div>
                     </form>
+
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <label>모니터링 컴포넌트 설정 </label>
+                                <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                        id="redelete">
+                                    <i class="fas fa-copy"></i> 삭제
+                                </button>
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                        data-target="#modal-lg" style="margin-right: 5px;">
+                                    <i class="fas fa-edit"></i> 등록
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
 
                     <div class="row">
                         <table class="table table-hover text-nowrap">
