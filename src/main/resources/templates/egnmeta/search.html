@@ -53,7 +53,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Egmanager 자원관리</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -64,84 +64,54 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>restapi 등록 수</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="/hyperrest/list" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53</h3>
-
-                            <p>DashBoard 등록 건수</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
-            <!-- /.row -->
 
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-secret"></i> DashBoard 관리</h3>
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> Egmanager 자원관리</h3>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
+
+                        <form action="/admin/egnmetasearch" id="app_search" method="POST">
+                            <input type="hidden" name="_method" value="post"/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>META TYPE 정보</label>
+                                        <select class="form-control select2" name="searchType" style="width: 100%;">
+                                            <option th:selected="${searchType} == 'metaNm'" value="metaNm">자원 이름</option>
+                                            <option th:selected="${searchType} == 'metaHm'" value="metaHm">자원 Host 이름</option>
+                                            <option th:selected="${searchType} == 'metaEu'" value="metaEu">자원 용도</option>
+                                            <option th:selected="${searchType} == 'metaMm'" value="metaMm">자원 모델명</option>
+                                            <option th:selected="${searchType} == 'metaWm'" value="metaWm">자원 Host 업무명</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>META Host 업무명</label>
+                                        <input class="form-control" name="keyword" type="text"
+                                               placeholder="검색어을 입력해주세요" th:value="${keyword}">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- /.row -->
+
+
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="form-group">
                                     목록 : [[${postsTotalCount}]] 건
-                                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                            data-target="#modal-xl"><i class="far fas fa-search"></i> 조회
+                                    <button type="button" class="btn btn-secondary float-right"
+                                            style="margin-right: 5px;"
+                                            onclick="document.getElementById('app_search').reset();">
+                                        <i class="fas fa-ellipsis-h"></i> 초기화
+                                    </button>
+                                    <button type="button" onclick="document.getElementById('app_search').submit();"
+                                            class="btn btn-primary float-right" style="margin-right: 5px;"><i
+                                            class="fas fa-search"></i> Search
                                     </button>
                                     <button type="button" class="btn btn-secondary float-right"
                                             style="margin-right: 5px;" id="list">
@@ -169,31 +139,34 @@
                                         <input type="checkbox" id="chkAll">
                                     </th>
                                     <th width="5%">번호</th>
-                                    <th>DashBoard TYPE</th>
-                                    <th>DashBoard 이름</th>
-                                    <th>DashBoard 용도</th>
-                                    <th>DashBoard Group</th>
-                                    <th>DashBoard 업무명</th>
-                                    <th>사용 유무</th>
-                                    <th>DashBoard 비고</th>
+                                    <th>자원 TYPE 정보</th>
+                                    <th>자원 이름</th>
+                                    <th>자원 Host 이름</th>
+                                    <th>자원 용도</th>
+                                    <th>자원 모델명</th>
+                                    <th>자원 Host 업무명</th>
+                                    <th>자원 Host OS</th>
+                                    <th>자원 Host 구분</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="dashBoardMngList ,i : ${dashBoardMngList}">
+                                <tr th:each="egmMetaList ,i : ${egmMetaList}">
                                     <td width="5%">
-                                        <input type="checkbox" class="chk" th:value="${dashBoardMngList.id}">
+                                        <input type="checkbox" class="chk" th:value="${egmMetaList.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${dashBoardMngList.id}"></span></td>
-                                    <td><span th:text="${dashBoardMngList.dsbType}"></span></td>
-                                    <td><a th:href="${dashBoardMngList.dsbUrl}" target="_blank">
-                                        <span th:text="${dashBoardMngList.dsbNm}"></span>
-                                    </a></td>
-                                    <td><span th:text="${dashBoardMngList.dsbEu}"></span></td>
-                                    <td><span th:text="${dashBoardMngList.dsbGm}"></span></td>
-                                    <td><span th:text="${dashBoardMngList.dsbWm}"></span></td>
-                                    <td><span th:text="${dashBoardMngList.seTf}"></span></td>
-                                    <td><span th:text="${dashBoardMngList.dsbNote}"></span></td>
+                                    <td width="5%"><span th:text="${egmMetaList.id}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaType}"></span></td>
+                                    <td><a th:href="@{'/egnmeta/post/' + ${egmMetaList.id}}">
+                                        <span th:text="${egmMetaList.metaNm}"></span>
+                                    </a>
+                                    </td>
+                                    <td><span th:text="${egmMetaList.metaHm}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaEu}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaMm}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaWm}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaOs}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaTm}"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -206,7 +179,8 @@
                         <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
 
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/admin/egnmetalist?page=1'}">&laquo;</a>
+                            <li class="page-item"><a class="page-link"
+                                                     th:href="@{'/admin/egnmetalist?page=1'}">&laquo;</a>
                             </li>
                             <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
                                 <a class="page-link"
@@ -237,146 +211,93 @@
 <!-- ./wrapper -->
 
 
-
-<!-- /.modal
-<div class="modal fade" id="modal-lg">
-  <div class="modal-dialog modal-lg">-->
-<div class="modal fade" id="modal-xl">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Search</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/admin/egnmetapost" id="app_search" method="POST">
-                    <input type="hidden" name="_method" value="post"/>
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>META TYPE 정보</label>
-                                        <input class="form-control" name="metaType" type="text" placeholder="Meta Type을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>META Host 업무명</label>
-                                        <input class="form-control" name="restFunction" type="text" placeholder="REST_FUNCTION을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>META 이름</label>
-                                        <input class="form-control" name="restFunction" type="text" placeholder="REST_FUNCTION을 입력해주세요">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-md-12 ">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
-                                    data-dismiss="modal">Close
-                            </button>
-                            <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;"
-                                    onclick="document.getElementById('app_search').reset();">
-                                <i class="fas fa-ellipsis-h"></i> 초기화
-                            </button>
-                            <button type="button" onclick="document.getElementById('app_search').submit();"
-                                    class="btn btn-primary float-right" style="margin-right: 5px;"><i
-                                    class="fas fa-search"></i> Search
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-
-
-
-
+<!-- /.modal !-->
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">DashBoard 관리</h4>
+                <h4 class="modal-title">Egmanager 자원관리</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/admin/dbmngpost" method="post" id="app_brd" class="form-horizontal">
+                <form action="/admin/egnmetapost" method="post" id="app_brd" class="form-horizontal">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard TYPE </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbType" value="EGM" placeholder="DashBoard TYPE">
+                        <label class="col-sm-2 col-form-label">META TYPE 정보 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaType" value="EGM"
+                                   placeholder="META TYPE 정보">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard 이름 </label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbNm" value="DashBoard 이름" placeholder="DashBoard 이름">
+                        <label class="col-sm-2 col-form-label">META 이름 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaNm" value="MES DB" placeholder="META 이름">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard 용도</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbEu" value="DashBoard 용도" placeholder="DashBoard 용도">
+                        <label class="col-sm-2 col-form-label">META 용도</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaEu" value="MES Tibero DBMS"
+                                   placeholder="META 용도">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard Group</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbGm" value="metaMm" placeholder="DashBoard Group">
+                        <label class="col-sm-2 col-form-label">META 모델명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaMm" value="metaMm" placeholder="META 모델명">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard 업무명</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbWm" value="DashBoard 업무명" placeholder="DashBoard 업무명">
+                        <label class="col-sm-2 col-form-label">META Group</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaGm" value="META Group"
+                                   placeholder="META Group">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">연결 URL</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbUrl" value="연결 URL" placeholder="연결 URL">
+                        <label class="col-sm-2 col-form-label">META Host 업무명</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaWm" value="META Host 업무명"
+                                   placeholder="META Host 업무명">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">사용유무</label>
-                        <div class="col-sm-9">
-                            <select class="form-control select2" name="seTf" style="width: 100%;">
-                                <option selected="selected" value="Y">사용</option>
-                                <option value="N">미사용</option>
-                            </select>
+                        <label class="col-sm-2 col-form-label">META Host 이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaHm" value="META Host 이름"
+                                   placeholder="META Host 이름">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">DashBoard 비고</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbNote" value="DashBoard 비고" placeholder="DashBoard 비고">
+                        <label class="col-sm-2 col-form-label">META Host OS</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaOs" value="META Host OS"
+                                   placeholder="META Host OS">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">META Host IP</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaIp" value="META Host IP"
+                                   placeholder="META Host IP">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">META Host 구분 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaTm" value="META Host 구분"
+                                   placeholder="META Host 구분">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">META Host 비고</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="metaNote" value="META Host 비고"
+                                   placeholder="META Host 비고">
                         </div>
                     </div>
                     <!-- div class="form-group row">
@@ -453,7 +374,7 @@
     });
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/admin/dbmnglist";
+        location.href = "/admin/egnmetalist";
 
     });
 
@@ -468,7 +389,7 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 EG Manager 자원을 선택하세요 ?")
         } else {
-            location.href = "/admin/dbmngdel?idx=" + chk_id;
+            location.href = "/admin/egnmetadel?idx=" + chk_id;
         }
 
     });

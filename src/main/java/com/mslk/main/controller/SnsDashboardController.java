@@ -121,56 +121,36 @@ public class SnsDashboardController {
     }
 
     @GetMapping("/sns/dashboard")
-    public String dashboard( Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    public String dashboard( Model model, @RequestParam(value="idx", defaultValue = "1") Integer idx) {
+
+        logger.info("URL : /sns/dashboard");
+
+        String imgUrl ="/images/dashboard/CPU_dark.png";
+
+        switch (idx) {
+            case 1:
+                imgUrl ="/images/dashboard/CPU_dark.png";
+                break;
+            case 2:
+                imgUrl ="/images/dashboard/CPU_white.png";
+                break;
+            case 3:
+                imgUrl ="/images/dashboard/Nw_dark.png";
+                break;
+            case 4:
+                imgUrl ="/images/dashboard/NW_white.png";
+                break;
+            default:
+                imgUrl ="/images/dashboard/CPU_dark.png";
+                break;
+        }
 
 
-        logger.info("URL : /dashboard");
 
-        List<BoardDto> boardList = boardService.getBoardlist(pageNum);
-        Integer[] pageList = boardService.getPageList(pageNum);
-
-        double  count = Double.valueOf(boardService.getBoardCount());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("imgUrl", imgUrl);
 
 
-        return "dashboard/dashboard";
-
-    }
-
-    @GetMapping("/sns/dashboard1")
-    public String dashboard1( Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-
-
-        logger.info("URL : /dashboard1");
-
-
-        return "dashboard/dashboard1";
-
-    }
-
-    @GetMapping("/sns/dashboard2")
-    public String dashboard2( Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-
-
-        logger.info("URL : /dashboard2");
-
-
-        return "dashboard/dashboard2";
-
-    }
-
-    @GetMapping("/sns/dashboard3")
-    public String dashboard3( Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-
-
-        logger.info("URL : /dashboard3");
-
-
-        return "dashboard/dashboard3";
+        return "sns/dashboard/main";
 
     }
 }

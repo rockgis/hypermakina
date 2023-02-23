@@ -1,8 +1,11 @@
 package com.mslk.egmanager.controller;
 
+import com.mslk.egmanager.dto.EgmDataDto;
+import com.mslk.hypermakina.board.dto.BoardDto;
 import com.mslk.hypermakina.board.service.BoardService;
 import com.mslk.egmanager.dto.EgmMetaDto;
 import com.mslk.egmanager.service.EgmMetaService;
+import com.mslk.egmanager.service.EgmDataService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -10,12 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,17 +29,18 @@ public class EgmMetaController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BoardService boardService;
-
     private EgmMetaService egmMetaService;
+
+    private EgmDataService egmDataService;
 
     @GetMapping("/admin/egnmetalist")
     public String egnmeta(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
 
         List<EgmMetaDto> egmMetaList = egmMetaService.getEgmMetalist(pageNum);
-        Integer[] pageList = egmMetaService.getPageList(pageNum);
 
         double  count = Double.valueOf(egmMetaService.getEgmMetaCount());
+        Integer[] pageList = egmMetaService.getPageList(pageNum, count);
+
         Integer postsTotalCount = (int) count;
 
         model.addAttribute("egmMetaList", egmMetaList);
@@ -90,21 +93,50 @@ public class EgmMetaController {
     }
 
 
-    @PostMapping("/admin/egnmetasearch")
-    public String egnmetasearch(EgmMetaDto egmMetaDto, Model model) {
+    @GetMapping("/egnmeta/post/{no}")
+    public String staffdetail(@PathVariable("no") Long no, Model model) {
+        EgmMetaDto egmMetaDto = egmMetaService.getPost(no);
 
-        List<EgmMetaDto> egmMetaList = egmMetaService.getEgmMetalist(10); //hyperRestApiService.searchPosts(hyperRestApiDto);
-        Integer[] pageList = egmMetaService.getPageList(10);
+        model.addAttribute("egmMetaDto", egmMetaDto);
+
+        List<EgmDataDto> egmDataList = egmDataService.getEgmDatalist(20);
+
+
+        model.addAttribute("egmDataList", egmDataList);
+
+
+        return "egnmeta/read";
+    }
+
+    @PutMapping("/egnmeta/post/edit/{no}")
+    public String update(EgmMetaDto egmMetaDto) {
+        egmMetaService.savePost(egmMetaDto);
+
+        return "redirect:/admin/egnmetalist";
+    }
+
+
+    @PostMapping("/admin/egnmetasearch")
+    public String egnmetasearch(@RequestParam(value="keyword") String keyword, @RequestParam(value="searchType") String searchType ,Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+
+        logger.info("searchType : " + searchType);
+        logger.info("keyword : " + keyword);
+
+        List<EgmMetaDto> egmMetaList = egmMetaService.searchPosts(searchType, keyword); //
 
         double  count = Double.valueOf(egmMetaList.size());
+        Integer[] pageList = egmMetaService.getPageList(pageNum, count);
+
         Integer postsTotalCount = (int) count;
 
         model.addAttribute("egmMetaList", egmMetaList);
         model.addAttribute("pageList", pageList);
+        model.addAttribute("page", pageNum);
         model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
 
-
-        return "egnmeta/index.html";
+        return "egnmeta/search.html";
     }
 
 
