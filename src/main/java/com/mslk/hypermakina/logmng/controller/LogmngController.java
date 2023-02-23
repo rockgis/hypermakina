@@ -31,4 +31,8 @@ public class LogmngController {
         return "manager/logmng/main.html";
     }
 
+
+
+
+
 }
