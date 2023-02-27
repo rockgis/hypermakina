@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class EgmDataDto {
 
     private Long id;
-    private int metaId;    /// 'FOREIGN Key ',
+    private Long metaId;    /// 'FOREIGN Key ',
 
     private String restName; // 'REST API 이름',
 
@@ -40,7 +40,7 @@ public class EgmDataDto {
 
 
     @Builder
-    public EgmDataDto(Long id, int metaId, String restName, String componentName, String startDate, String endDate, String test, String info, String componentType, String timeline, String measure, String seTf, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public EgmDataDto(Long id, Long metaId, String restName, String componentName, String startDate, String endDate, String test, String info, String componentType, String timeline, String measure, String seTf, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.metaId = metaId;
         this.restName = restName;

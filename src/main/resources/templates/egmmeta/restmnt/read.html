@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hypermakina 서비스</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+          href="/webjars/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <!-- BS Stepper -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bs-stepper/css/bs-stepper.min.css">
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/dropzone/min/dropzone.min.css">
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css">
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <div th:insert="com/header.html" id="header"></div>
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <div th:insert="com/leftmenuAdminMain.html" id="leftMenu"></div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>HyperMSLK 서비스 <small>Version 1.0</small></h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item ">Egmanager 자원관리 </li>
+                            <li class="breadcrumb-item active"> 컴포넌트 설정</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Horizontal Form -->
+            <!-- /.card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 모니터링 컴포넌트 설정 </h3>
+                </div>
+                <div class="card-body">
+                    <form action="/admin/egmdatapost" method="post" id="app_rest" class="form-horizontal">
+                        <input type="hidden" name="_method" value="post"/>
+                        <input type="text" name="metaId"  id="id" th:value="${egmDataDto.id}"/>
+                        <input type="text" name="metaId"  id="metaId" th:value="${egmDataDto.metaId}"/>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">REST API 이름 </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="restName" th:value="${egmDataDto.restName}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Component 이름 </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="componentName" th:value="${egmDataDto.componentName}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">조회 시작 날짜</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="startDate" th:value="${egmDataDto.startDate}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">조회 종료 날짜</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="endDate" th:value="${egmDataDto.endDate}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">조회 항목</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="test" th:value="${egmDataDto.test}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">조회 상세 항목</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="info" th:value="${egmDataDto.info}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">ComponentType 이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="componentType" th:value="${egmDataDto.componentType}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">timeline</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="timeline" th:value="${egmDataDto.timeline}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Measure</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="measure" th:value="${egmDataDto.measure}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">사용여부 </label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" name="seTf" style="width: 100%;">
+                                    <option selected="selected" value="Y">사용</option>
+                                    <option value="N">미사용</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+                 </div>
+                    <!-- /.card-body -->
+                 <div class="card-footer clearfix">
+                     <div class="row">
+                         <div class="col-md-12 ">
+                             <div class="form-group">
+                                 <button type="button" class="btn btn-secondary float-right"
+                                         style="margin-right: 5px;" id="list">
+                                     <i class=" far fa-plus-square"></i> 목록
+                                 </button>
+                                 <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                         id="delete">
+                                     <i class="fas fa-copy"></i> 완전삭제
+                                 </button>
+                                 <button type="button" class="btn btn-primary float-right"
+                                         onclick="document.getElementById('app_rest').submit();"
+                                         style="margin-right: 5px;">
+                                     <i class="fas fa-edit"></i> 수정
+                                 </button>
+
+                             </div>
+
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+            <!-- /.card -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- FOOTER -->
+    <div th:insert="com/footer.html" id="footer"></div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="/webjars/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="/webjars/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="/webjars/AdminLTE/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
+
+<!-- Page specific script -->
+
+<script>
+    $(function () {
+
+
+    });
+
+    $(document).on('click', '#list', function () {	// 목록 버튼 클릭 시
+
+        var chk_id = $("#metaId").val();
+
+        location.href = "/egmmeta/post/"+chk_id;
+
+    });
+
+    $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
+        var chk_id = $("#id").val();
+        alert(chk_id);
+        //location.href = "/snsad/staffdel?idx=" + chk_id;
+
+
+    });
+</script>
+</body>
+</html>

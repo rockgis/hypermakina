@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface EgmDataRepository extends JpaRepository<EgmDataEntity, Long> {
 
+    List<EgmDataEntity> findByMetaId( @Param("metaId") Long metaId);
+
 }

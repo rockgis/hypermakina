@@ -33,8 +33,8 @@ public class EgmMetaController {
 
     private EgmDataService egmDataService;
 
-    @GetMapping("/admin/egnmetalist")
-    public String egnmeta(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    @GetMapping("/admin/egmmetalist")
+    public String egmmetalist(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
 
         List<EgmMetaDto> egmMetaList = egmMetaService.getEgmMetalist(pageNum);
 
@@ -48,12 +48,12 @@ public class EgmMetaController {
         model.addAttribute("page", pageNum);
         model.addAttribute("postsTotalCount", postsTotalCount);
 
-        return "egnmeta/index.html";
+        return "egmmeta/index.html";
     }
 
 
-    @PostMapping("/admin/egnmetapost")
-    public String egnmetapost(Principal principal, EgmMetaDto egmMetaDto) {
+    @PostMapping("/admin/egmmetapost")
+    public String egmmetapost(Principal principal, EgmMetaDto egmMetaDto) {
 
         LocalDateTime now = LocalDateTime.now();
 
@@ -63,12 +63,12 @@ public class EgmMetaController {
 
         egmMetaService.savePost(egmMetaDto);
 
-        return "redirect:/admin/egnmetalist";
+        return "redirect:/admin/egmmetalist";
     }
 
 
-    @GetMapping("/admin/egnmetadel")
-    public String egnmetadelete(@RequestParam(value="idx") String idx) {
+    @GetMapping("/admin/egmmetadel")
+    public String egmmetadelete(@RequestParam(value="idx") String idx) {
 
         long no = 0;
 
@@ -89,35 +89,38 @@ public class EgmMetaController {
             egmMetaService.deletePost(no);
 
         }
-        return "redirect:/admin/egnmetalist";
+        return "redirect:/admin/egmmetalist";
     }
 
 
-    @GetMapping("/egnmeta/post/{no}")
-    public String staffdetail(@PathVariable("no") Long no, Model model) {
+    @GetMapping("/egmmeta/post/{no}")
+    public String egmmetadetail(@PathVariable("no") Long no, Model model) {
         EgmMetaDto egmMetaDto = egmMetaService.getPost(no);
 
         model.addAttribute("egmMetaDto", egmMetaDto);
 
-        List<EgmDataDto> egmDataList = egmDataService.getEgmDatalist(20);
+
+        logger.info("no : "+ no);
+
+        List<EgmDataDto> egmDataList = egmDataService.getEgmMetaIDlist(no);
 
 
         model.addAttribute("egmDataList", egmDataList);
 
 
-        return "egnmeta/read";
+        return "egmmeta/read";
     }
 
-    @PutMapping("/egnmeta/post/edit/{no}")
-    public String update(EgmMetaDto egmMetaDto) {
+    @PutMapping("/egmmeta/post/edit/{no}")
+    public String egmmetaupdate(EgmMetaDto egmMetaDto) {
         egmMetaService.savePost(egmMetaDto);
 
-        return "redirect:/admin/egnmetalist";
+        return "redirect:/admin/egmmetalist";
     }
 
 
-    @PostMapping("/admin/egnmetasearch")
-    public String egnmetasearch(@RequestParam(value="keyword") String keyword, @RequestParam(value="searchType") String searchType ,Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    @PostMapping("/admin/egmmetasearch")
+    public String egmmetasearch(@RequestParam(value="keyword") String keyword, @RequestParam(value="searchType") String searchType ,Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
 
         logger.info("searchType : " + searchType);
         logger.info("keyword : " + keyword);
@@ -136,7 +139,7 @@ public class EgmMetaController {
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
 
-        return "egnmeta/search.html";
+        return "egmmeta/search.html";
     }
 
 

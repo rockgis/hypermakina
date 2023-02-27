@@ -72,7 +72,8 @@
                     <h3 class="card-title"><i class="fas fa-user-secret"></i> Egmanager 자원관리</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/egnmeta/post/edit/' + ${rankDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                    <form action="/egnmeta/post/edit/' + ${rankDto.id}}" method="post" id="app_brd"
+                          class="form-horizontal">
                         <input type="hidden" name="_method" value="post"/>
                         <input type="hidden" name="id" id="id" th:value="${egmMetaDto.id}"/>
                         <div class="row">
@@ -80,13 +81,15 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>자원 TYPE 정보 </label>
-                                        <input type="text" class="form-control" name="metaType" th:value="${egmMetaDto.metaType}">
+                                    <input type="text" class="form-control" name="metaType"
+                                           th:value="${egmMetaDto.metaType}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>자원 Group</label>
-                                        <input type="text" class="form-control" name="metaGm" th:value="${egmMetaDto.metaGm}">
+                                    <input type="text" class="form-control" name="metaGm"
+                                           th:value="${egmMetaDto.metaGm}">
                                 </div>
                             </div>
                         </div>
@@ -95,13 +98,15 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>자원 이름 </label>
-                                    <input type="text" class="form-control" name="metaNm" th:value="${egmMetaDto.metaNm}">
+                                    <input type="text" class="form-control" name="metaNm"
+                                           th:value="${egmMetaDto.metaNm}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>자원 용도</label>
-                                    <input type="text" class="form-control" name="metaEu" th:value="${egmMetaDto.metaEu}">
+                                    <input type="text" class="form-control" name="metaEu"
+                                           th:value="${egmMetaDto.metaEu}">
                                 </div>
                             </div>
                         </div>
@@ -123,13 +128,15 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Host 구분</label>
-                                    <input type="text" class="form-control" name="metaTm" th:value="${egmMetaDto.metaTm}">
+                                    <input type="text" class="form-control" name="metaTm"
+                                           th:value="${egmMetaDto.metaTm}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Host 이름</label>
-                                    <input type="text" class="form-control" name="metaHm" th:value="${egmMetaDto.metaHm}">
+                                    <input type="text" class="form-control" name="metaHm"
+                                           th:value="${egmMetaDto.metaHm}">
                                 </div>
                             </div>
                         </div>
@@ -138,13 +145,15 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>Host OS</label>
-                                    <input type="text" class="form-control" name="metaOs" th:value="${egmMetaDto.metaOs}">
+                                    <input type="text" class="form-control" name="metaOs"
+                                           th:value="${egmMetaDto.metaOs}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Host IP</label>
-                                    <input type="text" class="form-control" name="metaIp" th:value="${egmMetaDto.metaIp}">
+                                    <input type="text" class="form-control" name="metaIp"
+                                           th:value="${egmMetaDto.metaIp}">
                                 </div>
                             </div>
                         </div>
@@ -152,7 +161,8 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">자원 Host 비고</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="metaNote" th:value="${egmMetaDto.metaNote}">
+                                <input type="text" class="form-control" name="metaNote"
+                                       th:value="${egmMetaDto.metaNote}">
                             </div>
                         </div>
                     </form>
@@ -194,46 +204,50 @@
                             <!-- CONTENTS !-->
                             <tr th:each="egmDataList ,i : ${egmDataList}">
                                 <td width="5%"><span th:text="${egmDataList.id}"></span></td>
-                                <td><a th:href="@{'/egnmeta/post/' + ${egmDataList.id}}">
-                                    <span th:text="${egmDataList.restName}"></span>
+                                <td><span th:text="${egmDataList.restName}"></span></td>
+                                <td><a th:href="@{'/egmdata/post/' + ${egmDataList.id}}">
+                                    <span th:text="${egmDataList.componentName}"></span>
                                 </a>
                                 </td>
-                                <td><span th:text="${egmDataList.componentName}"></span></td>
                                 <td><span th:text="${egmDataList.startDate}"></span></td>
                                 <td><span th:text="${egmDataList.endDate}"></span></td>
-                                <td><span th:text="${egmDataList.test}"></span></td>
+                                <td><a th:href="@{'/egmdata/post/' + ${egmDataList.id}}">
+                                    <span th:text="${egmDataList.test}"></span>
+                                </a>
+                                </td>
                                 <td><span th:text="${egmDataList.info}"></span></td>
                                 <td><span th:text="${egmDataList.seTf}"></span></td>
-                                <td><span th:text="${#temporals.format(egmDataList.createdDate, 'yyyy-MM-dd')}"></span></td>
+                                <td><span th:text="${#temporals.format(egmDataList.createdDate, 'yyyy-MM-dd')}"></span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
 
-                 </div>
-                    <!-- /.card-body -->
-                 <div class="card-footer clearfix">
-                     <div class="row">
-                         <div class="col-md-12 ">
-                             <div class="form-group">
-                                 <button type="button" class="btn btn-secondary float-right"
-                                         style="margin-right: 5px;" id="list">
-                                     <i class=" far fa-plus-square"></i> 목록
-                                 </button>
-                                 <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
-                                         id="delete">
-                                     <i class="fas fa-copy"></i> 완전삭제
-                                 </button>
-                                 <button type="button" class="btn btn-primary float-right"
-                                         onclick="document.getElementById('app_brd').submit();"
-                                         style="margin-right: 5px;">
-                                     <i class="fas fa-edit"></i> 수정
-                                 </button>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary float-right"
+                                        style="margin-right: 5px;" id="list">
+                                    <i class=" far fa-plus-square"></i> 목록
+                                </button>
+                                <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                        id="delete">
+                                    <i class="fas fa-copy"></i> 완전삭제
+                                </button>
+                                <button type="button" class="btn btn-primary float-right"
+                                        onclick="document.getElementById('app_brd').submit();"
+                                        style="margin-right: 5px;">
+                                    <i class="fas fa-edit"></i> 수정
+                                </button>
 
-                             </div>
+                            </div>
 
-                         </div>
-                     </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -253,6 +267,121 @@
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+<!-- /.modal !-->
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Egmanager Rest API 등록</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/egmdatapost" method="post" id="app_rest" class="form-horizontal">
+                    <input type="hidden" name="_method" value="post"/>
+                    <input type="text" name="metaId" th:value="${egmMetaDto.id}"/>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">REST API 이름 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="restName" value="EGM"
+                                   placeholder="META TYPE 정보">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Component 이름 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="componentName" value="componentName"
+                                   placeholder="componentName 이름">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">조회 시작 날짜</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="startDate" value="startDate"
+                                   placeholder="endDate">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">조회 종료 날짜</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="endDate" value="endDate"
+                                   placeholder="META 모델명">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">조회 항목</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="test" value="test"
+                                   placeholder="META Group">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">조회 상세 항목</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="info" value="info"
+                                   placeholder="info">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">ComponentType 이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="componentType" value="componentType"
+                                   placeholder="componentType">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">timeline</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="timeline" value="timeline"
+                                   placeholder="timeline">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Measure</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="measure" value="measure"
+                                   placeholder="measure">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">사용여부 </label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2" name="seTf" style="width: 100%;">
+                                <option selected="selected" value="Y">사용</option>
+                                <option value="N">미사용</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="button" onclick="document.getElementById('app_rest').submit();"
+                                    class="btn btn-primary float-right" style="margin-right: 5px;"><i
+                                    class="fas fa-search"></i> 등록
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 
 <!-- jQuery -->
 <script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
@@ -280,7 +409,7 @@
 
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/admin/egnmetalist";
+        location.href = "/admin/egmmetalist";
 
     });
 

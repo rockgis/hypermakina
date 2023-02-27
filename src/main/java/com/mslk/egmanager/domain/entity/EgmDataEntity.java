@@ -18,8 +18,8 @@ public class EgmDataEntity extends TimeEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 4, nullable = false)
-    private int metaId ;    /// 'FOREIGN Key ',
+    @Column(nullable = false)
+    private Long metaId ;    /// 'FOREIGN Key ',
 
     @Column(length = 50, nullable = false)
     private String restName; // 'REST API 이름',
@@ -48,7 +48,7 @@ public class EgmDataEntity extends TimeEntity {
 
 
     @Builder
-    public EgmDataEntity(Long id , int metaId , String restName,String componentName,String startDate,String endDate, String test, String info, String componentType,String timeline,String measure,String seTf,String altEn){
+    public EgmDataEntity(Long id , Long metaId , String restName,String componentName,String startDate,String endDate, String test, String info, String componentType,String timeline,String measure,String seTf,String altEn){
         this.id = id;
         this.metaId = metaId;
         this.restName =restName;

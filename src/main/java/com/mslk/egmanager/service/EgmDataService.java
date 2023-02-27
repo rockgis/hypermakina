@@ -1,8 +1,10 @@
 package com.mslk.egmanager.service;
 
 import com.mslk.egmanager.domain.entity.EgmDataEntity;
+import com.mslk.egmanager.domain.entity.EgmMetaEntity;
 import com.mslk.egmanager.domain.repostory.EgmDataRepository;
 import com.mslk.egmanager.dto.EgmDataDto;
+import com.mslk.egmanager.dto.EgmMetaDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +38,24 @@ public class EgmDataService {
 
         return EgmDataDtoList;
     }
+
+    @Transactional
+    public List<EgmDataDto> getEgmMetaIDlist(Long metaID) {
+
+        List<EgmDataEntity> egmDataEnties = egmDataRepository.findByMetaId(metaID);
+
+        List<EgmDataDto> egmDataDtoList = new ArrayList<>();
+
+        for (EgmDataEntity egmDataEntity : egmDataEnties) {
+            egmDataDtoList.add(this.convertEntityToDto(egmDataEntity));
+        }
+
+        return egmDataDtoList;
+    }
+
+
+
+
 
     @Transactional
     public Long getEgmDataCount() {

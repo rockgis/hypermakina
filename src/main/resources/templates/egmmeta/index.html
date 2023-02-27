@@ -157,7 +157,7 @@
                                     </td>
                                     <td width="5%"><span th:text="${egmMetaList.id}"></span></td>
                                     <td><span th:text="${egmMetaList.metaType}"></span></td>
-                                    <td><a th:href="@{'/egnmeta/post/' + ${egmMetaList.id}}">
+                                    <td><a th:href="@{'/egmmeta/post/' + ${egmMetaList.id}}">
                                         <span th:text="${egmMetaList.metaNm}"></span>
                                     </a>
                                     </td>
@@ -180,11 +180,11 @@
 
                         <ul class="pagination pagination-sm m-0 float-right">
                             <li class="page-item"><a class="page-link"
-                                                     th:href="@{'/admin/egnmetalist?page=1'}">&laquo;</a>
+                                                     th:href="@{'/admin/egmmetalist?page=1'}">&laquo;</a>
                             </li>
                             <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
                                 <a class="page-link"
-                                   th:href="@{'/admin/egnmetalist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                                   th:href="@{'/admin/egmmetalist?page=' + ${pageNum}}">[[${pageNum}]]</a>
                             </li>
                             <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                         </ul>
