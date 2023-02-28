@@ -61,6 +61,7 @@ public class BoardService {
 
     @Transactional
     public List<BoardDto> searchPosts(String keyword) {
+
         List<BoardEntity> boardEntities = boardRepository.findByTitleContaining(keyword);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
