@@ -5,6 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class Pagination {
+
+    private int page;   // 현재 페이지
     private int totalRecordCount;   // 전체 데이터 수
     private int totalPageCount;     // 전체 페이지 수
     private int startPage;          // 첫 페이지 번호
@@ -29,6 +31,8 @@ public class Pagination {
         if (params.getPage() > totalPageCount) {
             params.setPage(totalPageCount);
         }
+
+        page = params.getPage();
 
         // 첫 페이지 번호 계산
         startPage = ((params.getPage() - 1) / params.getPageSize()) * params.getPageSize() + 1;
