@@ -72,8 +72,8 @@
                     <h3 class="card-title"><i class="fas fa-user-secret"></i> 부서 관리</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/snsad/departmentpost/edit/' + ${departmentDto.id}}" method="post" id="app_brd" class="form-horizontal">
-                        <input type="hidden" name="_method" value="post"/>
+                    <form th:action="@{'/snsad/departmentpost/edit/' + ${departmentDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                        <input type="hidden" name="_method" value="put"/>
                         <input type="hidden" name="id" id="id" th:value="${departmentDto.id}"/>
                         <div class="row">
                             <div class="col-sm-6">
@@ -131,8 +131,8 @@
                             <label class="col-sm-2 col-form-label">동기화 유무</label>
                             <div class="col-sm-10">
                                 <select class="form-control select2" name="syncUse" style="width: 100%;">
-                                    <option selected="selected" value="1">True</option>
-                                    <option value="0">False</option>
+                                    <option th:selected="${departmentDto.syncUse} == '1'" value="1">True</option>
+                                    <option th:selected="${departmentDto.syncUse} == '0'" value="0">False</option>
                                 </select>
                             </div>
                         </div>
@@ -146,8 +146,8 @@
                             <label class="col-sm-2 col-form-label">최상위 유무 </label>
                             <div class="col-sm-10">
                                 <select class="form-control select2" name="root" style="width: 100%;">
-                                    <option selected="selected" value="1">True</option>
-                                    <option value="0">False</option>
+                                    <option th:selected="${departmentDto.root} == '1'" value="1">True</option>
+                                    <option th:selected="${departmentDto.root} == '0'" value="0">False</option>
                                 </select>
                             </div>
                         </div>

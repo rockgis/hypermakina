@@ -113,8 +113,8 @@
                                 <div class="form-group">
                                     <label>성별</label>
                                     <select class="form-control select2" name="sex" style="width: 100%;">
-                                        <option selected="selected" value="남">남</option>
-                                        <option value="여">여</option>
+                                        <option th:selected="${staffDto.sex} == '남'" value="남">남</option>
+                                        <option th:selected="${staffDto.sex} == '여'" value="여">여</option>
                                     </select>
                                 </div>
                             </div>
