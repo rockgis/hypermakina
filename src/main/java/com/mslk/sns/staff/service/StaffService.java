@@ -3,6 +3,7 @@ package com.mslk.sns.staff.service;
 import com.mslk.sns.staff.domain.entity.StaffEntity;
 import com.mslk.sns.staff.domain.repository.StaffRepository;
 import com.mslk.sns.staff.dto.StaffDto;
+import com.mslk.common.paging.dto.SearchDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,56 +61,42 @@ public class StaffService {
         staffRepository.deleteById(id);
     }
 
-    /* @Transactional
-    public List<StaffDto> searchPosts(StaffDto staffDto) {
+    @Transactional
+    public List<StaffDto> searchPosts(SearchDto searchDto) {
 
-        String dcd = gitta0001Dto.getDcd();
-        String usrNm =  gitta0001Dto.getUsrNm();
-        String usrEn = gitta0001Dto.getUsrEn();
-        String emNm = gitta0001Dto.getEmNm();
-        String nrIpAr = gitta0001Dto.getNrIpAr();
-        String earEhf = gitta0001Dto.getEarEhf();
+         String keyword = searchDto.getKeyword();           // 검색 키워드
+         String searchType = searchDto.getSearchType();        // 검색 유형
 
-        System.out.println(dcd);
-        System.out.println(usrNm);
-        System.out.println(usrEn);
-        System.out.println(emNm);
-        System.out.println(nrIpAr);
-        System.out.println(earEhf);
 
-        List<StaffEntity> gitta0001Entities = null;
+        List<StaffEntity> staffEntities = null;
 
-        if(!dcd.isEmpty()){
-            gitta0001Entities = gitta0001Repository.findByDcdContaining(dcd);
-        } else if (!usrNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrNmContaining(usrNm);
-        }else if (!usrEn.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrEnContaining(usrEn);
-        }else if (!emNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByEmNmContaining(emNm);
-        }else if (!nrIpAr.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByNrIpArContaining(nrIpAr);
-        }else if (!earEhf.equals("A")) {
-            gitta0001Entities = gitta0001Repository.findByEarEhfContaining(earEhf);
-        }else{
-
-            Page<Gitta0001Entity> page = gitta0001Repository.findAll(PageRequest.of(0, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
-
-            gitta0001Entities = page.getContent();
+        switch (searchType) {
+            case "uid":  // uid   아이디
+                staffEntities =  staffRepository.findByUidContaining(keyword);
+                break;
+            case "fullName":  // fullName 이름
+                staffEntities =  staffRepository.findByFullNameContaining(keyword);
+                break;
+            case "identityNo": // identityNo  사원번호
+                staffEntities =  staffRepository.findByIdentityNoContaining(keyword);
+                break;
+            case "eMail":  // eMail 이메일
+                staffEntities =  staffRepository.findByeMailContaining(keyword);
+                break;
+            case "hp":  // hp 헨드폰 번호
+                staffEntities =  staffRepository.findByHpContaining(keyword);
+                break;
         }
 
-        List<Gitta0001Dto> gitta0001DtoList = new ArrayList<>();
+        List<StaffDto> staffDtotoList = new ArrayList<>();
 
-        if (gitta0001Entities.isEmpty()) return gitta0001DtoList;
-
-        for (Gitta0001Entity gitta0001Entity : gitta0001Entities) {
-            gitta0001DtoList.add(this.convertEntityToDto(gitta0001Entity));
+        for (StaffEntity staffEntity : staffEntities) {
+            staffDtotoList.add(this.convertEntityToDto(staffEntity));
         }
 
-        return gitta0001DtoList;
+        return staffDtotoList;
     }
 
-     */
 
     public Integer[] getPageList(Integer curPageNum) {
         // 총 게시글 갯수
@@ -156,7 +143,7 @@ public class StaffService {
                 .concurrentPosition(staffEntity.getConcurrentPosition())
                 .userId(staffEntity.getUserId())
                 .eMail(staffEntity.getEMail())
-                .hP(staffEntity.getHP())
+                .hp(staffEntity.getHp())
                 .seq(staffEntity.getSeq())
                 .syncUse(staffEntity.getSyncUse())
                 .syncSystem(staffEntity.getSyncSystem())

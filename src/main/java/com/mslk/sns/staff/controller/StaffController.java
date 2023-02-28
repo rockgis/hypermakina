@@ -130,17 +130,35 @@ public class StaffController {
 
 
     @PostMapping("/snsad/staffsearch")
-    public String usersearch(StaffDto staffDto, Model model) {
+    public String usersearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
 
-        /* List<StaffDto> gitta0001DtoList = staffService.searchPosts(gitta0001Dto);
+        logger.info("/snsad/staffsearch ===>  keyword : "+ keyword);
 
-        double  count = Double.valueOf(gitta0001DtoList.size());
+        logger.info("/snsad/staffsearch ==> getKeyword : "+params.getKeyword());
+
+        logger.info("/snsad/staffsearch ==> getSearchType : "+params.getSearchType());
+
+        List<StaffDto> staffList = staffService.searchPosts(params);
+
+        // 총 게시글 갯수
+        double  count = Double.valueOf(staffList.size());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("gitta0001List", gitta0001DtoList);
-        model.addAttribute("pageList", postsTotalCount);
-        model.addAttribute("postsTotalCount", postsTotalCount);
-         */
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("staffList", staffList);
+        model.addAttribute("pagination", pagination);
 
 
         return "sns/staff/list";

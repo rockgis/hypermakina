@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     목록 : [[${pagination.totalRecordCount}]] 건
                                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                            data-target="#modal-xl"><i class="far fas fa-search"></i> 조회
+                                            data-target="#modal-default"><i class="far fas fa-search"></i> 조회
                                     </button>
                                     <button type="button" class="btn btn-secondary float-right"
                                             style="margin-right: 5px;" id="list">
@@ -138,7 +138,7 @@
                                     </td>
                                     <td><span th:text="${staff.eMail}"></span></td>
                                     <td><span th:text="${staff.name}"></span></td>
-                                    <td><span th:text="${staff.hP}"></span></td>
+                                    <td><span th:text="${staff.hp}"></span></td>
                                     <td><span th:text="${#temporals.format(staff.createdDate, 'yyyy-MM-dd')}"></span></td>
                                 </tr>
                                 </tbody>
@@ -196,11 +196,35 @@
 </div>
 <!-- ./wrapper -->
 
+
+<div class="modal fade" id="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Default Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- /.modal
 <div class="modal fade" id="modal-lg">
   <div class="modal-dialog modal-lg">-->
-<div class="modal fade" id="modal-xl">
-    <div class="modal-dialog modal-xl">
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Search</h4>
@@ -212,55 +236,23 @@
                 <form action="/snsad/staffsearch" id="app_search" method="POST">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>사번</label>
-                                        <input class="form-control" name="usrEn" type="text" placeholder="사번을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>이름</label>
-                                        <input class="form-control" name="usrNm" type="text" placeholder="이름을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input class="form-control" name="emNm" type="text" placeholder="Email을 입력해주세요">
-                                    </div>
-                                </div>
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>검색 조건</label>
+                                <select class="form-control select2" name="searchType" style="width: 100%;">
+                                    <option selected="selected" value="uid">아이디</option>
+                                    <option value="fullName">이름</option>
+                                    <option value="identityNo">사원번호</option>
+                                    <option value="eMail">이메일</option>
+                                    <option value="hp">헨드폰 번호</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>부서</label>
-                                        <input class="form-control" name="dcd" type="text" placeholder="부서를 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>관리공간 IP</label>
-                                        <input class="form-control" name="nrIpAr" type="text"
-                                               placeholder="관리공간 IP를 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>공용 계정 사용 여부</label>
-                                        <select class="form-control select2" name="earEhf" style="width: 100%;">
-                                            <option selected="selected" value="A">전체</option>
-                                            <option value="Y">Y</option>
-                                            <option value="N">N</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>검색어</label>
+                                <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
                             </div>
                         </div>
                     </div>
@@ -443,7 +435,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">연락처</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="hP" placeholder="연락처">
+                            <input type="text" class="form-control" name="hp" placeholder="연락처">
                         </div>
                     </div>
 

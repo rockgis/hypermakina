@@ -66,7 +66,7 @@ public class StaffEntity extends TimeEntity {
     private String eMail; // 'E-mail',
 
     @Column(length = 50, nullable = false)
-    private String hP; // '연락처',
+    private String hp; // '연락처',
 
     @Column(nullable = false)
     private int seq; // '순서',
@@ -91,7 +91,7 @@ public class StaffEntity extends TimeEntity {
 
 
     @Builder
-    public StaffEntity(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hP, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, String memo) {
+    public StaffEntity(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, String memo) {
         this.id = id;
         this.uid = uid;
         this.name = name;
@@ -110,7 +110,7 @@ public class StaffEntity extends TimeEntity {
         this.concurrentPosition = concurrentPosition;
         this.userId = userId;
         this.eMail = eMail;
-        this.hP = hP;
+        this.hp = hp;
         this.seq = seq;
         this.syncUse = syncUse;
         this.syncSystem = syncSystem;

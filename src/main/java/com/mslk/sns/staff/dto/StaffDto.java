@@ -30,7 +30,7 @@ public class StaffDto {
     private String concurrentPosition; // '겸직',
     private String userId; // '겸직 사용자 아이디',
     private String eMail; // 'E-mail',
-    private String hP; // '연락처',
+    private String hp; // '연락처',
     private int seq; // '순서',
     private int syncUse; // '동기화 유무 (0/1 , FALSE/TRUE)',
     private String syncSystem; // '동기화시스템 (,)',
@@ -65,7 +65,7 @@ public class StaffDto {
                 .concurrentPosition(concurrentPosition)
                 .userId(userId)
                 .eMail(eMail)
-                .hP(hP)
+                .hp(hp)
                 .seq(seq)
                 .syncUse(syncUse)
                 .syncSystem(syncSystem)
@@ -78,7 +78,7 @@ public class StaffDto {
     }
 
     @Builder
-    public StaffDto(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hP, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, LocalDateTime createdDate, LocalDateTime modifiedDate, LocalDateTime deleteDate, String memo) {
+    public StaffDto(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, LocalDateTime createdDate, LocalDateTime modifiedDate, LocalDateTime deleteDate, String memo) {
         this.id = id;
         this.uid = uid;
         this.name = name;
@@ -97,7 +97,7 @@ public class StaffDto {
         this.concurrentPosition = concurrentPosition;
         this.userId = userId;
         this.eMail = eMail;
-        this.hP = hP;
+        this.hp = hp;
         this.seq = seq;
         this.syncUse = syncUse;
         this.syncSystem = syncSystem;
