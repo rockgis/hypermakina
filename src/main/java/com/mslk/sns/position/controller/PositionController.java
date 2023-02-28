@@ -106,7 +106,35 @@ public class PositionController {
 
 
     @PostMapping("/snsad/positionsearch")
-    public String usersearch(PositionDto gitta0001Dto, Model model) {
+    public String positionsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
+
+        logger.info("/snsad/positionsearch ===>  keyword : "+ keyword);
+
+        logger.info("/snsad/positionsearch ==> getKeyword : "+params.getKeyword());
+
+        logger.info("/snsad/positionsearch ==> getSearchType : "+params.getSearchType());
+
+        List<PositionDto> positionlist = positionService.searchPosts(params);
+
+        // 총 게시글 갯수
+        double  count = Double.valueOf(positionlist.size());
+        Integer postsTotalCount = (int) count;
+
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("positionlist", positionlist);
+        model.addAttribute("pagination", pagination);
 
 
         return "sns/position/list";

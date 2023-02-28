@@ -1,5 +1,6 @@
 package com.mslk.sns.position.service;
 
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.sns.position.domain.entity.PositionEntity;
 import com.mslk.sns.position.domain.repository.PositionRepository;
 import com.mslk.sns.position.dto.PositionDto;
@@ -60,81 +61,36 @@ public class PositionService {
         positionRepository.deleteById(id);
     }
 
-    /* @Transactional
-    public List<StaffDto> searchPosts(StaffDto staffDto) {
 
-        String dcd = gitta0001Dto.getDcd();
-        String usrNm =  gitta0001Dto.getUsrNm();
-        String usrEn = gitta0001Dto.getUsrEn();
-        String emNm = gitta0001Dto.getEmNm();
-        String nrIpAr = gitta0001Dto.getNrIpAr();
-        String earEhf = gitta0001Dto.getEarEhf();
+    @Transactional
+     public List<PositionDto> searchPosts(SearchDto searchDto) {
 
-        System.out.println(dcd);
-        System.out.println(usrNm);
-        System.out.println(usrEn);
-        System.out.println(emNm);
-        System.out.println(nrIpAr);
-        System.out.println(earEhf);
+         String keyword = searchDto.getKeyword();           // 검색 키워드
+         String searchType = searchDto.getSearchType();        // 검색 유형
 
-        List<StaffEntity> gitta0001Entities = null;
 
-        if(!dcd.isEmpty()){
-            gitta0001Entities = gitta0001Repository.findByDcdContaining(dcd);
-        } else if (!usrNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrNmContaining(usrNm);
-        }else if (!usrEn.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrEnContaining(usrEn);
-        }else if (!emNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByEmNmContaining(emNm);
-        }else if (!nrIpAr.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByNrIpArContaining(nrIpAr);
-        }else if (!earEhf.equals("A")) {
-            gitta0001Entities = gitta0001Repository.findByEarEhfContaining(earEhf);
-        }else{
+        List<PositionEntity> positionEntities = null;
 
-            Page<Gitta0001Entity> page = gitta0001Repository.findAll(PageRequest.of(0, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+        switch (searchType) {
+            case "uid":  // uid   부서 아이디
+                positionEntities =  positionRepository.findByUidContaining(keyword);
+                break;
+            case "name":  // 부서 이름
+                positionEntities =  positionRepository.findByNameContaining(keyword);
+                break;
 
-            gitta0001Entities = page.getContent();
         }
 
-        List<Gitta0001Dto> gitta0001DtoList = new ArrayList<>();
+        List<PositionDto> positionList = new ArrayList<>();
 
-        if (gitta0001Entities.isEmpty()) return gitta0001DtoList;
-
-        for (Gitta0001Entity gitta0001Entity : gitta0001Entities) {
-            gitta0001DtoList.add(this.convertEntityToDto(gitta0001Entity));
+        for (PositionEntity positionEntity : positionEntities) {
+            positionList.add(this.convertEntityToDto(positionEntity));
         }
 
-        return gitta0001DtoList;
+        return positionList;
     }
 
-     */
 
-    public Integer[] getPageList(Integer curPageNum) {
-        // 총 게시글 갯수
-        Double postsTotalCount = Double.valueOf(this.getPositionCount());
-
-        // 총 게시글 기준으로 계산한 마지막 페이지 번호 계산
-        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
-
-        // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-                ? curPageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
-
-        Integer[] pageList = new Integer[blockLastPageNum];
-
-        // 페이지 시작 번호 조정
-        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
-
-        // 페이지 번호 할당
-        for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
-            pageList[idx] = val;
-        }
-
-        return pageList;
-    }
 
     private PositionDto convertEntityToDto(PositionEntity positionEntity) {
         return PositionDto.builder()
