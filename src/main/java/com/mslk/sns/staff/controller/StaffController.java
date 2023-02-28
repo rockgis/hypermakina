@@ -130,7 +130,7 @@ public class StaffController {
 
 
     @PostMapping("/snsad/staffsearch")
-    public String usersearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
+    public String staffsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
 
         logger.info("/snsad/staffsearch ===>  keyword : "+ keyword);
 

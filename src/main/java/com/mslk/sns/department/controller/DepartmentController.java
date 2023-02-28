@@ -108,10 +108,38 @@ public class DepartmentController {
 
 
     @PostMapping("/snsad/departmentsearch")
-    public String usersearch(DepartmentDto departmentDto, Model model) {
+    public String departmentsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
+
+        logger.info("/snsad/departmentsearch ===>  keyword : "+ keyword);
+
+        logger.info("/snsad/departmentsearch ==> getKeyword : "+params.getKeyword());
+
+        logger.info("/snsad/departmentsearch ==> getSearchType : "+params.getSearchType());
+
+        List<DepartmentDto> departmentlist = departmentService.searchPosts(params);
+
+        // 총 게시글 갯수
+        double  count = Double.valueOf(departmentlist.size());
+        Integer postsTotalCount = (int) count;
+
+        logger.info("params : " + params.getPage());
 
 
-        return "sns/departmentlist";
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("departmentlist", departmentlist);
+        model.addAttribute("pagination", pagination);
+
+
+        return "sns/department/list";
     }
 
 }

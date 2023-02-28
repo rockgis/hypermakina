@@ -3,6 +3,7 @@ package com.mslk.sns.department.service;
 import com.mslk.sns.department.domain.entity.DepartmentEntity;
 import com.mslk.sns.department.domain.repository.DepartmentRepository;
 import com.mslk.sns.department.dto.DepartmentDto;
+import com.mslk.common.paging.dto.SearchDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,56 +61,33 @@ public class DepartmentService {
         departmentRepository.deleteById(id);
     }
 
-    /* @Transactional
-    public List<StaffDto> searchPosts(StaffDto staffDto) {
+     @Transactional
+     public List<DepartmentDto> searchPosts(SearchDto searchDto) {
 
-        String dcd = gitta0001Dto.getDcd();
-        String usrNm =  gitta0001Dto.getUsrNm();
-        String usrEn = gitta0001Dto.getUsrEn();
-        String emNm = gitta0001Dto.getEmNm();
-        String nrIpAr = gitta0001Dto.getNrIpAr();
-        String earEhf = gitta0001Dto.getEarEhf();
+         String keyword = searchDto.getKeyword();           // 검색 키워드
+         String searchType = searchDto.getSearchType();        // 검색 유형
 
-        System.out.println(dcd);
-        System.out.println(usrNm);
-        System.out.println(usrEn);
-        System.out.println(emNm);
-        System.out.println(nrIpAr);
-        System.out.println(earEhf);
 
-        List<StaffEntity> gitta0001Entities = null;
+        List<DepartmentEntity> departmentEntities = null;
 
-        if(!dcd.isEmpty()){
-            gitta0001Entities = gitta0001Repository.findByDcdContaining(dcd);
-        } else if (!usrNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrNmContaining(usrNm);
-        }else if (!usrEn.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByUsrEnContaining(usrEn);
-        }else if (!emNm.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByEmNmContaining(emNm);
-        }else if (!nrIpAr.isEmpty()) {
-            gitta0001Entities = gitta0001Repository.findByNrIpArContaining(nrIpAr);
-        }else if (!earEhf.equals("A")) {
-            gitta0001Entities = gitta0001Repository.findByEarEhfContaining(earEhf);
-        }else{
+        switch (searchType) {
+            case "uid":  // uid   부서 아이디
+                departmentEntities =  departmentRepository.findByUidContaining(keyword);
+                break;
+            case "name":  // 부서 이름
+                departmentEntities =  departmentRepository.findByNameContaining(keyword);
+                break;
 
-            Page<Gitta0001Entity> page = gitta0001Repository.findAll(PageRequest.of(0, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
-
-            gitta0001Entities = page.getContent();
         }
 
-        List<Gitta0001Dto> gitta0001DtoList = new ArrayList<>();
+        List<DepartmentDto> departmentList = new ArrayList<>();
 
-        if (gitta0001Entities.isEmpty()) return gitta0001DtoList;
-
-        for (Gitta0001Entity gitta0001Entity : gitta0001Entities) {
-            gitta0001DtoList.add(this.convertEntityToDto(gitta0001Entity));
+        for (DepartmentEntity departmentEntity : departmentEntities) {
+            departmentList.add(this.convertEntityToDto(departmentEntity));
         }
 
-        return gitta0001DtoList;
+        return departmentList;
     }
-
-     */
 
     public Integer[] getPageList(Integer curPageNum) {
         // 총 게시글 갯수
