@@ -1,9 +1,13 @@
 package com.mslk.sns.staff.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.board.dto.BoardDto;
 import com.mslk.sns.staff.dto.StaffDto;
 import com.mslk.sns.staff.service.StaffService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,20 +26,36 @@ import java.util.List;
 public class StaffController {
     private StaffService staffService;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     /* 게시글 목록 */
 
     @GetMapping("/snsad/stafflist")
-    public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<StaffDto> staffList = staffService.getStafflist(pageNum);
-        Integer[] pageList = staffService.getPageList(pageNum);
+    public String index(Model model, @ModelAttribute("params") final SearchDto params) {
 
+        List<StaffDto> staffList = staffService.getStafflist(params.getPage());
+
+        // 총 게시글 갯수
         double  count = Double.valueOf(staffService.getStaffCount());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("staffList", staffList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
 
         return "sns/staff/list";
     }
