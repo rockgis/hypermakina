@@ -25,8 +25,6 @@ import java.util.List;
 public class UserController {
     private Gitta0001Service gitta0001Service;
 
-    private Gitta0002Service gitta0002Service;
-
     /* 게시글 목록 */
 
     @GetMapping("/admin/userlist")
@@ -101,63 +99,6 @@ public class UserController {
         return "admin/userlist";
     }
 
-
-    @GetMapping("/admin/publiclist")
-    public String publiclist(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0002Dto> gitta0002List = gitta0002Service.getGitta0002list(pageNum);
-        Integer[] pageList = gitta0002Service.getPageList(pageNum);
-
-        double  count = Double.valueOf(gitta0002Service.getGitta002Count());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("gitta0002List", gitta0002List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
-
-
-
-        return "admin/publiclist";
-    }
-
-    @PostMapping("/admin/publicpost")
-    public String publicpost(Principal principal, Gitta0002Dto gitta0002Dto) {
-
-        LocalDateTime now = LocalDateTime.now();
-
-        gitta0002Dto.setAltEn(principal.getName());
-        gitta0002Dto.setModifiedDate(now);
-        // System.out.println(now);
-
-        gitta0002Service.savePost(gitta0002Dto);
-
-        return "redirect:/admin/publiclist";
-    }
-
-
-    @GetMapping("/admin/publicdel")
-    public String publicdelete(@RequestParam(value="idx") String idx) {
-
-        long no = 0;
-
-        int beginIndex = idx.indexOf(",");
-
-        if(beginIndex > 0){
-
-            String[] ArraysStr = idx.split(",");
-
-            for(String s : ArraysStr){
-                no = Long.parseLong(s);
-                gitta0002Service.deletePost(no);
-            }
-
-        }else{
-
-            no = Long.parseLong(idx);
-            gitta0002Service.deletePost(no);
-
-        }
-        return "redirect:/admin/publiclist";
-    }
 
     @RequestMapping(value = "/admin/logout", method = RequestMethod.GET)
     public String loout(HttpServletRequest request, HttpServletResponse response) throws Exception {
