@@ -1,6 +1,8 @@
 package com.mslk.hypermakina.inspectionmng.controller;
 
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.inspectionmng.service.Gittd0003Service;
 import com.mslk.hypermakina.inspectionmng.service.Gittd0004Service;
 import com.mslk.hypermakina.inspectionmng.dto.Gittd0001Dto;
@@ -11,6 +13,8 @@ import com.mslk.hypermakina.inspectionmng.service.Gittd0002Service;
 import com.mslk.hypermakina.inspectionmng.dto.Gittd0003Dto;
 import com.mslk.hypermakina.inspectionmng.dto.Gittd0004Dto;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,9 @@ public class InspectionmngController {
     private Gittd0003Service gittd0003Service;
 
     private Gittd0004Service gittd0004Service;
+
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 인증감사 */
     @GetMapping("/admin/inspectionmng")
@@ -63,16 +70,27 @@ public class InspectionmngController {
 
     /* 권한감사 */
     @GetMapping("/admin/authorityaudit")
-    public String authorityaudit(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittd0003Dto> gittd0003List = gittd0003Service.getGittd0003list(pageNum);
-        Integer[] pageList = gittd0003Service.getPageList(pageNum);
+    public String authorityaudit(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gittd0003Dto> gittd0003List = gittd0003Service.getGittd0003list(params.getPage());
 
         double  count = Double.valueOf(gittd0003Service.getGittd003Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittd0003List", gittd0003List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "manager/authorityaudit/main.html";
     }
