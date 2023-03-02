@@ -64,71 +64,6 @@
         <!-- Main content -->
         <section class="content">
 
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>restapi 등록 수</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="/hyperrest/list" class="small-box-footer">More info <i
-                                class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53</h3>
-
-                            <p>DashBoard 등록 건수</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-            </div>
-            <!-- /.row -->
-
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
@@ -139,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="form-group">
-                                    목록 : [[${postsTotalCount}]] 건
+                                    목록 : [[${pagination.totalRecordCount}]] 건
                                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
                                             data-target="#modal-xl"><i class="far fas fa-search"></i> 조회
                                     </button>
@@ -200,17 +135,32 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
 
-                        <span th:if="${postsTotalCount} > 0 "> Pages:</span>
-                        <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
+                        <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
+                        <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
 
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=1'}">&laquo;</a>
+                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=1'}">First</a></li>
+                            <!-- 이전 페이지로 가기 버튼
+                            <li th:class="${pagination.existPrevPage} ? 'disabled'">
+                              <a th:href="${list.first} ? '#' :${prevAddr}"
+                                 aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                              </a>
+                            </li>-->
+
+
+                            <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
+                                <a  class="page-link" th:href="@{'/admin/codemnglist?page=' + ${pageNum}}">[[${pageNum}]]</a>
                             </li>
-                            <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
-                                <a class="page-link"
-                                   th:href="@{'/admin/codemnglist?page=' + ${pageNum}}">[[${pageNum}]]</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            <!--다음 페이지로
+                            <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
+                              <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                              </a>
+                            </li>-->
+                            <!--맨 마지막 페이지로 이동 -->
+                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=' + ${pagination.getEndPage()}}">Last</a></li>
+
                         </ul>
 
                     </div>

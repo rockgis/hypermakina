@@ -1,5 +1,7 @@
 package com.mslk.hypermakina.code.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.code.dto.CodeMngDto;
 import com.mslk.hypermakina.code.service.CodeMngService;
 import com.mslk.hypermakina.board.service.BoardService;
@@ -11,6 +13,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,11 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CodeMngController {
 
-    private static String authorizationRequestBaseUri = OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private BoardService boardService;
 
     private CodeMngService codeMngService;
 
@@ -35,18 +34,28 @@ public class CodeMngController {
 
 
     @GetMapping("/admin/codemnglist")
-    public String codemnglist(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    public String codemnglist(Principal principal, Model model, @ModelAttribute("params") final SearchDto params) {
 
-        List<CodeMngDto> codeMngList = codeMngService.getCodeMnglist(pageNum);
-        Integer[] pageList = codeMngService.getPageList(pageNum);
+        List<CodeMngDto> codeMngList = codeMngService.getCodeMnglist(params.getPage());
 
         double  count = Double.valueOf(codeMngService.getCodeMngCount());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("codeMngList", codeMngList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("page", pageNum);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "system/codemng//index";
     }
@@ -95,16 +104,6 @@ public class CodeMngController {
 
     @PostMapping("/admin/codemngearch")
     public String codemngearch(CodeMngDto codeMngDto, Model model) {
-
-        List<CodeMngDto> codeMngList = codeMngService.getCodeMnglist(10); //hyperRestApiService.searchPosts(hyperRestApiDto);
-        Integer[] pageList = codeMngService.getPageList(10);
-
-        double  count = Double.valueOf(codeMngList.size());
-        Integer postsTotalCount = (int) count;
-
-        model.addAttribute("codeMngList", codeMngList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
 
 
         return "system/codemng/index";

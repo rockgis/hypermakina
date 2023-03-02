@@ -41,33 +41,6 @@ public class CodeMngService {
         return codeMngRepository.count();
     }
 
-
-    public Integer[] getPageList(Integer curPageNum) {
-        // 총 게시글 갯수
-        Double postsTotalCount = Double.valueOf(this.getCodeMngCount());
-
-        // 총 게시글 기준으로 계산한 마지막 페이지 번호 계산
-        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
-
-        // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-                ? curPageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
-
-        Integer[] pageList = new Integer[blockLastPageNum];
-
-        // 페이지 시작 번호 조정
-        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
-
-        // 페이지 번호 할당
-        for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
-            pageList[idx] = val;
-        }
-
-        return pageList;
-    }
-
-
     @Transactional
     public Long savePost(CodeMngDto codeMngDto) {
         return codeMngRepository.save(codeMngDto.toEntity()).getId();
