@@ -35,20 +35,6 @@ public class Gitte0001Entity extends TimeCEntity {
     @Column(columnDefinition ="char" , length = 1, nullable = false)
     private String mnuId;//   MNU_ID      CHAR(1) COMMENT '결과',
 
-   // @Transient
-   // private String strRg_Dt = "";
-
-   // public String getStrRg_Dt() {
-  //      return  new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(this.rg_dt);
-  //  }
-
-  //  @Transient
-  //  private String strAlt_Dt = "";
-
-  //  public String getStrAlt_Dt() {
-   //     return  new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(this.alt_dt);
-   // }
-
     @Builder
     public Gitte0001Entity(Long id, String dcd, String usrNm, String usrEn, String reqNm, String mnuId) {
         this.id = id;
