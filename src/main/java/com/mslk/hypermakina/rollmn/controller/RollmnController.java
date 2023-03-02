@@ -1,8 +1,12 @@
 package com.mslk.hypermakina.rollmn.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.rollmn.dto.Gittf0001Dto;
 import com.mslk.hypermakina.rollmn.service.Gittf0001Service;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +19,33 @@ import java.util.List;
 @AllArgsConstructor
 public class RollmnController {
     private Gittf0001Service gittf0001Service;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* Main Page */
     @GetMapping("/admin/rollmn")
-    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittf0001Dto> gittf0001List = gittf0001Service.getGittf0001list(pageNum);
-        Integer[] pageList = gittf0001Service.getPageList(pageNum);
-
+    public String list(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gittf0001Dto> gittf0001List = gittf0001Service.getGittf0001list(params.getPage());
 
         // 총 게시글 갯수
         double  count = Double.valueOf(gittf0001Service.getGitta001Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittf0001List", gittf0001List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
 
         return "manager/rollmn/main.html";
     }

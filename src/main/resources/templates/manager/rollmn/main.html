@@ -128,15 +128,32 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
 
-              <span th:if="${postsTotalCount} > 0 "> Pages:</span>
-              <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
+              <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
+              <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
 
               <ul class="pagination pagination-sm m-0 float-right">
-                <li class="page-item"><a class="page-link" th:href="@{'/admin/perferencesmng?page=1'}">&laquo;</a></li>
-                <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
-                  <a  class="page-link" th:href="@{'/admin/perferencesmng?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                <li class="page-item"><a class="page-link" th:href="@{'/admin/rollmn?page=1'}">First</a></li>
+                <!-- 이전 페이지로 가기 버튼
+                <li th:class="${pagination.existPrevPage} ? 'disabled'">
+                  <a th:href="${list.first} ? '#' :${prevAddr}"
+                     aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                  </a>
+                </li>-->
+
+
+                <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
+                  <a  class="page-link" th:href="@{'/admin/rollmn?page=' + ${pageNum}}">[[${pageNum}]]</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                <!--다음 페이지로
+                <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
+                  <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                  </a>
+                </li>-->
+                <!--맨 마지막 페이지로 이동 -->
+                <li class="page-item"><a class="page-link" th:href="@{'/admin/rollmn?page=' + ${pagination.getEndPage()}}">Last</a></li>
+
               </ul>
             </div>
           </div>
