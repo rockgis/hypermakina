@@ -76,9 +76,9 @@
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="form-group">
-                                    목록 : [[${postsTotalCount}]] 건
+                                    목록 : [[${pagination.totalRecordCount}]] 건
                                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                            data-target="#modal-xl"><i class="far fas fa-search"></i> 조회
+                                            data-target="#modal-default"><i class="far fas fa-search"></i> 조회
                                     </button>
                                     <button type="button" class="btn btn-secondary float-right"
                                             style="margin-right: 5px;" id="list">
@@ -144,7 +144,7 @@
                         <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
 
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/stafflist?page=1'}">First</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/ranklist?page=1'}">First</a></li>
                             <!-- 이전 페이지로 가기 버튼
                             <li th:class="${pagination.existPrevPage} ? 'disabled'">
                               <a th:href="${list.first} ? '#' :${prevAddr}"
@@ -155,7 +155,7 @@
 
 
                             <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
-                                <a  class="page-link" th:href="@{'/snsad/stafflist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                                <a  class="page-link" th:href="@{'/snsad/ranklist?page=' + ${pageNum}}">[[${pageNum}]]</a>
                             </li>
                             <!--다음 페이지로
                             <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
@@ -164,7 +164,7 @@
                               </a>
                             </li>-->
                             <!--맨 마지막 페이지로 이동 -->
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/stafflist?page=' + ${pagination.getEndPage()}}">Last</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/ranklist?page=' + ${pagination.getEndPage()}}">Last</a></li>
 
                         </ul>
 
@@ -188,11 +188,9 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- /.modal
-<div class="modal fade" id="modal-lg">
-  <div class="modal-dialog modal-lg">-->
-<div class="modal fade" id="modal-xl">
-    <div class="modal-dialog modal-xl">
+<!-- /.modal-->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Search</h4>
@@ -201,58 +199,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/admin/usersearch" id="app_search" method="POST">
+                <form action="/snsad/ranksearch" id="app_search" method="POST">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>사번</label>
-                                        <input class="form-control" name="usrEn" type="text" placeholder="사번을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>이름</label>
-                                        <input class="form-control" name="usrNm" type="text" placeholder="이름을 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input class="form-control" name="emNm" type="text" placeholder="Email을 입력해주세요">
-                                    </div>
-                                </div>
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>검색 조건</label>
+                                <select class="form-control select2" name="searchType" style="width: 100%;">
+                                    <option selected="selected" value="uid">직책 ID</option>
+                                    <option value="name">직책명</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>부서</label>
-                                        <input class="form-control" name="dcd" type="text" placeholder="부서를 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>관리공간 IP</label>
-                                        <input class="form-control" name="nrIpAr" type="text"
-                                               placeholder="관리공간 IP를 입력해주세요">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>공용 계정 사용 여부</label>
-                                        <select class="form-control select2" name="earEhf" style="width: 100%;">
-                                            <option selected="selected" value="A">전체</option>
-                                            <option value="Y">Y</option>
-                                            <option value="N">N</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>검색어</label>
+                                <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
                             </div>
                         </div>
                     </div>

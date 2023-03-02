@@ -2,6 +2,7 @@ package com.mslk.sns.rank.controller;
 
 import com.mslk.common.paging.Pagination;
 import com.mslk.common.paging.dto.SearchDto;
+import com.mslk.sns.position.dto.PositionDto;
 import com.mslk.sns.rank.dto.RankDto;
 import com.mslk.sns.rank.service.RankService;
 import lombok.AllArgsConstructor;
@@ -105,8 +106,35 @@ public class RankController {
 
 
     @PostMapping("/snsad/ranksearch")
-    public String usersearch(RankDto gitta0001Dto, Model model) {
+    public String ranksearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
 
+        logger.info("/snsad/ranksearch ===>  keyword : "+ keyword);
+
+        logger.info("/snsad/ranksearch ==> getKeyword : "+params.getKeyword());
+
+        logger.info("/snsad/ranksearch ==> getSearchType : "+params.getSearchType());
+
+        List<RankDto> ranklist = rankService.searchPosts(params);
+
+        // 총 게시글 갯수
+        double  count = Double.valueOf(ranklist.size());
+        Integer postsTotalCount = (int) count;
+
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("ranklist", ranklist);
+        model.addAttribute("pagination", pagination);
 
         return "sns/rank/list";
     }
