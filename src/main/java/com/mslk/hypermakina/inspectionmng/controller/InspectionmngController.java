@@ -38,16 +38,27 @@ public class InspectionmngController {
 
     /* 인증감사 */
     @GetMapping("/admin/inspectionmng")
-    public String inspectionmng(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittd0001Dto> gittd0001List = gittd0001Service.getGittd0001list(pageNum);
-        Integer[] pageList = gittd0001Service.getPageList(pageNum);
+    public String inspectionmng(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gittd0001Dto> gittd0001List = gittd0001Service.getGittd0001list(params.getPage());
 
         double  count = Double.valueOf(gittd0001Service.getGittd001Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittd0001List", gittd0001List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "manager/inspectionmng/main.html";
     }
@@ -109,16 +120,27 @@ public class InspectionmngController {
 
     /* 앱점속감사 */
     @GetMapping("/admin/appstoreaudit")
-    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittd0004Dto> gittd0004List = gittd0004Service.getGittd0004list(pageNum);
-        Integer[] pageList = gittd0004Service.getPageList(pageNum);
+    public String list(Model model,  @ModelAttribute("params") final SearchDto params) {
+        List<Gittd0004Dto> gittd0004List = gittd0004Service.getGittd0004list(params.getPage());
 
         double  count = Double.valueOf(gittd0004Service.getGittd004Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittd0004List", gittd0004List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "manager/appstoreaudit/main.html";
     }
