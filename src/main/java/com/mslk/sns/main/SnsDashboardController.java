@@ -1,11 +1,10 @@
-package com.mslk.main.controller;
+package com.mslk.sns.main;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.dashboard.dto.DashBoardMngDto;
 import com.mslk.dashboard.service.DashBoardMngService;
-import com.mslk.hypermakina.board.dto.BoardDto;
-import com.mslk.hypermakina.board.service.BoardService;
 import com.mslk.egmanager.service.EgmMetaService;
-import com.mslk.main.service.RestApiService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -14,15 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -33,34 +31,42 @@ import java.util.List;
 @AllArgsConstructor
 public class SnsDashboardController {
 
-    private static final String authorizationRequestBaseUri = OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BoardService boardService;
 
     private DashBoardMngService dashBoardMngService;
 
-    private RestApiService restApiService;
 
 
     private EgmMetaService egmMetaService;
 
     @GetMapping("/sns/main")
-    public String sns(  Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) throws Exception {
+    public String sns(  Model model, @ModelAttribute("params") final SearchDto params) throws Exception {
 
         logger.info("URL : /sns/main");
 
-        List<DashBoardMngDto> dashBoardMngList = dashBoardMngService.getDashBoardMnglist(pageNum);
-        Integer[] pageList = dashBoardMngService.getPageList(pageNum);
+        List<DashBoardMngDto> dashBoardMngList = dashBoardMngService.getDashBoardMnglist(params.getPage());
 
         double  count = Double.valueOf(dashBoardMngService.getDashBoardMngCount());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("dashBoardMngList", dashBoardMngList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("page", pageNum);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
+
 
 
         double  regcount = Double.valueOf(egmMetaService.getEgmMetaCount());

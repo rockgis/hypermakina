@@ -129,16 +129,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="dashBoardMngList ,i : ${dashBoardMngList}">
-                                                <td width="5%"><span th:text="${dashBoardMngList.id}"></span></td>
-                                                <td><span th:text="${dashBoardMngList.dsbType}"></span></td>
-                                                <td><a th:href="${dashBoardMngList.dsbUrl}" target="_top">
-                                                    <span th:text="${dashBoardMngList.dsbNm}"></span>
+                                            <tr th:each="dashBoard ,i : ${dashBoardMngList}">
+                                                <td width="5%"><span th:text="${i.count}"></span></td>
+                                                <td><span th:text="${dashBoard.dsbType}"></span></td>
+                                                <td><a th:href="${dashBoard.dsbUrl}" target="_top">
+                                                    <span th:text="${dashBoard.dsbNm}"></span>
                                                 </a></td>
-                                                <td><span th:text="${dashBoardMngList.dsbEu}"></span></td>
-                                                <td><span th:text="${dashBoardMngList.dsbGm}"></span></td>
-                                                <td><span th:text="${dashBoardMngList.dsbWm}"></span></td>
-                                                <td><span th:text="${dashBoardMngList.seTf}"></span></td>
+                                                <td><span th:text="${dashBoard.dsbEu}"></span></td>
+                                                <td><span th:text="${dashBoard.dsbGm}"></span></td>
+                                                <td><span th:text="${dashBoard.dsbWm}"></span></td>
+                                                <td><span th:text="${dashBoard.seTf}"></span></td>
                                             </tr>
 
                                             </tbody>
@@ -147,18 +147,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <span th:if="${postsTotalCount} > 0 "> Pages:</span>
-                                    <span th:if="${postsTotalCount} == 0 "> 데이터가 없습니다.</span>
+                                    <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
+                                    <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
 
                                     <ul class="pagination pagination-sm m-0 float-right">
-                                        <li class="page-item"><a class="page-link"
-                                                                 th:href="@{'/admin/egnmetalist?page=1'}">&laquo;</a>
+                                        <li class="page-item"><a class="page-link" th:href="@{'/sns/main?page=1'}">First</a></li>
+                                        <!-- 이전 페이지로 가기 버튼
+                                        <li th:class="${pagination.existPrevPage} ? 'disabled'">
+                                          <a th:href="${list.first} ? '#' :${prevAddr}"
+                                             aria-label="Previous">
+                                            <span aria-hidden="true">&lt;</span>
+                                          </a>
+                                        </li>-->
+
+
+                                        <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
+                                            <a  class="page-link" th:href="@{'/sns/main?page=' + ${pageNum}}">[[${pageNum}]]</a>
                                         </li>
-                                        <li class="page-item" th:each="pageNum : ${pageList}" th:inline="text">
-                                            <a class="page-link"
-                                               th:href="@{'/admin/egnmetalist?page=' + ${pageNum}}">[[${pageNum}]]</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                        <!--다음 페이지로
+                                        <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
+                                          <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
+                                            <span aria-hidden="true">&gt;</span>
+                                          </a>
+                                        </li>-->
+                                        <!--맨 마지막 페이지로 이동 -->
+                                        <li class="page-item"><a class="page-link" th:href="@{'/sns/main?page=' + ${pagination.getEndPage()}}">Last</a></li>
+
                                     </ul>
 
                                 </div>
@@ -205,7 +219,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     $(document).ready(function(){
 
-
+        setTimeout(function () {
+            //location.reload();
+            //alert("페이지 리로드 하기 ");
+        }, 60 * 1000);
 
     });
 
