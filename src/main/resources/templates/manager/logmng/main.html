@@ -2,42 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>HyperMSLK 서비스</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+  <link href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css" rel="stylesheet">
   <!-- daterange picker -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.css">
+  <link href="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
   <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link href="/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link href="/webjars/AdminLTE/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link href="/webjars/AdminLTE/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
   <!-- Select2 -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link href="/webjars/AdminLTE/plugins/select2/css/select2.min.css" rel="stylesheet">
+  <link href="/webjars/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet">
   <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <link href="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet">
   <!-- BS Stepper -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bs-stepper/css/bs-stepper.min.css">
+  <link href="/webjars/AdminLTE/plugins/bs-stepper/css/bs-stepper.min.css" rel="stylesheet">
   <!-- dropzonejs -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/dropzone/min/dropzone.min.css">
+  <link href="/webjars/AdminLTE/plugins/dropzone/min/dropzone.min.css" rel="stylesheet">
   <!-- jsGrid -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css">
-  <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css">
+  <link href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css" rel="stylesheet">
+  <link href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css" rel="stylesheet">
   <!-- Theme style -->
-  <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+  <link href="/webjars/AdminLTE/dist/css/adminlte.min.css" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <div th:insert="com/header.html" id="header"></div>
+  <div id="header" th:insert="com/header.html"></div>
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <div th:insert="com/leftmenuAdminMain.html" id="leftMenu"></div>
+    <div id="leftMenu" th:insert="com/leftmenuAdminMain.html"></div>
     <!-- /.sidebar -->
   </aside>
 
@@ -75,8 +75,8 @@
                 <div class="col-md-12 ">
                   <div class="form-group">
                     목록 : [[${pagination.totalRecordCount}]]  건
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modal-xl"><i class="far fas fa-search"></i> 조회</button>
-                    <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;">
+                    <button class="btn btn-success float-right" data-target="#modal-xl" data-toggle="modal" type="button"><i class="far fas fa-search"></i> 조회</button>
+                    <button class="btn btn-secondary float-right" style="margin-right: 5px;" type="button">
                       <i class="fas fa-download"></i> 다운로드</button>
 
                   </div>
@@ -147,13 +147,15 @@
           </div>
           <!-- /.card -->
           <!-- /.card -->
+        </div>
+      </div>
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
   <!-- FOOTER -->
-  <div th:insert="com/footer.html" id="footer"></div>
+  <div id="footer" th:insert="com/footer.html"></div>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -171,7 +173,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Search</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -183,19 +185,19 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>사용자</label>
-                    <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+                    <input class="form-control" name="keyword" placeholder="검색어를 입력해주세요" type="text">
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                     <label>사번</label>
-                    <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+                    <input class="form-control" name="keyword" placeholder="검색어를 입력해주세요" type="text">
                   </div>
                 </div>
                 <div class="col-4">
                   <div class="form-group">
                     <label>부서</label>
-                    <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+                    <input class="form-control" name="keyword" placeholder="검색어를 입력해주세요" type="text">
                   </div>
                 </div>
               </div>
@@ -213,14 +215,14 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="far fa-clock"></i></span>
                       </div>
-                      <input type="text" class="form-control float-right" id="reservationtime">
+                      <input class="form-control float-right" id="reservationtime" type="text">
                     </div>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                     <label>결과</label>
-                    <input class="form-control" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+                    <input class="form-control" name="keyword" placeholder="검색어를 입력해주세요" type="text">
                   </div>
                 </div>
 
@@ -235,10 +237,10 @@
         <div class="row">
           <div class="col-md-12 ">
             <div class="form-group">
-              <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;">
+              <button class="btn btn-danger float-right" data-dismiss="modal" style="margin-right: 5px;" type="button">Close</button>
+              <button class="btn btn-secondary float-right" style="margin-right: 5px;" type="button">
                 <i class="fas fa-ellipsis-h"></i> 초기화</button>
-              <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"><i class="fas fa-search"></i>  Search</button>
+              <button class="btn btn-primary float-right" style="margin-right: 5px;" type="button"><i class="fas fa-search"></i>  Search</button>
             </div>
 
           </div>

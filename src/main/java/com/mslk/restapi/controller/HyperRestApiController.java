@@ -1,5 +1,7 @@
 package com.mslk.restapi.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.dashboard.service.DashBoardMngService;
 import com.mslk.egmanager.service.EgmMetaService;
 import com.mslk.hypermakina.board.service.BoardService;
@@ -16,6 +18,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,17 +46,30 @@ public class HyperRestApiController {
     private DashBoardMngService dashBoardMngService;
 
     @GetMapping("/admin/restlist")
-    public String hyperrestapi(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    public String hyperrestapi(Principal principal, Model model, @ModelAttribute("params") final SearchDto params) {
 
-        List<HyperRestApiDto> hyperRestApiList = hyperRestApiService.getHyperRestlist(pageNum);
-        Integer[] pageList = hyperRestApiService.getPageList(pageNum);
+        List<HyperRestApiDto> hyperRestApiList = hyperRestApiService.getHyperRestlist(params.getPage());
+
 
         double  count = Double.valueOf(hyperRestApiService.getHyperRestApiCount());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("hyperRestApiList", hyperRestApiList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
 
         double  regcount = Double.valueOf(egmMetaService.getEgmMetaCount());
         Integer regCount = (int) regcount;
