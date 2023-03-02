@@ -54,16 +54,28 @@ public class InspectionmngController {
 
     /* 계정감사 */
     @GetMapping("/admin/accountaudit")
-    public String accountaudit(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittd0002Dto> gittd0002List = gittd0002Service.getGittd0002list(pageNum);
-        Integer[] pageList = gittd0002Service.getPageList(pageNum);
+    public String accountaudit(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gittd0002Dto> gittd0002List = gittd0002Service.getGittd0002list(params.getPage());
+
 
         double  count = Double.valueOf(gittd0002Service.getGittd002Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittd0002List", gittd0002List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "manager/accountaudit/main.html";
     }
