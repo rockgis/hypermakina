@@ -1,5 +1,7 @@
 package com.mslk.egmanager.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.egmanager.dto.EgmDataDto;
 import com.mslk.hypermakina.board.dto.BoardDto;
 import com.mslk.hypermakina.board.service.BoardService;
@@ -25,8 +27,6 @@ import java.util.List;
 @AllArgsConstructor
 public class EgmMetaController {
 
-    private static String authorizationRequestBaseUri = OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private EgmMetaService egmMetaService;
@@ -34,19 +34,29 @@ public class EgmMetaController {
     private EgmDataService egmDataService;
 
     @GetMapping("/admin/egmmetalist")
-    public String egmmetalist(Principal principal, Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+    public String egmmetalist(Principal principal, Model model, @ModelAttribute("params") final SearchDto params) {
 
-        List<EgmMetaDto> egmMetaList = egmMetaService.getEgmMetalist(pageNum);
+        List<EgmMetaDto> egmMetaList = egmMetaService.getEgmMetalist(params.getPage());
 
         double  count = Double.valueOf(egmMetaService.getEgmMetaCount());
-        Integer[] pageList = egmMetaService.getPageList(pageNum, count);
-
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("egmMetaList", egmMetaList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("page", pageNum);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
 
         return "egmmeta/index.html";
     }
