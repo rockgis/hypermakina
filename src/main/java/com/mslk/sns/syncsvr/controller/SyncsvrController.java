@@ -2,6 +2,7 @@ package com.mslk.sns.syncsvr.controller;
 
 import com.mslk.common.paging.Pagination;
 import com.mslk.common.paging.dto.SearchDto;
+import com.mslk.sns.rank.dto.RankDto;
 import com.mslk.sns.syncsvr.dto.SyncsvrDto;
 import com.mslk.sns.syncsvr.service.SyncsvrService;
 import lombok.AllArgsConstructor;
@@ -107,8 +108,35 @@ public class SyncsvrController {
 
 
     @PostMapping("/snsad/syncsvrsearch")
-    public String usersearch(SyncsvrDto gitta0001Dto, Model model) {
+    public String syncsvrsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
 
+        logger.info("/snsad/syncsvrsearch ===>  keyword : "+ keyword);
+
+        logger.info("/snsad/syncsvrsearch ==> getKeyword : "+params.getKeyword());
+
+        logger.info("/snsad/syncsvrsearch ==> getSearchType : "+params.getSearchType());
+
+        List<SyncsvrDto> syncsvrlist = syncsvrService.searchPosts(params);
+
+        // 총 게시글 갯수
+        double  count = Double.valueOf(syncsvrlist.size());
+        Integer postsTotalCount = (int) count;
+
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("syncsvrlist", syncsvrlist);
+        model.addAttribute("pagination", pagination);
 
         return "sns/syncsvr/list";
     }
