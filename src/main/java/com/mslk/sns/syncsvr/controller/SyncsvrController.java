@@ -74,7 +74,12 @@ public class SyncsvrController {
     }
 
     @PutMapping("/snsad/syncsvrpost/edit/{no}")
-    public String update(SyncsvrDto syncsvrDto) {
+    public String update(Principal principal, SyncsvrDto syncsvrDto) {
+
+        logger.info("setModiId : " + principal.getName());
+
+        syncsvrDto.setModiId(principal.getName());
+
         syncsvrService.savePost(syncsvrDto);
 
         return "redirect:/snsad/syncsvrlist";
