@@ -1,5 +1,7 @@
 package com.mslk.hypermakina.user.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.user.service.Gitta0001Service;
 import com.mslk.hypermakina.user.service.Gitta0002Service;
 import com.mslk.hypermakina.user.dto.Gitta0001Dto;
@@ -7,6 +9,8 @@ import com.mslk.hypermakina.user.dto.Gitta0001Dto;
 import com.mslk.hypermakina.user.dto.Gitta0002Dto;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -25,19 +29,32 @@ import java.util.List;
 public class UserController {
     private Gitta0001Service gitta0001Service;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /* 게시글 목록 */
 
     @GetMapping("/admin/userlist")
-    public String index(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(pageNum);
-        Integer[] pageList = gitta0001Service.getPageList(pageNum);
+    public String index(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gitta0001Dto> gitta0001List = gitta0001Service.getGitta0001list(params.getPage());
 
         double  count = Double.valueOf(gitta0001Service.getGitta001Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gitta0001List", gitta0001List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
 
         return "admin/userlist";
     }
