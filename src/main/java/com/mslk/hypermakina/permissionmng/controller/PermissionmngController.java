@@ -1,8 +1,12 @@
 package com.mslk.hypermakina.permissionmng.controller;
 
+import com.mslk.common.paging.Pagination;
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.permissionmng.service.Gittc0001Service;
 import com.mslk.hypermakina.permissionmng.dto.Gittc0001Dto;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +21,33 @@ public class PermissionmngController {
 
     private Gittc0001Service gittc0001Service;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /* Main Page */
     @GetMapping("/admin/permissionmng")
-    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
-        List<Gittc0001Dto> gittc0001List = gittc0001Service.getGittc0001list(pageNum);
-        Integer[] pageList = gittc0001Service.getPageList(pageNum);
+    public String list(Model model, @ModelAttribute("params") final SearchDto params) {
+        List<Gittc0001Dto> gittc0001List = gittc0001Service.getGittc0001list(params.getPage());
+
 
         double  count = Double.valueOf(gittc0001Service.getGittc001Count());
         Integer postsTotalCount = (int) count;
 
+        logger.info("params : " + params.getPage());
+
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
         model.addAttribute("gittc0001List", gittc0001List);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        model.addAttribute("pagination", pagination);
+
 
         return "manager/permissionmng/main.html";
     }
