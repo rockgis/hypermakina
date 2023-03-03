@@ -190,7 +190,7 @@
                                     </a></td>
                                     <td><span th:text="${dashBoardMng.dsbEu}"></span></td>
                                     <td><span th:text="${dashBoardMng.dsbGm}"></span></td>
-                                    <td><span th:text="${dashBoardMng.dsbWm}"></span></td>
+                                    <td><a th:href="${dashBoardMng.dsbUrl}" target="_blank"><span th:text="${dashBoardMng.dsbWm}"></span></a></td>
                                     <td><span th:text="${dashBoardMng.seTf}"></span></td>
                                     <td><span th:text="${#temporals.format(dashBoardMng.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                                     </td>
