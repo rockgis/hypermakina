@@ -46,7 +46,6 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getAlarmCount"),
             @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
             @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
@@ -54,7 +53,6 @@ public class EgMngRestApi {
     @ResponseBody
     @GetMapping( "/getAlarmCount")
     public ResponseEntity<String> getAlarmCount(
-            @RequestParam(value = "appUrl") String appUrl,
             @RequestParam(value = "managerurl") String managerurl,
             @RequestParam(value = "user") String user,
             @RequestParam(value = "pwd") String pwd
@@ -62,10 +60,13 @@ public class EgMngRestApi {
     ) {
 
         // API 기본 인증 헤드 생성
-       /* String apiUrl = "http://172.30.1.109:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+       /*     // 각자 상황에 맞는 IP & url 사용
+        @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getAlarmCount"),
         String managerurl = "http://172.30.1.109:7077";
         String user = "admin";
         String pwd ="bHlpanVuIUAwOQ==";*/
+
+        String appUrl = managerurl + "/api/eg/analytics/getAlarmCount";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -105,7 +106,6 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getComponentsDetails"),
             @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
             @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
@@ -113,7 +113,6 @@ public class EgMngRestApi {
     @ResponseBody
     @GetMapping( "/getComponentsDetails")
     public ResponseEntity<String> getComponentsDetails(
-            @RequestParam(value = "appUrl") String appUrl,
             @RequestParam(value = "managerurl") String managerurl,
             @RequestParam(value = "user") String user,
             @RequestParam(value = "pwd") String pwd
@@ -125,6 +124,8 @@ public class EgMngRestApi {
         String managerurl = "http://172.30.1.109:7077";
         String user = "admin";
         String pwd ="bHlpanVuIUAwOQ==";*/
+
+        String appUrl = managerurl + "/api/eg/analytics/getComponentsDetails";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -162,7 +163,6 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getTestData"),
             @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
             @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
@@ -170,7 +170,6 @@ public class EgMngRestApi {
     @ResponseBody
     @GetMapping( "/getTestData")
     public ResponseEntity<String> getTestData(
-            @RequestParam(value = "appUrl") String appUrl,
             @RequestParam(value = "managerurl") String managerurl,
             @RequestParam(value = "user") String user,
             @RequestParam(value = "pwd") String pwd
@@ -182,6 +181,8 @@ public class EgMngRestApi {
         String managerurl = "http://172.30.1.109:7077";
         String user = "admin";
         String pwd ="bHlpanVuIUAwOQ==";*/
+
+        String appUrl = managerurl + "/api/eg/analytics/getTestData";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -230,7 +231,6 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getInfraHealth"),
             @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
             @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
@@ -238,7 +238,6 @@ public class EgMngRestApi {
     @ResponseBody
     @GetMapping( "/getInfraHealth")
     public ResponseEntity<String> getInfraHealth(
-            @RequestParam(value = "appUrl") String appUrl,
             @RequestParam(value = "managerurl") String managerurl,
             @RequestParam(value = "user") String user,
             @RequestParam(value = "pwd") String pwd
@@ -250,6 +249,8 @@ public class EgMngRestApi {
         String managerurl = "http://172.30.1.109:7077";
         String user = "admin";
         String pwd ="bHlpanVuIUAwOQ==";*/
+
+        String appUrl = managerurl + "/api/eg/analytics/getInfraHealth";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -295,7 +296,6 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "appUrl", description = "Eg Manager URL ", example = "http://172.30.1.109:7077/api/eg/analytics/getHistoricalData"),
             @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
             @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
@@ -303,7 +303,6 @@ public class EgMngRestApi {
     @ResponseBody
     @GetMapping( "/getHistoricalData")
     public ResponseEntity<String> getHistoricalData(
-            @RequestParam(value = "appUrl") String appUrl,
             @RequestParam(value = "managerurl") String managerurl,
             @RequestParam(value = "user") String user,
             @RequestParam(value = "pwd") String pwd
@@ -315,6 +314,8 @@ public class EgMngRestApi {
         String managerurl = "http://172.30.1.109:7077";
         String user = "admin";
         String pwd ="bHlpanVuIUAwOQ==";*/
+
+        String appUrl = managerurl + "/api/eg/analytics/getHistoricalData";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
