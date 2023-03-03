@@ -1,8 +1,13 @@
 package com.mslk.dashboard.service;
 
+import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.dashboard.domain.entity.DashBoardMngEntity;
 import com.mslk.dashboard.domain.repostory.DashBoardMngRepository;
 import com.mslk.dashboard.dto.DashBoardMngDto;
+import com.mslk.sns.department.domain.entity.DepartmentEntity;
+import com.mslk.sns.department.dto.DepartmentDto;
+import com.mslk.sns.staff.domain.entity.StaffEntity;
+import com.mslk.sns.staff.dto.StaffDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -42,32 +48,6 @@ public class DashBoardMngService {
     }
 
 
-    public Integer[] getPageList(Integer curPageNum) {
-        // 총 게시글 갯수
-        Double postsTotalCount = Double.valueOf(this.getDashBoardMngCount());
-
-        // 총 게시글 기준으로 계산한 마지막 페이지 번호 계산
-        Integer totalLastPageNum = (int)(Math.ceil((postsTotalCount/PAGE_POST_COUNT)));
-
-        // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-                ? curPageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
-
-        Integer[] pageList = new Integer[blockLastPageNum];
-
-        // 페이지 시작 번호 조정
-        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
-
-        // 페이지 번호 할당
-        for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
-            pageList[idx] = val;
-        }
-
-        return pageList;
-    }
-
-
     @Transactional
     public Long savePost(DashBoardMngDto dashBoardMngDto) {
         return dashBoardMngRepository.save(dashBoardMngDto.toEntity()).getId();
@@ -77,6 +57,46 @@ public class DashBoardMngService {
     public void deletePost(Long id) {
         dashBoardMngRepository.deleteById(id);
     }
+
+    @Transactional
+    public DashBoardMngDto getPost(Long id) {
+        Optional<DashBoardMngEntity> dashBoardMngEntityWrapper = dashBoardMngRepository.findById(id);
+        DashBoardMngEntity dashBoardMngEntity = dashBoardMngEntityWrapper.get();
+
+        return this.convertEntityToDto(dashBoardMngEntity);
+    }
+
+
+    @Transactional
+    public List<DashBoardMngDto> searchPosts(SearchDto searchDto) {
+
+        String keyword = searchDto.getKeyword();           // 검색 키워드
+        String searchType = searchDto.getSearchType();        // 검색 유형
+
+
+        List<DashBoardMngEntity> dashBoardMngEntities = null;
+
+        switch (searchType) {
+            case "dsbNm":  // dsbNm   이름
+                dashBoardMngEntities =  dashBoardMngRepository.findByDsbNmContaining(keyword);
+                break;
+            case "dsbEu":  // dsbEu 용도
+                dashBoardMngEntities =  dashBoardMngRepository.findByDsbEuContaining(keyword);
+                break;
+            case "dsbWm": // dsbWm  업무명
+                dashBoardMngEntities =  dashBoardMngRepository.findByDsbWmContaining(keyword);
+                break;
+        }
+
+        List<DashBoardMngDto> dashBoardMngList = new ArrayList<>();
+
+        for (DashBoardMngEntity dashBoardMngEntity : dashBoardMngEntities) {
+            dashBoardMngList.add(this.convertEntityToDto(dashBoardMngEntity));
+        }
+
+        return dashBoardMngList;
+    }
+
 
 
     private DashBoardMngDto convertEntityToDto(DashBoardMngEntity eashBoardMngEntity) {
