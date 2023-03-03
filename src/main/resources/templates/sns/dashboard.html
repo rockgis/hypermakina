@@ -155,9 +155,8 @@
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="board : ${boardList}">
-                                    <td>
-                                        <span th:text="${board.id}"></span>
+                                <tr th:each="board, i : ${boardList}">
+                                    <td><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span>
                                     </td>
                                     <td>
                                         <a th:href="@{'/admin/post/' + ${board.id}}">

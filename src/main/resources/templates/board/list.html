@@ -89,9 +89,9 @@
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="board : ${boardList}">
+                                <tr th:each="board, i : ${boardList}">
                                     <td>
-                                        <span th:text="${postsTotalCount} - ${boardStat.index}"></span>
+                                        <span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></span>
                                     </td>
                                     <td>
                                         <a th:href="@{'/user/post/' + ${board.id}}">

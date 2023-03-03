@@ -183,7 +183,7 @@
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${dashBoardMng.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${i.count}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${dashBoardMng.dsbType}"></span></td>
                                     <td><a th:href="@{'/admin/dbmngpost/' + ${dashBoardMng.id}}">
                                         <span th:text="${dashBoardMng.dsbNm}"></span>

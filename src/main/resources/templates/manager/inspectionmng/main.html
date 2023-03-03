@@ -97,8 +97,8 @@
                   </thead>
                   <tbody>
                   <!-- CONTENTS !-->
-                  <tr th:each="gittd0001 : ${gittd0001List}">
-                    <td width="5%"><span th:text="${gittd0001.id}"></span></td>
+                  <tr th:each="gittd0001, i : ${gittd0001List}">
+                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                     <td><span th:text="${#temporals.format(gittd0001.createdDate, 'yyyy-MM-dd HH:mm')}"></span></td>
                     <td><span th:text="${gittd0001.dcd}"></span></td>
                     <td><span th:text="${gittd0001.usrNm}"></span></td>

@@ -118,11 +118,11 @@
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="syncsvr : ${syncsvrlist}">
+                                <tr th:each="syncsvr, i : ${syncsvrlist}">
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${syncsvr.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${syncsvr.id}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${syncsvr.uid}"></span></td>
                                     <td><a th:href="@{'/snsad/syncsvrpost/' + ${syncsvr.id}}">
                                         <span th:text="${syncsvr.name}"></span>

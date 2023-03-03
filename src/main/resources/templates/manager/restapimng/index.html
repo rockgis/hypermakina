@@ -180,11 +180,11 @@
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="hyperRestApi : ${hyperRestApiList}">
+                                <tr th:each="hyperRestApi, i : ${hyperRestApiList}">
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${hyperRestApi.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${hyperRestApi.id}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${hyperRestApi.restType}"></span></td>
                                     <td><span th:text="${hyperRestApi.restContent}"></span></td>
                                     <td><span th:text="${hyperRestApi.restServer}"></span></td>

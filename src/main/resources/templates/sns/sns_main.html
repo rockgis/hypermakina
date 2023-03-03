@@ -130,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </thead>
                                             <tbody>
                                             <tr th:each="dashBoard ,i : ${dashBoardMngList}">
-                                                <td width="5%"><span th:text="${i.count}"></span></td>
+                                                <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                                 <td><span th:text="${dashBoard.dsbType}"></span></td>
                                                 <td><a th:href="${dashBoard.dsbUrl}" target="_top">
                                                     <span th:text="${dashBoard.dsbNm}"></span>

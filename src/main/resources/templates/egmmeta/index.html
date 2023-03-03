@@ -155,7 +155,7 @@
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${egmMetaList.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${egmMetaList.id}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${egmMetaList.metaType}"></span></td>
                                     <td><a th:href="@{'/egmmeta/post/' + ${egmMetaList.id}}">
                                         <span th:text="${egmMetaList.metaNm}"></span>

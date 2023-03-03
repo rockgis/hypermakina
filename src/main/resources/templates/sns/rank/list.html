@@ -116,11 +116,11 @@
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="rank : ${ranklist}">
+                                <tr th:each="rank, i : ${ranklist}">
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${rank.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${rank.id}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${rank.uid}"></span></td>
                                     <td><a th:href="@{'/snsad/rankpost/' + ${rank.id}}">
                                         <span th:text="${rank.name}"></span>

@@ -110,11 +110,11 @@
               </thead>
               <tbody>
               <!-- CONTENTS !-->
-              <tr th:each="gitta0002 : ${gitta0002List}">
+              <tr th:each="gitta0002, i : ${gitta0002List}">
                 <td width="5%">
                   <input type="checkbox" class="chk"  th:value="${gitta0002.id}">
                 </td>
-                <td width="5%"><span th:text="${gitta0002.id}"></span></td>
+                <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                 <td><span th:text="${gitta0002.usrEn}"></span></td>
                 <td><span th:text="${gitta0002.usTf}"></span></td>
                 <td><span th:text="${gitta0002.rgEn}"></span></td>
