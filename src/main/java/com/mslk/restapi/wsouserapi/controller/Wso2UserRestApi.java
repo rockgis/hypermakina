@@ -26,7 +26,7 @@ import java.util.Objects;
 
 import com.mslk.restapi.wsouserapi.service.Wso2UserJson;
 
-@Tag(name = "Wso2User Check ", description = "Wso2User Check API")
+@Tag(name = "Wso2User Check ", description = "Wso2User Check API(개발중)")
 @RestController
 @RequestMapping("/api/Wso2User")
 @RequiredArgsConstructor
