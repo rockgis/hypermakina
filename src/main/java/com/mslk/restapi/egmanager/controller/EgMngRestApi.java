@@ -46,9 +46,9 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
+            @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://192.168.10.62:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
-            @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
+            @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "c25zMTIzNCE=")
     })
     @ResponseBody
     @GetMapping( "/getAlarmCount")
@@ -163,9 +163,9 @@ public class EgMngRestApi {
 
     })
     @Parameters({
-            @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://172.30.1.109:7077"),
+            @Parameter(name = "managerurl", description = "Eg Manager Header ManagerURL ", example = "http://192.168.10.62:7077"),
             @Parameter(name = "user", description = "Eg Manager Header USER ", example = "admin"),
-            @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "bHlpanVuIUAwOQ==")
+            @Parameter(name = "pwd", description = "Eg Manager Header pwd ", example = "c25zMTIzNCE=")
     })
     @ResponseBody
     @GetMapping( "/getTestData")
@@ -192,11 +192,11 @@ public class EgMngRestApi {
         headers.add("pwd", pwd);
 
         String requestJson = "{\n" +
-                "  \"componentName\": \"gpu.hypermakina.net\",\n" +
+                "  \"componentName\": \"MES_App_1_1\",\n" +
                 "  \"lastmeasure\":\"true\",\n"+
-        "  \"startDate\":\"2023-02-07 15:35:00\",\n"+
-        "  \"endDate\":\"2023-02-07 15:40:00\",\n"+
-        "  \"test\":\"Uptime\"\n"+
+        "  \"startDate\":\"2023-03-05 00:35:00\",\n"+
+        "  \"endDate\":\"2023-03-05 15:40:00\",\n"+
+        "  \"test\":\"Network\"\n"+
         "}";
 
 
@@ -312,8 +312,13 @@ public class EgMngRestApi {
         // API 기본 인증 헤드 생성
        /* String apiUrl = "http://172.30.1.109:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
         String managerurl = "http://172.30.1.109:7077";
+        String managerurl = "http://192.168.10.62:7077";
         String user = "admin";
-        String pwd ="bHlpanVuIUAwOQ==";*/
+        String pwd ="bHlpanVuIUAwOQ==";
+
+         String pwd ="c25zMTIzNCE=";
+
+        */
 
         String appUrl = managerurl + "/api/eg/analytics/getHistoricalData";
 

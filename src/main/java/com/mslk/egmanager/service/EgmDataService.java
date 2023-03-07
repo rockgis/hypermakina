@@ -114,8 +114,6 @@ public class EgmDataService {
                 .metaId(egmDataEntity.getMetaId())
                 .restName(egmDataEntity.getRestName())
                 .componentName(egmDataEntity.getComponentName())
-                .startDate(egmDataEntity.getStartDate())
-                .endDate(egmDataEntity.getEndDate())
                 .test(egmDataEntity.getTest())
                 .info(egmDataEntity.getInfo())
                 .componentType(egmDataEntity.getComponentType())

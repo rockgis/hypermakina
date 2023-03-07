@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration scan="true" scanPeriod="30 seconds">
     <property name="LOG_PATH" value="./logs"/>
-    <property name="LOG_FILE_NAME" value="hypergit_portal"/>
-    <property name="ERR_LOG_FILE_NAME" value="hypergit_portal_error"/>
+    <property name="LOG_FILE_NAME" value="hypermslk_dashboard"/>
+    <property name="ERR_LOG_FILE_NAME" value="hypermslk_dashboard_error"/>
     <property name="CONSOLE_LOG_PATTERN"
               value="%highlight(%-5level) %date [%thread] %cyan([%C{0} :: %M :: %L]) - %msg%n"/>
     <property name="FILE_LOG_PATTERN"

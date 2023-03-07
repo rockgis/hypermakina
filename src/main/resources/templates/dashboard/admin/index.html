@@ -356,7 +356,13 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">DashBoard Group</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbGm" value="metaMm" placeholder="DashBoard Group">
+                            <select class="form-control select2" name="dsbGm" style="width: 100%;">
+                                <option selected="selected" value="SYSTEM">시스템</option>
+                                <option value="DB">DB</option>
+                                <option value="NETWORK">NETWORK</option>
+                                <option value="APP">APP</option>
+                                <option value="WAS">WAS</option>
+                            </select>
                         </div>
                     </div>
 
@@ -369,7 +375,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">연결 URL</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbUrl" value="연결 URL" placeholder="연결 URL">
+                            <input type="text" class="form-control" name="dsbUrl" value="/sns/dashboard?idx=L" placeholder="연결 URL">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -384,7 +390,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">DashBoard 비고</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="dsbNote" value="DashBoard 비고" placeholder="DashBoard 비고">
+                            <input type="text" class="form-control" name="dsbNote" placeholder="DashBoard 비고">
                         </div>
                     </div>
                     <!-- div class="form-group row">

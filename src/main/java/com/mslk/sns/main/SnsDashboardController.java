@@ -73,10 +73,12 @@ public class SnsDashboardController {
         Integer regCount = (int) regcount;
         model.addAttribute("regCount", regCount);
 
-        String apiUrl = "http://172.30.1.109:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
-        String managerurl = "http://172.30.1.109:7077";
+        String apiUrl = "http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+       // String managerurl = "http://172.30.1.109:7077";
+        String managerurl = "http://192.168.10.62:7077";
         String user = "admin";
-        String pwd ="bHlpanVuIUAwOQ==";
+        //String pwd ="bHlpanVuIUAwOQ==";
+        String pwd ="c25zMTIzNCE=";
 
         logger.info("Rest URL :" + apiUrl);
 

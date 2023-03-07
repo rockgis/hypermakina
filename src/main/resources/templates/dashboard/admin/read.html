@@ -96,7 +96,13 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">DashBoard Group</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="dsbGm" th:value="${egmMetaDto.dsbGm}">
+                                <select class="form-control select2" name="dsbGm" style="width: 100%;">
+                                    <option th:selected="${egmMetaDto.dsbGm} == 'SYSTEM'" value="SYSTEM" >시스템</option>
+                                    <option th:selected="${egmMetaDto.dsbGm} == 'DB'" value="DB"  >DB</option>
+                                    <option th:selected="${egmMetaDto.dsbGm} == 'NETWORK'" value="NETWORK"  >NETWORK</option>
+                                    <option th:selected="${egmMetaDto.dsbGm} == 'WAS'" value="WAS" >WAS</option>
+                                    <option th:selected="${egmMetaDto.dsbGm} == 'APP'" value="APP" >APP</option>
+                                </select>
                             </div>
                         </div>
 

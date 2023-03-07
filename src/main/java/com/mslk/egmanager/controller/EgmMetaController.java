@@ -122,7 +122,13 @@ public class EgmMetaController {
     }
 
     @PutMapping("/egmmeta/post/edit/{no}")
-    public String egmmetaupdate(EgmMetaDto egmMetaDto) {
+    public String egmmetaupdate(Principal principal, EgmMetaDto egmMetaDto) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        egmMetaDto.setAltEn(principal.getName());
+        egmMetaDto.setModifiedDate(now);
+
         egmMetaService.savePost(egmMetaDto);
 
         return "redirect:/admin/egmmetalist";
@@ -138,16 +144,9 @@ public class EgmMetaController {
         List<EgmMetaDto> egmMetaList = egmMetaService.searchPosts(searchType, keyword); //
 
         double  count = Double.valueOf(egmMetaList.size());
-        Integer[] pageList = egmMetaService.getPageList(pageNum, count);
-
         Integer postsTotalCount = (int) count;
 
         model.addAttribute("egmMetaList", egmMetaList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("page", pageNum);
-        model.addAttribute("postsTotalCount", postsTotalCount);
-        model.addAttribute("searchType", searchType);
-        model.addAttribute("keyword", keyword);
 
         return "egmmeta/search.html";
     }

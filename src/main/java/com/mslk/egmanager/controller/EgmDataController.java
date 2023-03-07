@@ -40,7 +40,7 @@ public class EgmDataController {
 
         egmDataService.savePost(egmDataDto);
 
-        return "redirect:/egnmeta/post/"+metaId;
+        return "redirect:/egmmeta/post/"+metaId;
     }
 
 

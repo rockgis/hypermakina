@@ -72,24 +72,34 @@
                     <h3 class="card-title"><i class="fas fa-user-secret"></i> Egmanager 자원관리</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/egnmeta/post/edit/' + ${rankDto.id}}" method="post" id="app_brd"
+                    <form th:action="@{'/egmmeta/post/edit/' + ${egmMetaDto.id}}" method="post" id="app_brd"
                           class="form-horizontal">
-                        <input type="hidden" name="_method" value="post"/>
+                        <input type="hidden" name="_method" value="put"/>
                         <input type="hidden" name="id" id="id" th:value="${egmMetaDto.id}"/>
                         <div class="row">
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>자원 TYPE 정보 </label>
-                                    <input type="text" class="form-control" name="metaType"
-                                           th:value="${egmMetaDto.metaType}">
+                                    <select class="form-control select2" name="metaType" style="width: 100%;">
+                                        <option th:selected="${egmMetaDto.metaType} == 'SYSTEM'" value="SYSTEM" >시스템</option>
+                                        <option th:selected="${egmMetaDto.metaType} == 'DB'" value="DB"  >DB</option>
+                                        <option th:selected="${egmMetaDto.metaType} == 'NETWORK'" value="NETWORK"  >NETWORK</option>
+                                        <option th:selected="${egmMetaDto.metaType} == 'WAS'" value="WAS" >WAS</option>
+                                        <option th:selected="${egmMetaDto.metaType} == 'APP'" value="APP" >APP</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>자원 Group</label>
-                                    <input type="text" class="form-control" name="metaGm"
-                                           th:value="${egmMetaDto.metaGm}">
+                                    <select class="form-control select2" name="metaGm" style="width: 100%;">
+                                        <option th:selected="${egmMetaDto.metaGm} == 'MES'" value="MES" >MES</option>
+                                        <option th:selected="${egmMetaDto.metaGm} == 'ERP'" value="ERP" >ERP</option>
+                                        <option th:selected="${egmMetaDto.metaGm} == 'SMM'" value="SMM" >보안</option>
+                                        <option th:selected="${egmMetaDto.metaGm} == 'NETWORK'" value="NETWORK"  >NETWORK</option>
+                                        <option th:selected="${egmMetaDto.metaGm} == 'APP'" value="APP" >Application</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -192,8 +202,6 @@
                                 <th width="5%">번호</th>
                                 <th>Rest API Name</th>
                                 <th>componentName</th>
-                                <th>startDate</th>
-                                <th>endDate</th>
                                 <th>test</th>
                                 <th>info</th>
                                 <th>사용여부</th>
@@ -209,8 +217,6 @@
                                     <span th:text="${egmDataList.componentName}"></span>
                                 </a>
                                 </td>
-                                <td><span th:text="${egmDataList.startDate}"></span></td>
-                                <td><span th:text="${egmDataList.endDate}"></span></td>
                                 <td><a th:href="@{'/egmdata/post/' + ${egmDataList.id}}">
                                     <span th:text="${egmDataList.test}"></span>
                                 </a>
@@ -285,65 +291,50 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">REST API 이름 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="restName" value="EGM"
-                                   placeholder="META TYPE 정보">
+                            <input type="text" class="form-control" name="restName"  placeholder="META TYPE 정보">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Component 이름 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="componentName" value="componentName"
-                                   placeholder="componentName 이름">
+                            <input type="text" class="form-control" name="componentName"  placeholder="componentName 이름">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">조회 시작 날짜</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="startDate" value="startDate"
-                                   placeholder="endDate">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">조회 종료 날짜</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="endDate" value="endDate"
-                                   placeholder="META 모델명">
-                        </div>
-                    </div>
-
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">조회 항목</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="test" value="test"
+                            <input type="text" class="form-control" name="test"
                                    placeholder="META Group">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">조회 상세 항목</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="info" value="info"
+                            <input type="text" class="form-control" name="info"
                                    placeholder="info">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">ComponentType 이름</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="componentType" value="componentType"
+                            <input type="text" class="form-control" name="componentType"
                                    placeholder="componentType">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">timeline</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="timeline" value="timeline"
+                            <input type="text" class="form-control" name="timeline"
                                    placeholder="timeline">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Measure</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="measure" value="measure"
-                                   placeholder="measure">
+                            <select class="form-control select2" name="measure" style="width: 100%;">
+                                <option selected="selected" value="Y">사용</option>
+                                <option value="N">미사용</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

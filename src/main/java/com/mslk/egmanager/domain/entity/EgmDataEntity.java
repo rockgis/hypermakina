@@ -26,10 +26,6 @@ public class EgmDataEntity extends TimeEntity {
     @Column(length = 50, nullable = false)
     private String componentName; // 'componentName',
     @Column(length = 50, nullable = false)
-    private String startDate; // 'startDate',
-    @Column(length = 50, nullable = false)
-    private String endDate; // 'endDate',
-    @Column(length = 50, nullable = false)
     private String test; // 'test',
     @Column(length = 50, nullable = false)
     private String info; // 'info',
@@ -48,13 +44,11 @@ public class EgmDataEntity extends TimeEntity {
 
 
     @Builder
-    public EgmDataEntity(Long id , Long metaId , String restName,String componentName,String startDate,String endDate, String test, String info, String componentType,String timeline,String measure,String seTf,String altEn){
+    public EgmDataEntity(Long id , Long metaId , String restName,String componentName, String test, String info, String componentType,String timeline,String measure,String seTf,String altEn){
         this.id = id;
         this.metaId = metaId;
         this.restName =restName;
         this.componentName = componentName;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.test = test;
         this.info = info;
         this.componentType = componentType;

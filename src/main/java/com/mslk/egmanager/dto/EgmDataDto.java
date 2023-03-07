@@ -18,10 +18,6 @@ public class EgmDataDto {
 
     private String componentName; // 'componentName',
 
-    private String startDate; // 'startDate',
-
-    private String endDate; // 'endDate',
-
     private String test; // 'test',
 
     private String info; // 'info',
@@ -40,13 +36,12 @@ public class EgmDataDto {
 
 
     @Builder
-    public EgmDataDto(Long id, Long metaId, String restName, String componentName, String startDate, String endDate, String test, String info, String componentType, String timeline, String measure, String seTf, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public EgmDataDto(Long id, Long metaId, String restName, String componentName, String test, String info, String componentType, String timeline, String measure, String seTf, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.metaId = metaId;
         this.restName = restName;
         this.componentName = componentName;
-        this.startDate = startDate;
-        this.endDate = endDate;
+
         this.test = test;
         this.info = info;
         this.componentType = componentType;
@@ -65,8 +60,6 @@ public class EgmDataDto {
                 .metaId(metaId)
                 .restName(restName)
                 .componentName(componentName)
-                .startDate(startDate)
-                .endDate(endDate)
                 .test(test)
                 .info(info)
                 .componentType(componentType)

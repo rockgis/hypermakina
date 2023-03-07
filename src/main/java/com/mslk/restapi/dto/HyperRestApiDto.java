@@ -21,9 +21,9 @@ public class HyperRestApiDto {
 
     private String usrPw;
 
-    private String contentType;
+    private String managerurl;
 
-    private String accept;
+    private int egmmngid;
 
     private String restServer;
 
@@ -41,15 +41,15 @@ public class HyperRestApiDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     @Builder
-    public HyperRestApiDto(Long id,String restType, String restContent, String usrEn, String usrPw, String contentType, String accept, String restServer, String restFunction, String restHttp, String seTf, String restSync, String syncTime, String altEn, LocalDateTime createdDate , LocalDateTime modifiedDate){
+    public HyperRestApiDto(Long id,String restType, String restContent, String usrEn, String usrPw, String managerurl, int egmmngid, String restServer, String restFunction, String restHttp, String seTf, String restSync, String syncTime, String altEn, LocalDateTime createdDate , LocalDateTime modifiedDate){
 
         this.id = id;
         this.restType = restType;
         this.restContent = restContent;
         this.usrEn = usrEn;
         this.usrPw = usrPw;
-        this.contentType = contentType;
-        this.accept = accept;
+        this.managerurl = managerurl;
+        this.egmmngid = egmmngid;
         this.restServer = restServer;
         this.restFunction = restFunction;
         this.restHttp = restHttp;
@@ -73,8 +73,8 @@ public class HyperRestApiDto {
                 .restContent(restContent)
                 .usrEn(usrEn)
                 .usrPw(usrPw)
-                .contentType(contentType)
-                .accept(accept)
+                .managerurl(managerurl)
+                .egmmngid(egmmngid)
                 .restServer(restServer)
                 .restFunction(restFunction)
                 .restHttp(restHttp)

@@ -140,10 +140,10 @@
                                     </th>
                                     <th width="5%">번호</th>
                                     <th>자원 TYPE 정보</th>
+                                    <th>자원 그룹</th>
                                     <th>자원 이름</th>
                                     <th>자원 Host 이름</th>
                                     <th>자원 용도</th>
-                                    <th>자원 모델명</th>
                                     <th>자원 Host 업무명</th>
                                     <th>자원 Host OS</th>
                                     <th>자원 Host 구분</th>
@@ -157,13 +157,13 @@
                                     </td>
                                     <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${egmMetaList.metaType}"></span></td>
+                                    <td><span th:text="${egmMetaList.metaGm}"></span></td>
                                     <td><a th:href="@{'/egmmeta/post/' + ${egmMetaList.id}}">
                                         <span th:text="${egmMetaList.metaNm}"></span>
                                     </a>
                                     </td>
                                     <td><span th:text="${egmMetaList.metaHm}"></span></td>
                                     <td><span th:text="${egmMetaList.metaEu}"></span></td>
-                                    <td><span th:text="${egmMetaList.metaMm}"></span></td>
                                     <td><span th:text="${egmMetaList.metaWm}"></span></td>
                                     <td><span th:text="${egmMetaList.metaOs}"></span></td>
                                     <td><span th:text="${egmMetaList.metaTm}"></span></td>
@@ -230,7 +230,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Egmanager 자원관리</h4>
+                <h4 class="modal-title">Eg Manager 자원관리</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -239,79 +239,83 @@
                 <form action="/admin/egnmetapost" method="post" id="app_brd" class="form-horizontal">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META TYPE 정보 </label>
+                        <label class="col-sm-2 col-form-label"> TYPE 정보 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaType" value="EGM"
-                                   placeholder="META TYPE 정보">
+                            <select class="form-control select2" name="metaType" style="width: 100%;">
+                                <option selected="selected" value="SYSTEM">시스템</option>
+                                <option value="DB">DB</option>
+                                <option value="NETWORK">NETWORK</option>
+                                <option value="APP">APP</option>
+                                <option value="WAS">WAS</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META 이름 </label>
+                        <label class="col-sm-2 col-form-label">자원 이름 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaNm" value="MES DB" placeholder="META 이름">
+                            <input type="text" class="form-control" name="metaNm" value="MES DB" placeholder="자원 이름">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META 용도</label>
+                        <label class="col-sm-2 col-form-label">자원 용도</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaEu" value="MES Tibero DBMS"
-                                   placeholder="META 용도">
+                            <input type="text" class="form-control" name="metaEu" placeholder="자원 용도">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META 모델명</label>
+                        <label class="col-sm-2 col-form-label">자원 모델명</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaMm" value="metaMm" placeholder="META 모델명">
+                            <input type="text" class="form-control" name="metaMm" placeholder="자원 모델명">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Group</label>
+                        <label class="col-sm-2 col-form-label">자원 Group</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaGm" value="META Group"
-                                   placeholder="META Group">
+                            <select class="form-control select2" name="metaGm" style="width: 100%;">
+                                <option selected="selected" value="MES" >MES</option>
+                                <option  value="ERP" >ERP</option>
+                                <option  value="SMM" >보안</option>
+                                <option  value="APP" >Application</option>
+                                <option  value="NETWORK" >NETWORK</option>
+                            </select>
+                            <input type="text" class="form-control" name="metaGm"  placeholder="자원 Group">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host 업무명</label>
+                        <label class="col-sm-2 col-form-label"> Host 업무명</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaWm" value="META Host 업무명"
-                                   placeholder="META Host 업무명">
+                            <input type="text" class="form-control" name="metaWm"   placeholder="자원 Host 업무명">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host 이름</label>
+                        <label class="col-sm-2 col-form-label">컴포넌트 이름</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaHm" value="META Host 이름"
-                                   placeholder="META Host 이름">
+                            <input type="text" class="form-control" name="metaHm"   placeholder="컨포넌트 이름">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host OS</label>
+                        <label class="col-sm-2 col-form-label"> Host OS</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaOs" value="META Host OS"
-                                   placeholder="META Host OS">
+                            <input type="text" class="form-control" name="metaOs"  placeholder="META Host OS">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host IP</label>
+                        <label class="col-sm-2 col-form-label"> Host IP</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaIp" value="META Host IP"
-                                   placeholder="META Host IP">
+                            <input type="text" class="form-control" name="metaIp" value="192.168.10." placeholder="Host IP">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host 구분 </label>
+                        <label class="col-sm-2 col-form-label"> Host 구분 </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaTm" value="META Host 구분"
-                                   placeholder="META Host 구분">
+                            <input type="text" class="form-control" name="metaTm"  placeholder=" Host 구분">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">META Host 비고</label>
+                        <label class="col-sm-2 col-form-label"> Host 비고</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaNote" value="META Host 비고"
-                                   placeholder="META Host 비고">
+                            <input type="text" class="form-control" name="metaNote" placeholder=" Host 비고">
                         </div>
                     </div>
                     <!-- div class="form-group row">
@@ -403,7 +407,7 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 EG Manager 자원을 선택하세요 ?")
         } else {
-            location.href = "/admin/egnmetadel?idx=" + chk_id;
+            location.href = "/admin/egmmetadel?idx=" + chk_id;
         }
 
     });

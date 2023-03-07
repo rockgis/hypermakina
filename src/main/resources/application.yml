@@ -11,8 +11,10 @@ spring:
   config:
     activate:
       on-profile: common
+  jmx:
+    enabled: true
   pid:
-    file: ./pid/hyperuis.pid
+    file: ./pid/hypermslk.pid
   mvc:
     hidden-method:
       filter:
@@ -55,7 +57,7 @@ server:
       #      session delete when app restart
       persistent: false
       cookie:
-        name: hypergit
+        name: hypermslk
         max-age: 3660
         http-only: true
   tomcat:
@@ -149,6 +151,41 @@ server:
       suffix: ""
       file-date-format: ""
   address: 127.0.0.1
+---
+spring:
+  config:
+    activate:
+      on-profile: developssl
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 'rockgis@gmail.com'
+    password: 'dldPwns!@09'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 9000
+  ssl:
+    key-store: classpath:/static/ssl/uiscloud_keystore.p12
+    key-store-type: PKCS12
+    key-store-password: Goodmit0802!
+    key-alias: uiscloud_tomcat
+  http2:
+    enabled: true
+  tomcat:
+    accesslog:
+      enabled: false
+      directory: /dev
+      prefix: stdout
+      buffered: false
+      suffix: ""
+      file-date-format: ""
+#  address: 10.11.10.200
 
 ---
 spring:
@@ -169,13 +206,6 @@ spring:
 
 server:
   port: 9000
-  ssl:
-   key-store: classpath:/static/ssl/uiscloud_keystore.p12
-   key-store-type: PKCS12
-   key-store-password: Goodmit0802!
-   key-alias: uiscloud_tomcat
-  http2:
-   enabled: true
   tomcat:
     accesslog:
       enabled: false
@@ -222,9 +252,12 @@ spring:
       on-profile: locdb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
-    username: hyperg
-    password: dldPwns!@09
+    #url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    #username: hyperg
+    #password: dldPwns!@09
+    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: dashusr
+    password: Sns!@9833
 
 ---
 spring:
@@ -233,9 +266,12 @@ spring:
       on-profile: devdb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
-    username: hyperg
-    password: dldPwns!@09
+    #url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    #username: hyperg
+    #password: dldPwns!@09
+    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: dashusr
+    password: Sns!@9833
 ---
 spring:
   config:

@@ -31,10 +31,9 @@ public class HyperRestApiEntity extends TimeEntity {
     private String usrPw;
 
     @Column(length = 30, nullable = false)
-    private String contentType;
+    private String managerurl;
 
-    @Column(length = 30, nullable = false)
-    private String accept;
+    private int egmmngid;
 
     @Column(length = 50, nullable = false)
     private String restServer;
@@ -59,14 +58,14 @@ public class HyperRestApiEntity extends TimeEntity {
 
 
     @Builder
-    public HyperRestApiEntity(Long id , String restType, String restContent, String usrEn, String usrPw, String contentType, String accept, String restServer, String restFunction, String restHttp, String seTf, String restSync, String syncTime, String altEn){
+    public HyperRestApiEntity(Long id , String restType, String restContent, String usrEn, String usrPw, String managerurl, int egmmngid, String restServer, String restFunction, String restHttp, String seTf, String restSync, String syncTime, String altEn){
         this.id = id;
         this.restType = restType;
         this.restContent =restContent;
         this.usrEn = usrEn;
         this.usrPw = usrPw;
-        this.contentType = contentType;
-        this.accept = accept;
+        this.managerurl = managerurl;
+        this.egmmngid = egmmngid;
         this.restServer = restServer;
         this.restFunction = restFunction;
         this.restHttp = restHttp;
