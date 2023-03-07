@@ -5,7 +5,8 @@ spring:
       local: common, locdb, loc
       localssl: common, locdb, locssl
       dev: common, devdb, develop
-      prod: common, devdb, prodop
+      devssl: common, makinadb, developssl
+      prod: common, makinadb, prodop
 ---
 spring:
   config:
@@ -171,10 +172,13 @@ spring:
 server:
   port: 9000
   ssl:
-    key-store: classpath:/static/ssl/uiscloud_keystore.p12
-    key-store-type: PKCS12
-    key-store-password: Goodmit0802!
-    key-alias: uiscloud_tomcat
+    enabled: true
+    enabled-protocols:
+      - TLSv1.1
+      - TLSv1.2
+    key-store: "/svc/data/ssl/hypermakina.com/keystore.jks"
+    key-store-password: "lyijun!@09"
+    key-store-type: "PKCS12"
   http2:
     enabled: true
   tomcat:
@@ -266,12 +270,19 @@ spring:
       on-profile: devdb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
-    #username: hyperg
-    #password: dldPwns!@09
     url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
     username: dashusr
     password: Sns!@9833
+---
+spring:
+  config:
+    activate:
+      on-profile: makinadb
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: hyperg
+    password: dldPwns!@09
 ---
 spring:
   config:
