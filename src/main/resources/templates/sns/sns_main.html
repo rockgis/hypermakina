@@ -114,37 +114,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="card-title">대쉬보드 리스트</h3>
                             </div>
                             <div class="card-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <table class="table table-hover text-nowrap">
-                                            <thead>
-                                            <tr>
-                                                <th width="5%">번호</th>
-                                                <th>DashBoard TYPE</th>
-                                                <th>DashBoard 이름</th>
-                                                <th>DashBoard 용도</th>
-                                                <th>DashBoard Group</th>
-                                                <th>DashBoard 업무명</th>
-                                                <th>사용 유무</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="dashBoard ,i : ${dashBoardMngList}">
-                                                <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
-                                                <td><span th:text="${dashBoard.dsbType}"></span></td>
-                                                <td><a th:href="${dashBoard.dsbUrl}" target="_top">
-                                                    <span th:text="${dashBoard.dsbNm}"></span>
-                                                </a></td>
-                                                <td><span th:text="${dashBoard.dsbEu}"></span></td>
-                                                <td><span th:text="${dashBoard.dsbGm}"></span></td>
-                                                <td><span th:text="${dashBoard.dsbWm}"></span></td>
-                                                <td><span th:text="${dashBoard.seTf}"></span></td>
-                                            </tr>
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th width="5%">번호</th>
+                                        <th> TYPE</th>
+                                        <th>DashBoard 이름</th>
+                                        <th>DashBoard 용도</th>
+                                        <th>DashBoard Group</th>
+                                        <th>DashBoard 업무명</th>
+                                        <th>사용 유무</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="dashBoard ,i : ${dashBoardMngList}">
+                                        <td width="5%"><span th:text="${pagination.getTotalRecordCount() - (pagination.page - 1 ) * 10 - i.index }"></span></td>
+                                        <td><span th:text="${dashBoard.dsbType}"></span></td>
+                                        <td><a th:href="${dashBoard.dsbUrl}" target="_top">
+                                            <span th:text="${dashBoard.dsbNm}"></span>
+                                        </a></td>
+                                        <td><span th:text="${dashBoard.dsbEu}"></span></td>
+                                        <td><span th:text="${dashBoard.dsbGm}"></span></td>
+                                        <td><span th:text="${dashBoard.dsbWm}"></span></td>
+                                        <td><span th:text="${dashBoard.seTf}"></span></td>
+                                    </tr>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
+                            </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>

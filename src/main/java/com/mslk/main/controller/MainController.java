@@ -57,7 +57,7 @@ public class MainController {
     @GetMapping("/")
     public String main(Authentication authentication, Model model) {
 
-        if (authentication != null) {
+        /*if (authentication != null) {
             logger.info("타입정보 : " + authentication.getClass());
             logger.info("권한 정보 : " + authentication.getAuthorities().toString().equals("[ROLE_ADMIN]"));
 
@@ -76,7 +76,9 @@ public class MainController {
 
             return "redirect:/dashboard";
 
-        }
+        }*/
+
+        return "redirect:/sns/main";
 
 
     }
