@@ -3,6 +3,8 @@ package com.mslk.restapi.service;
 import com.mslk.restapi.domain.entity.HyperRestApiEntity;
 import com.mslk.restapi.domain.repostory.HyperrestapiRepository;
 import com.mslk.restapi.dto.HyperRestApiDto;
+import com.mslk.sns.department.domain.entity.DepartmentEntity;
+import com.mslk.sns.department.dto.DepartmentDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -75,6 +78,14 @@ public class HyperRestApiService {
     @Transactional
     public void deletePost(Long id) {
         hyperrestapiRepository.deleteById(id);
+    }
+
+    @Transactional
+    public HyperRestApiDto getPost(String restFunction) {
+        Optional<HyperRestApiEntity> hyperRestApiEntityWrapper = hyperrestapiRepository.findByRestFunction(restFunction);
+        HyperRestApiEntity hyperRestApiEntity = hyperRestApiEntityWrapper.get();
+
+        return this.convertEntityToDto(hyperRestApiEntity);
     }
 
 

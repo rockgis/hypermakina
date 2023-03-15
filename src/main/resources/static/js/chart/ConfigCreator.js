@@ -27,7 +27,7 @@ function ConfigMaker() {
 				xAxes: [{
 					scaleLabel: {
 						display: true,
-						labelString: 'Year'
+						labelString: 'Time'
 					},
 					ticks: {
 		                padding: 10
@@ -77,7 +77,7 @@ function ConfigMaker() {
 			xAxes: [{
 				scaleLabel: {
 					display: true,
-					labelString: 'Year'
+					labelString: 'Time'
 				},
 				ticks: {
 					padding: 10
@@ -243,7 +243,7 @@ function ConfigMaker() {
 					xAxes: [{
 						scaleLabel: {
 							display: true,
-							labelString: 'Year'
+							labelString: 'Time'
 						},
 						ticks: {
 							padding: 10

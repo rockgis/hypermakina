@@ -58,12 +58,6 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    // https://mvnrepository.com/artifact/org.jolokia/jolokia-core
-    //JMX 설정을 위한 데이터
-    // https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server
-    implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-server', version: '3.0.0'
-    implementation group: 'org.jolokia', name: 'jolokia-core', version: '1.7.2'
-
     implementation 'junit:junit:4.13.2'
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation 'mysql:mysql-connector-java:8.0.29'

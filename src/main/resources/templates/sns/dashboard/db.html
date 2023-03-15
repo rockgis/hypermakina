@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperMSLK 서비스</title>
+    <link rel="stylesheet" href="/sns/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="/js/billboard/css/datalab.min.css">
+    <link rel="stylesheet" href="/js/billboard/css/insight.min.css">
+</head>
+<!-- 주석처리 꼭 읽어주세요 -->
+<body>
+    <div id="wrap">
+        <div class="dashboardTop">
+            <aside class="Top-left">
+                <div class="Top-left__detail">
+                    <div class="logo-box">
+                        <a href="" class="logo">
+                            <svg width="128" height="40" viewBox="0 0 128 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path fill="url(#vxyey0km0a)" d="M0 0h128v40H0z"/>
+                                <defs>
+                                    <pattern id="vxyey0km0a" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                        <use xlink:href="#spn4rdrbob" transform="matrix(.00645 0 0 .02065 0 -.006)"/>
+                                    </pattern>
+                                    <image id="spn4rdrbob" width="155" height="49" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJsAAAAxCAYAAADN5tsEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEFCQjEyRjZCNkNEMTFFQjg3MUZFOEI4NEUyRjY0QjAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEFCQjEyRjdCNkNEMTFFQjg3MUZFOEI4NEUyRjY0QjAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowQUJCMTJGNEI2Q0QxMUVCODcxRkU4Qjg0RTJGNjRCMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowQUJCMTJGNUI2Q0QxMUVCODcxRkU4Qjg0RTJGNjRCMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqGBq1AAAAi7SURBVHja7F09bNtG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"/>
+                                </defs>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="user-box">
+                        <div class="user b-blakBox Convex">
+                            <!-- 사용자 명 -->
+                            <output name="hostNM" for="" id="hostNM" class="t-gray t-nomal">CPU host_01</output>
+                        </div> 
+                    </div>
+                </div>
+                <!-- DB System -->
+                <div class="Top-left__dbBox b-blakBox">
+                    <div class="dbBox-title"><p class="t-bold ">DB System</p></div>
+                    <div class="dbBox-result">
+                        <div class="dbBox-result__left">
+                            <div class="result__left-txt">
+                                <span class="t-white">MsSQL</span>
+                                <span  class="b-blakBox b-blue Convex"><em class="t-white" >1</em></span>
+                            </div>
+                            <div class="result__left-txt">
+                                <span class="t-white">Tibero</span>
+                                <span  class="b-blakBox b-blue Convex"><em class="t-white" >2</em></span>
+                            </div>
+                        </div>
+                        <!-- **************************
+                        신호표시 result__right-sign 자식 
+                        span태그에 class명 green(정상) / red(비정상)를 넣어 정상 비정상 표시
+                       ****************************** -->
+                        <div class="dbBox-result__right">
+                            <div class="result__right-sign">
+                                <span class="green"></span>
+                                <span>정상</span>
+                            </div>
+                            <div class="result__right-sign">
+                                <span class=""></span><!-- class명 red 생략 -->
+                                <span>비정상</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 상단 대시보드 -->
+            <div class="Top-right">
+                <div class="Top-right__detail b-blakBox">
+                    <div class="sign-light-box">
+                        <ul>
+                            <li>
+                                <div class="b-red ball-sign"><strong ><span th:text="${critical}"></span></strong></div>
+                                <div class="ball-sign-txt"><p class="t-light" >Critical</p></div>
+                            </li>
+                            <li>
+                                <div class="b-yellow ball-sign"><strong ><span th:text="${major}"></span></strong></div>
+                                <div class="ball-sign-txt"><p class="t-light" >Major</p></div>
+                            </li>
+                            <li>
+                                <div class="b-sky ball-sign"><strong ><span th:text="${minor}"></span></strong></div>
+                                <div class="ball-sign-txt"><p class="t-light" >Minor</p></div>
+                            </li>
+                            <li>
+                                <div class="b-lightGreen ball-sign"><strong ><span th:text="${total}"></span></strong></div>
+                                <div class="ball-sign-txt"><p class="t-light" >Total</p></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sign-graph-box">
+                        <div>
+                            <div class="sign-graph-data sign-graph-data2">
+                                <div>
+                                    <div class="t-lightGray fs-15 tit">CPU Core</div>
+                                    <div class=""><em  class="fs-21">B</em></div>
+                                </div>
+                                <div>
+                                    <div class="t-lightGray fs-15 tit">RAM Total</div>
+                                    <div><em  class="fs-21">16GB</em></div>
+                                </div>
+                            </div>
+                            <div class="sign-graph-halfCircle">
+                                <div>
+                                    <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 282px;  height: 143px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                                        <div id="cpuChart" style="height: 143px; width: 282px"></div>
+                                    </div>
+                                    <div><p class="fs-20 tit">CPU Busy</p></div>
+                                </div>
+                                <div>
+                                    <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 282px;  height: 143px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                                        <div id="memChart" style="height: 143px; width: 282px"></div>
+                                    </div>
+                                    <div><p  class="fs-20 tit">RAM Used</p></div>
+                                </div>
+                                <div>
+                                    <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 282px;  height: 143px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                                        <div id="swapChart" style="height: 143px; width: 282px"></div>
+                                    </div>
+                                    <div><p class="fs-20" tit>SWAP Used</p></div>
+                                </div>
+                            </div>
+                            <div class="sign-graph-uptime sign-graph-data2">
+                                <div>
+                                    <div class="t-lightGray fs-24 tit">Uptime</div>
+                                    <div><em  class="fs-21">3.1 day</em></div>
+                                </div>
+                            </div>
+                            <script>
+                                function getClock() {
+                                    setInterval (() =>  {
+                                        var today = new Date();
+                                        var year = today.getFullYear();
+                                        var month = today.getMonth()+1;
+                                        var date = today.getDate();
+                                        var week = new Array ('(일)','(월)','(화)','(수)','(목)','(금)','(토)');
+                                        var day  = week[today.getDay()];
+                                        var hours = today.getHours();
+                                        var minutes = today.getMinutes();
+                                        var seconds = today.getSeconds();
+                                        
+                                        document.getElementById("date").innerHTML = year + '-' + (("00"+month.toString()).slice(-2)) + '-' + (("00"+date.toString()).slice(-2)) + '&nbsp;' + day ;
+                                        document.getElementById("time").innerHTML = hours + ':' + (("00"+minutes.toString()).slice(-2)) + ':' + (("00"+seconds.toString()).slice(-2)) ;
+                            
+                                    });
+                                }
+                                getClock();
+                            </script>
+                            <div class="sign-graph-currentTime">
+                                <div onload="getClock()">
+                                    <p id="date"></p>
+                                    <p id="time"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 4분할 대시보드 -->
+        <div class="dashboardBtm">
+            <div class="b-blakBox">
+                <div><em>CPU Basic</em></div>
+                <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 682px; height: 228px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                    <canvas id="cpulineChart" style=" height: 228px; width: 682px"></canvas>
+                </div>
+            </div>
+            <div class="b-blakBox">
+                <div><em>Memory Basic</em></div>
+                <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 682px; height: 228px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                    <canvas id="ramChart" style=" height: 228px; width: 682px"></canvas>
+                </div>
+            </div>
+            <div class="b-blakBox">
+                <div><em>Disk Usage</em></div>
+                <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 779px; height: 317px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                    <canvas id="diskChart" style=" height: 228px; width: 682px"></canvas>
+                </div>
+            </div>
+            <div class="b-blakBox">
+                <div><em>Disk Space Used</em></div>
+                <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 779px; height: 317px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
+                    <canvas id="networkChart" style=" height: 228px; width: 682px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/js/billboard/js/billboard.pkgd.min.js"></script>
+
+    <script type="text/javascript" src="/js/chart/hyperChart.js"></script>
+
+    <!-- ChartJS -->
+    <script src="/webjars/AdminLTE/plugins/chart.js/Chart.js"></script>
+    <script src="/js/chart/ConfigCreator.js"></script>
+
+
+
+    <script th:inline="javascript">
+
+        let datasets = new Array();
+        let datasets2 = new Array();
+        let datasets3 = new Array();
+        let datasets4 = new Array();
+        let lineX = [];
+
+        let cpu_data  = [];
+        let ram_data  = [];
+        let disk_data  = [];
+        let newtwork_data  = [];
+
+        /*[# th:each="article : ${systemSummarylist}"]*/
+        console.log(/*[[${article.msmt_time}]]*/);
+        lineX.push(/*[[${article.msmt_time}]]*/);
+        cpu_data.push(/*[[${article.cpu_util}]]*/)
+        ram_data.push(/*[[${article.free_mem_avail}]]*/)
+        disk_data.push(/*[[${article.swap_avail}]]*/)
+        newtwork_data.push(/*[[${article.free_mem_avail}]]*/)
+        /*[/]*/
+
+        datasets.push(new DataElement("MES_App_1_t ",cpu_data));
+        //datasets.push(new DataElement("Server 2 ",ram_data));
+        //datasets.push(new DataElement("Server 3 ",disk_data));
+        //datasets.push(new DataElement("Server 4 ",newtwork_data));
+
+        //datasets2.push(new DataElement("MES_App_1_t ",cpu_data));
+        datasets2.push(new DataElement("MES_App_1_t",ram_data));
+        //datasets2.push(new DataElement("Server 3 ",disk_data));
+        //datasets2.push(new DataElement("Server 4 ",newtwork_data));
+
+
+        //datasets3.push(new DataElement("MES_App_1_t ",cpu_data));
+        //datasets3.push(new DataElement("Server 2 ",ram_data));
+        datasets3.push(new DataElement("MES_App_1_t ",disk_data));
+        //datasets3.push(new DataElement("Server 4 ",newtwork_data));
+
+        //datasets4.push(new DataElement("MES_App_1_t ",cpu_data));
+        //datasets4.push(new DataElement("Server 2 ",ram_data));
+        //datasets4.push(new DataElement("Server 3 ",disk_data));
+        datasets4.push(new DataElement("MES_App_1_t ",newtwork_data));
+
+
+    </script>
+
+
+
+    <script>
+
+        var initMinute;  // 최초 설정할 시간(min)
+        var remainSecond;  // 남은시간(sec)
+
+        $(document).ready(function() {
+
+            var cpu_data = [
+                ["CPU Used", 10.4]
+            ];
+
+            var ram_data = [
+                ["Ram Used", 50.2]
+            ];
+
+            var swap_data = [
+                ["SWAP Used", 40.3]
+            ];
+
+            chart_gauge("#cpuChart",cpu_data);
+            chart_gauge("#memChart",ram_data);
+            chart_gauge("#swapChart",swap_data);
+
+            lineCart(lineX,datasets,datasets2,datasets3,datasets4);
+
+            setTimeout(function () {
+                location.reload();
+                //alert("페이지 리로드 하기 ");
+            }, 300000);
+        });
+
+        //System Details - Summary
+        /*
+            ["TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  CPU_UTIL  CPU_UTIL_ST  SYS_CPU_UTIL  SYS_CPU_UTIL_ST  RUNNING_PROC  RUNNING_PROC_ST  BLOCKED_PROC  BLOCKED_PROC_ST  SWAP_AVAIL  SWAP_AVAIL_ST  FREE_MEM_AVAIL  FREE_MEM_AVAIL_ST  MEM_SCAN_RATE  MEM_SCAN_RATE_ST  STEAL_TIME  STEAL_TIME_ST  ",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:02:36  0.4977 GOOD 0.2330 GOOD 0.0000 GOOD 0.0000 GOOD 11769.8203 GOOD 6130.1719 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:07:24  0.8100 GOOD 0.3411 GOOD 0.0000 GOOD 0.0000 GOOD 11776.5273 GOOD 6126.7031 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:12:17  1.4796 GOOD 0.4663 GOOD 0.0000 GOOD 0.0000 GOOD 11786.4336 GOOD 6114.5156 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:17:00  1.1916 GOOD 0.7836 GOOD 0.0000 GOOD 0.0000 GOOD 11795.0117 GOOD 6076.7461 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:21:43  1.2806 GOOD 0.6947 GOOD 0.0000 GOOD 0.0000 GOOD 11793.7852 GOOD 6078.5586 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:26:29  0.3286 GOOD 0.2310 GOOD 0.0000 GOOD 0.0000 GOOD 11794.0977 GOOD 6077.6523 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:31:11  0.2723 GOOD 0.2397 GOOD 0.0000 GOOD 0.0000 GOOD 11797.2656 GOOD 6066.1406 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:35:59  0.3796 GOOD 0.3796 GOOD 0.0000 GOOD 0.0000 GOOD 11798.1641 GOOD 6068.4375 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:40:47  0.8626 GOOD 0.7324 GOOD 0.0000 GOOD 0.0000 GOOD 11793.8398 GOOD 6060.0273 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:45:46  0.8378 GOOD 0.4423 GOOD 0.0000 GOOD 0.0000 GOOD 11795.6406 GOOD 6062.9023 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:50:36  0.9331 GOOD 0.7379 GOOD 0.0000 GOOD 0.0000 GOOD 11808.5273 GOOD 6056.8320 GOOD 0.0000 GOOD -5.0000 GOOD",
+                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:55:42  0.9747 GOOD 0.4541 GOOD 0.0000 GOOD 0.0000 GOOD 11811.3125 GOOD 6051.3555 GOOD 0.0000 GOOD -5.0000 GOOD"
+            ]*/
+
+        /* Ram
+                "TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  TOTAL_PHY_MEM  TOTAL_PHY_MEM_ST  USED_PHY_MEM  USED_PHY_MEM_ST  FREE_PHY_MEM  FREE_PHY_MEM_ST  PHYSICAL_MEM_UTILZE  PHYSICAL_MEM_UTILZE_ST  PHYSICAL_AVAIL_MEM  PHYSICAL_AVAIL_MEM_ST  MODIFIED_MEM  MODIFIED_MEM_ST  STANDBY_MEM  STANDBY_MEM_ST  CACHED_MEM  CACHED_MEM_ST  MAX_MEM_ALLOCATE  MAX_MEM_ALLOCATE_ST  MAX_MEM_USAGE  MAX_MEM_USAGE_ST  AUTOMATION_STATUS  AUTOMATION_STATUS_ST  ",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:02:41  15838.0000 GOOD 9694.5430 GOOD 246.7227 GOOD 61.2107 GOOD 6130.0000 GOOD 13.4570 GOOD 5883.2773 GOOD 5896.7344 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:08:05  15838.0000 GOOD 9701.9297 GOOD 239.5078 GOOD 61.2573 GOOD 6125.0000 GOOD 11.0703 GOOD 5885.4922 GOOD 5896.5625 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:13:26  15838.0000 GOOD 9716.9570 GOOD 228.5273 GOOD 61.3522 GOOD 6109.0000 GOOD 12.0430 GOOD 5880.4727 GOOD 5892.5156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:18:40  15838.0000 GOOD 9746.0078 GOOD 192.1055 GOOD 61.5356 GOOD 6080.0000 GOOD 11.9922 GOOD 5887.8945 GOOD 5899.8867 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:23:16  15838.0000 GOOD 9749.9102 GOOD 193.4414 GOOD 61.5602 GOOD 6076.0000 GOOD 12.0898 GOOD 5882.5586 GOOD 5894.6484 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:28:28  15838.0000 GOOD 9750.2930 GOOD 197.2266 GOOD 61.5627 GOOD 6076.0000 GOOD 11.7070 GOOD 5878.7734 GOOD 5890.4805 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:33:49  15838.0000 GOOD 9754.9531 GOOD 186.0312 GOOD 61.5921 GOOD 6070.0000 GOOD 13.0469 GOOD 5883.9687 GOOD 5897.0156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:39:02  15838.0000 GOOD 9758.4219 GOOD 180.9805 GOOD 61.6140 GOOD 6066.0000 GOOD 13.5781 GOOD 5885.0195 GOOD 5898.5977 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:43:48  15838.0000 GOOD 9755.5977 GOOD 187.4258 GOOD 61.5961 GOOD 6069.0000 GOOD 13.4023 GOOD 5881.5742 GOOD 5894.9766 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:49:07  15838.0000 GOOD 9767.4258 GOOD 176.7617 GOOD 61.6708 GOOD 6058.0000 GOOD 12.5742 GOOD 5881.2383 GOOD 5893.8125 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:53:43  15838.0000 GOOD 9765.8281 GOOD 166.3320 GOOD 61.6607 GOOD 6058.0000 GOOD 14.1719 GOOD 5891.6680 GOOD 5905.8398 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
+                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:59:08  15838.0000 GOOD 9761.9336 GOOD 171.9219 GOOD 61.6362 GOOD 6076.0000 GOOD 0.0664 GOOD 5904.0781 GOOD 5904.1445 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD"
+        */
+
+
+
+        function lineCart(lineX) {
+
+            var ss_day = new Date();
+            var minu = 5;
+
+
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes());
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+5);
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+10);
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+15);
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+20);
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+25);
+            //lineX.push(ss_day.getHours() + ":" + ss_day.getMinutes()+30);
+
+
+
+            var i = 0;
+
+
+            var randomColor = function() {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgba(" + r + "," + g + "," + b + ","+0.7+")";
+            }
+
+            var configMaker = new ConfigMaker();
+
+            var config = configMaker.createLineChartConfig(lineX,datasets,false,"Server");
+            var lineChartCanvas          = document.getElementById('cpulineChart').getContext('2d');
+            var lineChart                = new Chart(lineChartCanvas,config);
+
+            var config2 = configMaker.createLineChartConfig(lineX,datasets2,false,"Server");
+            var lineChartCanvas2          = document.getElementById('ramChart').getContext('2d');
+            var lineChart2                = new Chart(lineChartCanvas2,config2);
+
+            var config3 = configMaker.createLineChartConfig(lineX,datasets3,false,"Server");
+            var lineChartCanvas3          = document.getElementById('diskChart').getContext('2d');
+            var lineChart3                = new Chart(lineChartCanvas3,config3);
+
+            var config4 = configMaker.createLineChartConfig(lineX,datasets3,false,"Server");
+            var lineChartCanvas4          = document.getElementById('networkChart').getContext('2d');
+            var lineChart4                = new Chart(lineChartCanvas4,config4);
+
+        }
+
+
+
+        function getClock(){
+            const date = new Date()
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const day = date.getDate();
+            day.innerText = `${year}년 ${month} 월 ${day}일`;
+
+            const hour = String(date.getHours()).padStart(2,"0");
+            const minutes = String(date.getMinutes()).padStart(2,"0");
+            const second = String(date.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
+            clock.innerText = `${hour}:${minutes}:${second}`;
+        }
+
+
+
+
+        function ajax_rest(){
+
+
+            let person = {name:"abc", age:10};
+            let person2 = {};
+
+            let managerurl = "http://172.30.1.109:7077";
+            let user = "admin";
+            let pwd ="bHlpanVuIUAwOQ==";
+
+
+            $.ajax({
+                crossOrigin : true,
+                type:'POST', //요청 메서드
+                url: 'http://172.30.1.109:7077/api/eg/analytics/getAlarmCount', //요청 URI
+                contentType : 'application/json',
+                headers : { 'managerurl':managerurl,
+                    'user':user,
+                    'pwd':pwd,
+                    'Accept':'application/json'
+                }, //요청 헤더
+                dataType : 'json', //전송할 데이터 타입
+                //data : JSON.stringify(person), //서버로 전송할 데이터. 직렬화.
+                success : function(result) {
+
+                    alert(JSON.parse(result));
+                },
+                error : function(request, status, error) {
+                    //alert("error: " + error)
+                } //에러가 발생했을 때 호출될 함수
+            }); //$.ajax()
+
+
+        }
+
+
+    </script>
+
+</body>
+
+
+</html>

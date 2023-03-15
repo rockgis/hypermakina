@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    //@Autowired
+   // private JavaMailSender mailSender;
 
     public void sendMail(MailTO mail) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -19,7 +19,7 @@ public class MailService {
         message.setSubject(mail.getTitle());
         message.setText(mail.getMessage());
 
-        mailSender.send(message);
+//        mailSender.send(message);
     }
 
 }

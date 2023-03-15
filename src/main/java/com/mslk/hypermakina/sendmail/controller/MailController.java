@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RequestMapping("/mail")
+//@RequestMapping("/mail")
 public class MailController {
 
     private MailService mailService;
 
-    @GetMapping("/send")
+    //@GetMapping("/send")
     public MailTO sendTestMail(String email) {
         MailTO mailTO = new MailTO();
 

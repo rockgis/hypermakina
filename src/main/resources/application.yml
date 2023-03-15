@@ -26,17 +26,17 @@ spring:
     resources:
       static-locations:
         classpath: /static/
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
   jpa:
     hibernate:
       connection:
@@ -91,17 +91,17 @@ spring:
   config:
     activate:
       on-profile: loc
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 server:
   port: 9000
@@ -120,17 +120,17 @@ spring:
   config:
     activate:
       on-profile: locssl
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 server:
   port: 9000
@@ -155,17 +155,17 @@ spring:
   config:
     activate:
       on-profile: developssl
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 server:
   port: 9000
@@ -194,17 +194,17 @@ spring:
   config:
     activate:
       on-profile: develop
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 server:
   port: 9000
@@ -223,17 +223,17 @@ spring:
   config:
     activate:
       on-profile: prodop
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: 'rockgis@gmail.com'
-    password: 'dldPwns!@09'
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+  #mail:
+  #  host: smtp.gmail.com
+  #  port: 587
+  #  username: 'mail_id'
+  #  password: 'passsword'
+  #  properties:
+  #    mail:
+  #      smtp:
+  #        auth: true
+  #        starttls:
+  #          enable: true
 
 
 server:
@@ -254,12 +254,13 @@ spring:
       on-profile: locdb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    #url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     #username: hyperg
     #password: dldPwns!@09
-    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: dashusr
     password: Sns!@9833
+
 
 ---
 spring:
@@ -268,7 +269,7 @@ spring:
       on-profile: devdb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: dashusr
     password: Sns!@9833
 ---
@@ -278,7 +279,7 @@ spring:
       on-profile: makinadb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: hyperg
     password: dldPwns!@09
 ---

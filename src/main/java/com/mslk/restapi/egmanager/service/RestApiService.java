@@ -1,5 +1,7 @@
 package com.mslk.restapi.egmanager.service;
 
+import com.mslk.restapi.dto.HyperRestApiDto;
+import com.mslk.sns.department.dto.DepartmentDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -15,8 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -94,34 +99,312 @@ public class RestApiService {
     }
 
 
+    public ResponseEntity<String> getAlarmCountData(HyperRestApiDto hyperRestApiDto){
 
 
-    public ResponseEntity<Object> getData(String url , String managerurl) {
+        String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+        // String managerurl = "http://172.30.1.109:7077";
+        String managerurl =  hyperRestApiDto.getManagerurl();//"http://192.168.10.62:7077";
+        String user =  hyperRestApiDto.getUsrEn();//"admin";
+        String pwd =hyperRestApiDto.getUsrPw();//"c25zMTIzNCE=";
+
+        logger.info("Rest getAlarmCountData URL :" + apiUrl);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("managerurl", managerurl);
+        headers.add("user", user);
+        headers.add("pwd", pwd);
+
+        HttpEntity<String> req = new HttpEntity<>("", headers);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setMaxConnTotal(100)
+                .setMaxConnPerRoute(10)
+                .disableCookieManagement()
+                .build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setHttpClient(httpClient);
+        RestTemplate loginRestTemplate = new RestTemplate(requestFactory);
+
+        ResponseEntity<String> res = loginRestTemplate.exchange(apiUrl, HttpMethod.POST, req, String.class);
+
+        return res;
+    }
+
+
+    public ResponseEntity<String> getTestData(String componentName,HyperRestApiDto hyperRestApiDto){
+
+
+        String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+        // String managerurl = "http://172.30.1.109:7077";
+        String managerurl =  hyperRestApiDto.getManagerurl();//"http://192.168.10.62:7077";
+        String user =  hyperRestApiDto.getUsrEn();//"admin";
+        String pwd =hyperRestApiDto.getUsrPw();//"c25zMTIzNCE=";){
+
+        logger.info("Rest getTestData URL :" + apiUrl);
+
+        Date date = new Date();
+
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String endDate = sdformat.format(date);
+
+        logger.info("현재 시간  : "+ endDate);
+
+        // 포맷변경 ( 년월일 시분초)
+        // Java 시간 더하기
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(date);
+
+        // 10분 더하기
+        cal.add(Calendar.MINUTE, -60);
+
+        String startDate = sdformat.format(cal.getTime());
+        logger.info("60분후 : " + startDate);
+
+       /* cal.setTime(date);
+
+        // 1시간 전
+        cal.add(Calendar.HOUR, -1);
+
+        startDate = sdformat.format(cal.getTime());
+        logger.info("1시간 전 : " + startDate);
+        */
+
+
+        String requestJson = "{\n" +
+                "  \"componentName\": \""+componentName+"\",\n" +
+                "  \"lastmeasure\":\"true\",\n"+
+                "  \"startDate\":\""+ startDate + "\",\n"+
+                "  \"endDate\":\""+ endDate + "\",\n"+
+                "  \"test\":\"System Details\",\n"+
+                "  \"info\":\"Summary\"\n"+
+                "}";
+
+        logger.info("requestJson : " + requestJson);
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("managerurl", managerurl);
+        headers.add("user", user);
+        headers.add("pwd", pwd);
+
+        HttpEntity<String> req = new HttpEntity<>(requestJson, headers);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setMaxConnTotal(100)
+                .setMaxConnPerRoute(10)
+                .disableCookieManagement()
+                .build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setHttpClient(httpClient);
+        RestTemplate loginRestTemplate = new RestTemplate(requestFactory);
+
+        ResponseEntity<String> res = loginRestTemplate.exchange(apiUrl, HttpMethod.POST, req, String.class);
+
+        return res;
+    }
+
+
+
+
+    public ResponseEntity<String> getData(String componentName,HyperRestApiDto hyperRestApiDto) {
         //Spring restTemplate
         HashMap<String, Object> result = new HashMap<String, Object>();
-        ResponseEntity<Object> resultMap = new ResponseEntity<>(null,null,200);
+        ResponseEntity<String> resultMap = new ResponseEntity<>(null,null,200);
 
-        logger.info("Rest getData Url : " + url);
+        String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+        // String managerurl = "http://172.30.1.109:7077";
+        String managerurl =  hyperRestApiDto.getManagerurl();//"http://192.168.10.62:7077";
+        String user =  hyperRestApiDto.getUsrEn();//"admin";
+        String pwd =hyperRestApiDto.getUsrPw();//"c25zMTIzNCE=";){
+
+        logger.info("Rest getTestData URL :" + apiUrl);
+
+        Date date = new Date();
+
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String endDate = sdformat.format(date);
+
+        logger.info("현재 시간  : "+ endDate);
+
+        // 포맷변경 ( 년월일 시분초)
+        // Java 시간 더하기
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(date);
+
+        // 10분 더하기
+        cal.add(Calendar.MINUTE, -60);
+
+        String startDate = sdformat.format(cal.getTime());
+        logger.info("60분후 : " + startDate);
+
+       /* cal.setTime(date);
+
+        // 1시간 전
+        cal.add(Calendar.HOUR, -1);
+
+        startDate = sdformat.format(cal.getTime());
+        logger.info("1시간 전 : " + startDate);
+        */
+
+
+        String requestJson = "{\n" +
+                "  \"componentName\": \""+componentName+"\",\n" +
+                "  \"lastmeasure\":\"true\",\n"+
+                "  \"startDate\":\""+ startDate + "\",\n"+
+                "  \"endDate\":\""+ endDate + "\",\n"+
+                "  \"test\":\"System Details\",\n"+
+                "  \"info\":\"Summary\"\n"+
+                "}";
+
+        logger.info("requestJson : " + requestJson);
+
+
 
         try {
-            RestTemplate restTemplate = new RestTemplate();
 
-            HttpHeaders header = new HttpHeaders();
 
-            header.set("Content-Type", "application/json;");
-            header.set("Accept", "application/json;");
-            header.add("managerurl", managerurl);
-            header.add("user", "admin");
-            header.add("pwd", "bHlpanVuIUAwOQ==");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.add("managerurl", managerurl);
+            headers.add("user", user);
+            headers.add("pwd", pwd);
 
-            HttpEntity<?> entity = new HttpEntity<>(header);
+            HttpEntity<String> req = new HttpEntity<>(requestJson, headers);
 
-            logger.info("Rest header header: " + header.toString());
-            logger.info("Rest headers entity : " + entity.toString());
+            CloseableHttpClient httpClient = HttpClients.custom()
+                    .setMaxConnTotal(100)
+                    .setMaxConnPerRoute(10)
+                    .disableCookieManagement()
+                    .build();
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setHttpClient(httpClient);
+            RestTemplate loginRestTemplate = new RestTemplate(requestFactory);
 
-            UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
+            resultMap = loginRestTemplate.exchange(apiUrl, HttpMethod.POST, req, String.class);
 
-            resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
+            //resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
+
+            result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
+            result.put("header", resultMap.getHeaders()); //헤더 정보 확인
+            result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+
+            //에러처리해야댐
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
+            System.out.println("error");
+            System.out.println(e.toString());
+
+            return resultMap;
+        }
+        catch (Exception e) {
+            result.put("statusCode", "999");
+            result.put("body"  , "excpetion오류");
+            System.out.println(e.toString());
+
+            return resultMap;
+
+        }
+
+        return resultMap;
+
+    }
+
+
+    public ResponseEntity<String> getDataUptime(String componentName,HyperRestApiDto hyperRestApiDto, String testdata, int min) {
+        //Spring restTemplate
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        ResponseEntity<String> resultMap = new ResponseEntity<>(null,null,200);
+
+        String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+        // String managerurl = "http://172.30.1.109:7077";
+        String managerurl =  hyperRestApiDto.getManagerurl();//"http://192.168.10.62:7077";
+        String user =  hyperRestApiDto.getUsrEn();//"admin";
+        String pwd =hyperRestApiDto.getUsrPw();//"c25zMTIzNCE=";){
+
+        logger.info("Rest getTestData URL :" + apiUrl);
+
+        Date date = new Date();
+
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String endDate = sdformat.format(date);
+
+        logger.info("현재 시간  : "+ endDate);
+
+        // 포맷변경 ( 년월일 시분초)
+        // Java 시간 더하기
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(date);
+
+        // 10분 더하기
+        cal.add(Calendar.MINUTE, min);
+
+        String startDate = sdformat.format(cal.getTime());
+        logger.info("60분후 : " + startDate);
+
+       /* cal.setTime(date);
+
+        // 1시간 전
+        cal.add(Calendar.HOUR, -1);
+
+        startDate = sdformat.format(cal.getTime());
+        logger.info("1시간 전 : " + startDate);
+        */
+
+
+        String requestJson = "{\n" +
+                "  \"componentName\": \""+componentName+"\",\n" +
+                "  \"lastmeasure\":\"true\",\n"+
+                "  \"startDate\":\""+ startDate + "\",\n"+
+                "  \"endDate\":\""+ endDate + "\",\n"+
+                "  \"test\":\""+ testdata + "\""+
+                "}";
+
+
+
+        logger.info("requestJson : " + requestJson);
+
+
+
+        try {
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.add("managerurl", managerurl);
+            headers.add("user", user);
+            headers.add("pwd", pwd);
+
+            HttpEntity<String> req = new HttpEntity<>(requestJson, headers);
+
+            CloseableHttpClient httpClient = HttpClients.custom()
+                    .setMaxConnTotal(100)
+                    .setMaxConnPerRoute(10)
+                    .disableCookieManagement()
+                    .build();
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setHttpClient(httpClient);
+            RestTemplate loginRestTemplate = new RestTemplate(requestFactory);
+
+            resultMap = loginRestTemplate.exchange(apiUrl, HttpMethod.POST, req, String.class);
+
+            //resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
 
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
             result.put("header", resultMap.getHeaders()); //헤더 정보 확인
