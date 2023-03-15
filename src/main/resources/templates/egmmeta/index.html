@@ -279,7 +279,6 @@
                                 <option  value="APP" >Application</option>
                                 <option  value="NETWORK" >NETWORK</option>
                             </select>
-                            <input type="text" class="form-control" name="metaGm"  placeholder="자원 Group">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -294,22 +293,70 @@
                             <input type="text" class="form-control" name="metaHm"   placeholder="컨포넌트 이름">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label"> Host OS</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaOs"  placeholder="META Host OS">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Host OS</label>
+                                <input type="text" class="form-control" name="metaOs"  placeholder="META Host OS">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Host IP</label>
+                                <input type="text" class="form-control" name="metaIp" value="192.168.10." placeholder="Host IP">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label"> Host IP</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaIp" value="192.168.10." placeholder="Host IP">
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>CPU Core 수</label>
+                                <input type="text" class="form-control" name="metaCore"  placeholder="CPU Core 수">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>설치된 메모리</label>
+                                <input type="text" class="form-control" name="metaMem" value="64GB" placeholder="설치된 메모리 GB">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label"> Host 구분 </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="metaTm"  placeholder=" Host 구분">
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>CPU 알람 조건</label>
+                                <input type="text" class="form-control" name="metaCpucheck" value="90">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>메모리 알람 조건</label>
+                                <input type="text" class="form-control" name="metaMemcheck" value="90">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Disk 알람 조건</label>
+                                <input type="text" class="form-control" name="metaDiskcheck"  value="90">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Host 구분</label>
+                                <input type="text" class="form-control" name="metaTm"  placeholder=" Host 구분">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">

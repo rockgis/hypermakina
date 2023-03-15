@@ -21,6 +21,13 @@ public class EgmMetaDto {
     private String metaHm; //COMMENT 'META Host 이름',
     private String metaOs; //COMMENT 'META Host OS',
     private String metaIp; //COMMENT 'META Host IP',
+
+    private String metaCore; // varchar(10) DEFAULT NULL COMMENT 'CPU Core 수',
+    private String metaMem; // varchar(10) DEFAULT NULL COMMENT '설치된 메모리 GB',
+    private String metaCpucheck; // varchar(10) DEFAULT NULL COMMENT 'CPU 알람',
+    private String metaMemcheck;// varchar(10) DEFAULT NULL COMMENT '메모 알람',
+    private String metaDiskcheck; // varchar(10) DEFAULT NULL COMMENT '용량 알람',
+
     private String metaTm; //COMMENT 'META Host 구분',
     private String metaNote; //COMMENT 'META Host 비고',
     private String altEn;
@@ -29,7 +36,7 @@ public class EgmMetaDto {
 
 
     @Builder
-    public EgmMetaDto(Long id, String metaType, String metaNm, String metaEu, String metaMm, String metaGm, String metaWm, String metaHm, String metaOs, String metaIp, String metaTm, String metaNote, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public EgmMetaDto(Long id, String metaType, String metaNm, String metaEu, String metaMm, String metaGm, String metaWm, String metaHm, String metaOs, String metaIp, String metaCore, String metaMem, String metaCpucheck, String metaMemcheck, String metaDiskcheck, String metaTm, String metaNote, String altEn, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.metaType = metaType;
         this.metaNm = metaNm;
@@ -40,6 +47,11 @@ public class EgmMetaDto {
         this.metaHm = metaHm;
         this.metaOs = metaOs;
         this.metaIp = metaIp;
+        this.metaCore = metaCore;
+        this.metaMem = metaMem;
+        this.metaCpucheck = metaCpucheck;
+        this.metaMemcheck = metaMemcheck;
+        this.metaDiskcheck = metaDiskcheck;
         this.metaTm = metaTm;
         this.metaNote = metaNote;
         this.altEn = altEn;
@@ -60,6 +72,11 @@ public class EgmMetaDto {
                 .metaHm(metaHm)
                 .metaOs(metaOs)
                 .metaIp(metaIp)
+                .metaCore(metaCore)
+                .metaMem(metaMem)
+                .metaCpucheck(metaCpucheck)
+                .metaMemcheck(metaMemcheck)
+                .metaDiskcheck(metaDiskcheck)
                 .metaTm(metaTm)
                 .metaNote(metaNote)
                 .altEn(altEn)

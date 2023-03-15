@@ -168,6 +168,55 @@
                             </div>
                         </div>
 
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>CPU Core 수</label>
+                                    <input type="text" class="form-control" name="metaCore"   th:value="${egmMetaDto.metaCore}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>설치된 메모리</label>
+                                    <input type="text" class="form-control" name="metaMem"  th:value="${egmMetaDto.metaMem}">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>CPU 알람 조건</label>
+                                    <input type="text" class="form-control" name="metaCpucheck"  th:value="${egmMetaDto.metaCpucheck}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>메모리 알람 조건</label>
+                                    <input type="text" class="form-control" name="metaMemcheck"  th:value="${egmMetaDto.metaMemcheck}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>Disk 알람 조건</label>
+                                    <input type="text" class="form-control" name="metaDiskcheck"  th:value="${egmMetaDto.metaDiskcheck}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">자원 Host 비고</label>
                             <div class="col-sm-10">

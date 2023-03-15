@@ -45,6 +45,18 @@ public class EgmMetaEntity extends TimeEntity {
     @Column(length = 30, nullable = false)
     private String metaIp; //COMMENT 'META Host IP',
 
+
+    @Column(length = 10, nullable = false)
+    private String metaCore; // varchar(10) DEFAULT NULL COMMENT 'CPU Core 수',
+    @Column(length = 10, nullable = false)
+    private String metaMem; // varchar(10) DEFAULT NULL COMMENT '설치된 메모리 GB',
+    @Column(length = 10, nullable = false)
+    private String metaCpucheck; // varchar(10) DEFAULT NULL COMMENT 'CPU 알람',
+    @Column(length = 10, nullable = false)
+    private String metaMemcheck;// varchar(10) DEFAULT NULL COMMENT '메모 알람',
+    @Column(length = 10, nullable = false)
+    private String metaDiskcheck; // varchar(10) DEFAULT NULL COMMENT '용량 알람',
+
     @Column(length = 30, nullable = false)
     private String metaTm; //COMMENT 'META Host 구분',
 
@@ -57,7 +69,7 @@ public class EgmMetaEntity extends TimeEntity {
 
 
     @Builder
-    public EgmMetaEntity(Long id , String metaType, String metaNm, String metaEu, String metaMm, String metaGm, String metaWm, String metaHm, String metaOs, String metaIp, String metaTm, String metaNote, String altEn){
+    public EgmMetaEntity(Long id , String metaType, String metaNm, String metaEu, String metaMm, String metaGm, String metaWm, String metaHm, String metaOs, String metaIp, String metaCore, String metaMem, String metaCpucheck, String metaMemcheck, String metaDiskcheck ,String metaTm, String metaNote, String altEn){
         this.id = id;
         this.metaType = metaType;
         this.metaNm =metaNm;
@@ -68,6 +80,11 @@ public class EgmMetaEntity extends TimeEntity {
         this.metaHm = metaHm;
         this.metaOs = metaOs;
         this.metaIp = metaIp;
+        this.metaCore = metaCore;
+        this.metaMem = metaMem;
+        this.metaCpucheck = metaCpucheck;
+        this.metaMemcheck = metaMemcheck;
+        this.metaDiskcheck = metaDiskcheck;
         this.metaTm = metaTm;
         this.metaNote = metaNote;
         this.altEn = altEn;
