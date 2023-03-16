@@ -5,15 +5,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Entity
 @Table(name = "lgusms.MMS_MSG")
 public class MmsEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     //보내려는 메세지 SMS 단문 전송 가능 용량은 90byte 입니다.
     //
     //MMS 전송 가능용량은 2000byte 입니다.
@@ -58,4 +61,7 @@ public class MmsEntity {
     }
 
 
+    public MmsEntity() {
+
+    }
 }

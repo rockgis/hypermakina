@@ -1,83 +1,575 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HyperMSLK 서비스</title>
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/sns/css/style.css">
 </head>
-<body class="hold-transition">
-<div class="wrapper">
+<body>
+<div id="wrap" class="noseBg">
+    <div class="nwTop">
+        <aside class="Top-left">
+            <div class="Top-left__detail">
+                <div class="logo-box">
+                    <a href="" class="logo">
+                        <svg width="128" height="40" viewBox="0 0 128 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path fill="url(#vxyey0km0a)" d="M0 0h128v40H0z"/>
+                            <defs>
+                                <pattern id="vxyey0km0a" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                    <use xlink:href="#spn4rdrbob" transform="matrix(.00645 0 0 .02065 0 -.006)"/>
+                                </pattern>
+                                <image id="spn4rdrbob" width="155" height="49" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJsAAAAxCAYAAADN5tsEAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNS4xIFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEFCQjEyRjZCNkNEMTFFQjg3MUZFOEI4NEUyRjY0QjAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEFCQjEyRjdCNkNEMTFFQjg3MUZFOEI4NEUyRjY0QjAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowQUJCMTJGNEI2Q0QxMUVCODcxRkU4Qjg0RTJGNjRCMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowQUJCMTJGNUI2Q0QxMUVCODcxRkU4Qjg0RTJGNjRCMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqGBq1AAAAi7SURBVHja7F09bNtG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"/>
+                            </defs>
+                        </svg>
+                    </a>
+                </div>
+                <div class="user-box">
+                    <div class="user b-blakBox Convex">
+                        <!-- 화면명 -->
+                        <output name="" for="" id="" class="t-gray t-nomal">N/W</output>
+                    </div>
+                </div>
+            </div>
+            <!-- NW System -->
+            <div class="Top-left__dbBox b-blakBox">
+                <div class="dbBox-title"><p class="t-bold ">NW System</p></div>
+                <div class="dbBox-result">
+                    <div class="dbBox-result__left" style="margin-top: 3px;">
+                        <div class="result__left-txt">
+                            <span class="t-white">LAN</span>
+                            <span id="" class="b-blakBox b-blue Convex"><em class="t-white" th:text="${lan}">3</em></span>
+                        </div>
+                        <div class="result__left-txt">
+                            <span class="t-white">Switch</span>
+                            <span id="" class="b-blakBox b-blue Convex"><em class="t-white" th:text="${switch}">2</em></span>
+                        </div>
+                    </div>
+                    <!-- **************************
+                    신호표시 result__right-sign 자식
+                    span태그에 class명 green(정상) / red(비정상)를 넣어 정상 비정상 표시
+                   ****************************** -->
+                    <div class="dbBox-result__right">
+                        <div class="result__right-sign on">
+                            <span id="" class="green"></span>
+                            <span>정상</span>
+                        </div>
+                        <div class="result__right-sign">
+                            <span id="" class=""></span><!-- class명 b-red 생략 -->
+                            <span>비정상</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  출하 사무실, 창고 -->
+            <div class="b-blakBox b-blakBox2" style="margin-top: 49px;">
+                <div class="dirBoxTit"><em>출하 사무실, 창고</em></div>
+                <div class="dirBox">
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p><!-- 최대 2줄까지만 허용되게끔 css작성 -->
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-deepOrange"><strong>출하  사무실</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="">
+                                        <span id="on" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class=""><!-- class 'on', 현재상태를 표시 스크립트로 on이 되었을 경우 자식 span태그에 .b-red 또는 .b-green 클래스가 삽입 되게끔 개발 -->
+                                        <span id="" class="sign"></span><!-- class명 b-red 생략 -->
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- 상단 신호등 -->
+        <div class="sign-light-box">
+            <ul>
+                <li>
+                    <div class="b-red ball-sign"><strong ><span th:text="${critical}"></span></strong></div>
+                    <div class="ball-sign-txt"><p class="t-light" >Critical</p></div>
+                </li>
+                <li>
+                    <div class="b-yellow ball-sign"><strong ><span th:text="${major}"></span></strong></div>
+                    <div class="ball-sign-txt"><p class="t-light" >Major</p></div>
+                </li>
+                <li>
+                    <div class="b-sky ball-sign"><strong ><span th:text="${minor}"></span></strong></div>
+                    <div class="ball-sign-txt"><p class="t-light" >Minor</p></div>
+                </li>
+                <li>
+                    <div class="b-lightGreen ball-sign"><strong ><span th:text="${total}"></span></strong></div>
+                    <div class="ball-sign-txt"><p class="t-light" >Total</p></div>
+                </li>
+            </ul>
+        </div>
+        <!-- 본관 전산실 -->
+        <div class="Top-mid">
+            <div class="b-blakBox b-blakBox2 MainDirBox">
+                <div class="dirBoxTit"><em>본관 전산실</em></div>
+                <div class="dirBox">
+                    <div class="dirBoxCnt">
+                        <!-- 본관 전산실 top -->
+                        <div class="MainDirBoxTop">
+                            <div class="MainDirBox-cnt">
+                                <div class="dirBoxCnt-left">
+                                    <div class="dirBoxCnt-left__icon mainL1"></div>
+                                    <p>Wireless LAN Controller</p>
+                                </div>
+                                <div class="dirBoxCnt-right">
+                                    <div class="dirBoxCnt-right-area">
+                                        <div class="dirBoxCnt-dataBox">
+                                            <p id="">48.341 (Mbps)</p>
+                                            <p id="">35.064 (Mbps)</p>
+                                        </div>
+                                        <div class="dirBoxCnt-signBox">
+                                            <div class="on">
+                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span>정상</span>
+                                            </div>
+                                            <div class="">
+                                                <span id="" class="sign"></span>
+                                                <span>비정상</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="MainDirBox-cnt">
+                                <div class="dirBoxCnt-left">
+                                    <div class="dirBoxCnt-left__icon mainL2"></div>
+                                    <p>Backbone</p>
+                                </div>
+                                <div class="dirBoxCnt-right">
+                                    <div class="dirBoxCnt-right-area">
+                                        <div class="dirBoxCnt-dataBox">
+                                            <p id="">48.341 (Mbps)</p>
+                                            <p id="">35.064 (Mbps)</p>
+                                        </div>
+                                        <div class="dirBoxCnt-signBox">
+                                            <div class="on">
+                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span>정상</span>
+                                            </div>
+                                            <div class="">
+                                                <span id="" class="sign"></span>
+                                                <span>비정상</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 본관 전산실 bottom -->
+                        <div class="MainDirBoxBottom">
+                            <div class="MainDirBox-cnt">
+                                <div class="dirBoxCnt-left">
+                                    <div class="dirBoxCnt-left__icon"></div>
+                                    <p>Ga-Dong_2F-L</p>
+                                </div>
+                                <div class="dirBoxCnt-right">
+                                    <div class="dirBoxCnt-right-area">
+                                        <div class="dirBoxCnt-dataBox">
+                                            <p id="">48.341 (Mbps)</p>
+                                            <p id="">35.064 (Mbps)</p>
+                                        </div>
+                                        <div class="dirBoxCnt-signBox">
+                                            <div class="on">
+                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span>정상</span>
+                                            </div>
+                                            <div class="">
+                                                <span id="" class="sign"></span>
+                                                <span>비정상</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="MainDirBox-cnt">
+                                <div class="dirBoxCnt-left">
+                                    <div class="dirBoxCnt-left__icon"></div>
+                                    <p>Ga-Dong_2F-L</p>
+                                </div>
+                                <div class="dirBoxCnt-right">
+                                    <div class="dirBoxCnt-right-area">
+                                        <div class="dirBoxCnt-dataBox">
+                                            <p id="">48.341 (Mbps)</p>
+                                            <p id="">35.064 (Mbps)</p>
+                                        </div>
+                                        <div class="dirBoxCnt-signBox">
+                                            <div class="on">
+                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span>정상</span>
+                                            </div>
+                                            <div class="">
+                                                <span id="" class="sign"></span>
+                                                <span>비정상</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="MainDirBox-cnt">
+                                <div class="dirBoxCnt-left">
+                                    <div class="dirBoxCnt-left__icon"></div>
+                                    <p>Ga-Dong_2F-L</p>
+                                </div>
+                                <div class="dirBoxCnt-right">
+                                    <div class="dirBoxCnt-right-area">
+                                        <div class="dirBoxCnt-dataBox">
+                                            <p id="">48.341 (Mbps)</p>
+                                            <p id="">35.064 (Mbps)</p>
+                                        </div>
+                                        <div class="dirBoxCnt-signBox">
+                                            <div class="on">
+                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span>정상</span>
+                                            </div>
+                                            <div class="">
+                                                <span id="" class="sign"></span>
+                                                <span>비정상</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  현재시각 및 나동 영역 -->
+        <div class="Top-right">
+            <!-- 현재 시각  -->
+            <script>
+                function getClock() {
+                    setInterval (() =>  {
+                        var today = new Date();
+                        var year = today.getFullYear();
+                        var month = today.getMonth()+1;
+                        var date = today.getDate();
+                        var week = new Array ('(일)','(월)','(화)','(수)','(목)','(금)','(토)');
+                        var day  = week[today.getDay()];
+                        var hours = today.getHours();
+                        var minutes = today.getMinutes();
+                        var seconds = today.getSeconds();
 
-<img id="imgId" th:src="${imgUrl}" style=" height: 1080px; width: 1920px">
-    <!-- ./wrapper -->
+                        document.getElementById("date").innerHTML = year + '-' + (("00"+month.toString()).slice(-2)) + '-' + (("00"+date.toString()).slice(-2)) + '&nbsp;' + day ;
+                        document.getElementById("time").innerHTML = hours + ':' + (("00"+minutes.toString()).slice(-2)) + ':' + (("00"+seconds.toString()).slice(-2)) ;
+
+                    });
+                }
+                getClock();
+            </script>
+            <div class="sign-graph-currentTime">
+                <div onload="getClock()">
+                    <p id="date"></p>
+                    <p id="time"></p>
+                </div>
+            </div>
+            <!--  나동 -->
+            <div class="b-blakBox b-blakBox2 dirBox-two">
+                <div class="dirBoxTit"><em>나동</em></div>
+                <div class="dirBox">
+                    <!-- box1 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-Indigo"><strong>2F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box2 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-Indigo"><strong>1F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nwBtm">
+        <!--  다동 -->
+        <div class="b-blakBox b-blakBox2 dirBox-four" style="margin-left: 32px;">
+            <div class="dirBoxTit"><em>다동</em></div>
+            <div class="flex">
+                <div class="dirBox dirBox-two">
+                    <!-- box1 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>2F-Left</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box2 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>1F-Left</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dirBox dirBox-two">
+                    <!-- box3 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>2F-Right</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box4 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>1F-Right</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  가동 -->
+        <div class="b-blakBox b-blakBox2 dirBox-four">
+            <div class="dirBoxTit"><em>가동</em></div>
+            <div class="flex">
+                <div class="dirBox dirBox-two">
+                    <!-- box1 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>2F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box2 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>1F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dirBox dirBox-two">
+                    <!-- box3 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>4F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box4 -->
+                    <div class="dirBoxCnt">
+                        <div class="dirBoxCnt-left">
+                            <p>Ga-Dong_2F-L</p>
+                            <div class="dirBoxCnt-left__icon"></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>3F-Main</strong></div>
+                        </div>
+                        <div class="dirBoxCnt-right">
+                            <div class="dirBoxCnt-right-area">
+                                <div class="dirBoxCnt-dataBox">
+                                    <p id="">48.341 (Mbps)</p>
+                                    <p id="">35.064 (Mbps)</p>
+                                </div>
+                                <div class="dirBoxCnt-signBox">
+                                    <div class="on">
+                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span>정상</span>
+                                    </div>
+                                    <div class="">
+                                        <span id="" class="sign"></span>
+                                        <span>비정상</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- jQuery -->
-<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Ekko Lightbox -->
-<script src="/webjars/AdminLTE/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
-<!-- Filterizr-->
-<script src="/webjars/AdminLTE/plugins/filterizr/jquery.filterizr.min.js"></script>
-
-<script type="text/javascript" src="/js/crossdomain/jquery.ajax-cross-origin.min.js"></script>
-
-
-<script>
-    $(document).ready(function(){
-
-
-
-    });
-
-    function ajax_rest(){
-
-
-        let person = {name:"abc", age:10};
-        let person2 = {};
-
-        let managerurl = "http://172.30.1.109:7077";
-        let user = "admin";
-        let pwd ="bHlpanVuIUAwOQ==";
-
-
-        $.ajax({
-            crossOrigin : true,
-            type:'POST', //요청 메서드
-            url: 'http://172.30.1.109:7077/api/eg/analytics/getAlarmCount', //요청 URI
-            contentType : 'application/json',
-            headers : { 'managerurl':managerurl,
-                'user':user,
-                'pwd':pwd,
-                'Accept':'application/json'
-            }, //요청 헤더
-            dataType : 'json', //전송할 데이터 타입
-            //data : JSON.stringify(person), //서버로 전송할 데이터. 직렬화.
-            success : function(result) {
-
-                alert(JSON.parse(result));
-            },
-            error : function(request, status, error) {
-                //alert("error: " + error)
-            } //에러가 발생했을 때 호출될 함수
-        }); //$.ajax()
-
-
-    }
-
-
-</script>
-
 </body>
 </html>

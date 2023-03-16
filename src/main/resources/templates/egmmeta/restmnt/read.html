@@ -75,8 +75,8 @@
                 <div class="card-body">
                     <form action="/admin/egmdatapost" method="post" id="app_rest" class="form-horizontal">
                         <input type="hidden" name="_method" value="post"/>
-                        <input type="text" name="metaId"  id="id" th:value="${egmDataDto.id}"/>
-                        <input type="text" name="metaId"  id="metaId" th:value="${egmDataDto.metaId}"/>
+                        <input type="hidden" name="metaId"  id="id" th:value="${egmDataDto.id}"/>
+                        <input type="hidden" name="metaId"  id="metaId" th:value="${egmDataDto.metaId}"/>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">REST API 이름 </label>
                             <div class="col-sm-10">
@@ -105,7 +105,10 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">ComponentType 이름</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="componentType" th:value="${egmDataDto.componentType}">
+                                <select class="form-control select2" name="componentType" style="width: 100%;">
+                                    <option th:selected="${egmDataDto.componentType} == 'getTestData'" value="getTestData">getTestData</option>
+                                    <option th:selected="${egmDataDto.componentType} == 'getHistoricalData'" value="getHistoricalData">getHistoricalData</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -117,15 +120,18 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Measure</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="measure" th:value="${egmDataDto.measure}">
+                                <select class="form-control select2" name="measure" style="width: 100%;">
+                                    <option th:selected="${egmDataDto.measure} == 'Y'" value="Y" >사용</option>
+                                    <option th:selected="${egmDataDto.measure} == 'N'" value="N" >미사용</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">사용여부 </label>
                             <div class="col-sm-10">
                                 <select class="form-control select2" name="seTf" style="width: 100%;">
-                                    <option selected="selected" value="Y">사용</option>
-                                    <option value="N">미사용</option>
+                                    <option th:selected="${egmDataDto.seTf} == 'Y'" value="Y" >사용</option>
+                                    <option th:selected="${egmDataDto.seTf} == 'N'" value="N" >미사용</option>
                                 </select>
                             </div>
                         </div>
@@ -143,10 +149,6 @@
                                  <button type="button" class="btn btn-secondary float-right"
                                          style="margin-right: 5px;" id="list">
                                      <i class=" far fa-plus-square"></i> 목록
-                                 </button>
-                                 <button type="button" class="btn btn-danger float-right" style="margin-right: 5px;"
-                                         id="delete">
-                                     <i class="fas fa-copy"></i> 완전삭제
                                  </button>
                                  <button type="button" class="btn btn-primary float-right"
                                          onclick="document.getElementById('app_rest').submit();"
@@ -198,24 +200,12 @@
 <!-- Page specific script -->
 
 <script>
-    $(function () {
-
-
-    });
 
     $(document).on('click', '#list', function () {	// 목록 버튼 클릭 시
 
         var chk_id = $("#metaId").val();
 
         location.href = "/egmmeta/post/"+chk_id;
-
-    });
-
-    $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
-        var chk_id = $("#id").val();
-        alert(chk_id);
-        //location.href = "/snsad/staffdel?idx=" + chk_id;
-
 
     });
 </script>

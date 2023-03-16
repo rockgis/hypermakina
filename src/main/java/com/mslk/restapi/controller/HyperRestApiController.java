@@ -133,18 +133,28 @@ public class HyperRestApiController {
 
 
     @PostMapping("/admin/restsearch")
-    public String restsearch(HyperRestApiDto hyperRestApiDto, Model model) {
+    public String restsearch(HyperRestApiDto hyperRestApiDto, Model model, @ModelAttribute("params") final SearchDto params) {
 
         List<HyperRestApiDto> hyperRestApiList = hyperRestApiService.getHyperRestlist(10); //hyperRestApiService.searchPosts(hyperRestApiDto);
-        Integer[] pageList = hyperRestApiService.getPageList(10);
 
         double  count = Double.valueOf(hyperRestApiList.size());
         Integer postsTotalCount = (int) count;
 
-        model.addAttribute("hyperRestApiList", hyperRestApiList);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("postsTotalCount", postsTotalCount);
+        logger.info("params : " + params.getPage());
 
+
+        Pagination pagination = new Pagination(postsTotalCount, params);
+
+        logger.info("totalRecordCount : " + pagination.getTotalRecordCount());
+        logger.info("totalPageCount : " + pagination.getTotalPageCount());
+        logger.info("startPage : " + pagination.getStartPage());
+        logger.info("endPage : " + pagination.getEndPage());
+        logger.info("limitStart : " + pagination.getLimitStart());
+        logger.info("existPrevPage : " + pagination.isExistPrevPage());
+        logger.info("existNextPage : " + pagination.isExistNextPage());
+
+        model.addAttribute("hyperRestApiList", hyperRestApiList);
+        model.addAttribute("pagination", pagination);
 
         return "manager/restapimng/index.html";
     }

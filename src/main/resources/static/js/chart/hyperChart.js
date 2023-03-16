@@ -17,10 +17,10 @@ function  chart_gauge(source,data) {
         gauge: {},
         color: {
             pattern: [
-                "#FF0000",
-                "#F97600",
+                "#60B044",
                 "#F6C600",
-                "#60B044"
+                "#F97600",
+                "#FF0000"
             ],
             threshold: {
                 values: [
@@ -33,6 +33,9 @@ function  chart_gauge(source,data) {
         },
         size: {
             height: 180
+        },
+        legend: {
+            show: false
         },
         bindto: source
     });

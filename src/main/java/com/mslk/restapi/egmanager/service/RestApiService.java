@@ -134,7 +134,7 @@ public class RestApiService {
     }
 
 
-    public ResponseEntity<String> getTestData(String componentName,HyperRestApiDto hyperRestApiDto){
+    public ResponseEntity<String> getTestData(String componentName,String test,HyperRestApiDto hyperRestApiDto){
 
 
         String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
@@ -161,10 +161,10 @@ public class RestApiService {
         cal.setTime(date);
 
         // 10분 더하기
-        cal.add(Calendar.MINUTE, -60);
+        cal.add(Calendar.MINUTE, -120);
 
         String startDate = sdformat.format(cal.getTime());
-        logger.info("60분후 : " + startDate);
+        logger.info("120분 전 : " + startDate);
 
        /* cal.setTime(date);
 
@@ -181,8 +181,7 @@ public class RestApiService {
                 "  \"lastmeasure\":\"true\",\n"+
                 "  \"startDate\":\""+ startDate + "\",\n"+
                 "  \"endDate\":\""+ endDate + "\",\n"+
-                "  \"test\":\"System Details\",\n"+
-                "  \"info\":\"Summary\"\n"+
+                "  \"test\":\""+test+"\""+
                 "}";
 
         logger.info("requestJson : " + requestJson);
