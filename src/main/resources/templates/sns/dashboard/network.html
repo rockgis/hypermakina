@@ -68,15 +68,15 @@
                 <div class="dirBox">
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p><!-- 최대 2줄까지만 허용되게끔 css작성 -->
+                            <p>1F_Ship_Office</p><!-- 최대 2줄까지만 허용되게끔 css작성 -->
                             <div class="dirBoxCnt-left__icon"></div>
                             <div class="dirBoxCnt-left__floor b-deepOrange"><strong>출하  사무실</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_ab1_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_ab1_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="">
@@ -131,8 +131,8 @@
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="">48.341 (Mbps)</p>
-                                            <p id="">35.064 (Mbps)</p>
+                                            <p id="" th:text="${wlc_c9800_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${wlc_c9800_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
@@ -155,8 +155,8 @@
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="">48.341 (Mbps)</p>
-                                            <p id="">35.064 (Mbps)</p>
+                                            <p id="" th:text="${bb_9300l_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${bb_9300l_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
@@ -177,13 +177,13 @@
                             <div class="MainDirBox-cnt">
                                 <div class="dirBoxCnt-left">
                                     <div class="dirBoxCnt-left__icon"></div>
-                                    <p>Ga-Dong_2F-L</p>
+                                    <p>PC_ROOM_L2_1</p>
                                 </div>
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="">48.341 (Mbps)</p>
-                                            <p id="">35.064 (Mbps)</p>
+                                            <p id="" th:text="${sr_c1000_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${sr_c1000_1_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
@@ -201,13 +201,13 @@
                             <div class="MainDirBox-cnt">
                                 <div class="dirBoxCnt-left">
                                     <div class="dirBoxCnt-left__icon"></div>
-                                    <p>Ga-Dong_2F-L</p>
+                                    <p>PC_ROOM_L2_2</p>
                                 </div>
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="">48.341 (Mbps)</p>
-                                            <p id="">35.064 (Mbps)</p>
+                                            <p id="" th:text="${sr_c1000_2_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${sr_c1000_2_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
@@ -225,13 +225,13 @@
                             <div class="MainDirBox-cnt">
                                 <div class="dirBoxCnt-left">
                                     <div class="dirBoxCnt-left__icon"></div>
-                                    <p>Ga-Dong_2F-L</p>
+                                    <p>Server</p>
                                 </div>
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="">48.341 (Mbps)</p>
-                                            <p id="">35.064 (Mbps)</p>
+                                            <p id="" th:text="${sw_c1000_a1_2_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${sw_c1000_a1_2_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
@@ -287,15 +287,17 @@
                     <!-- box1 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Na-Dong_2F
+                                Main
+                            </p>
                             <div class="dirBoxCnt-left__icon"></div>
                             <div class="dirBoxCnt-left__floor b-Indigo"><strong>2F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_b1_2_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_b1_2_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -313,15 +315,17 @@
                     <!-- box2 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Na-Dong_1F
+                                Main
+                            </p>
                             <div class="dirBoxCnt-left__icon"></div>
                             <div class="dirBoxCnt-left__floor b-Indigo"><strong>1F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_b1_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_b1_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -349,15 +353,15 @@
                     <!-- box1 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Da-Dong_3F-Main</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>2F-Left</strong></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>3F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c3_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c3_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -375,15 +379,15 @@
                     <!-- box2 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Da-Dong_1F-Main</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>1F-Left</strong></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>1F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c1_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c1_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -403,15 +407,15 @@
                     <!-- box3 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Da-Dong_4F-Main</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>2F-Right</strong></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>4F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c4_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c4_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -429,15 +433,15 @@
                     <!-- box4 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Da-Dong_2F-Main</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>1F-Right</strong></div>
+                            <div class="dirBoxCnt-left__floor b-lightBlue"><strong>2F-Main</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c2_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_c2_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -465,13 +469,13 @@
                         <div class="dirBoxCnt-left">
                             <p>Ga-Dong_2F-L</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>2F-Main</strong></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>2F-Left</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a2_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a2_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -489,15 +493,15 @@
                     <!-- box2 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Ga-Dong_1F-L</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>1F-Main</strong></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>1F-Left</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a1_1_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a1_1_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -517,15 +521,15 @@
                     <!-- box3 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Ga-Dong_2F-R</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>4F-Main</strong></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>2F-Right</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a2_2_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a2_2_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -543,15 +547,15 @@
                     <!-- box4 -->
                     <div class="dirBoxCnt">
                         <div class="dirBoxCnt-left">
-                            <p>Ga-Dong_2F-L</p>
+                            <p>Ga-Dong_1F-R</p>
                             <div class="dirBoxCnt-left__icon"></div>
-                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>3F-Main</strong></div>
+                            <div class="dirBoxCnt-left__floor b-deepPink"><strong>1F-Right</strong></div>
                         </div>
                         <div class="dirBoxCnt-right">
                             <div class="dirBoxCnt-right-area">
                                 <div class="dirBoxCnt-dataBox">
-                                    <p id="">48.341 (Mbps)</p>
-                                    <p id="">35.064 (Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a1_2_t_inp_pkt_rate}" >(Mbps)</p>
+                                    <p id="" th:text="${sw_c1000_a1_2_t_out_pkt_rate}"> (Mbps)</p>
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
@@ -571,5 +575,21 @@
         </div>
     </div>
 </div>
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+
+        setTimeout(function () {
+            location.reload();
+            //alert("페이지 리로드 하기 ");
+        }, 300000);
+    });
+
+
+</script>
 </body>
 </html>

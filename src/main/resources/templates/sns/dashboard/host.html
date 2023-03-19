@@ -178,7 +178,7 @@
                 </div>
             </div>
             <div class="b-blakBox">
-                <div><em>Disk Space</em></div>
+                <div><em>Disk Usage</em></div>
                 <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 779px; height: 317px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
                     <canvas id="disklineChart" style=" height: 228px; width: 682px"></canvas>
                 </div>
@@ -212,37 +212,213 @@
         let datasets2 = new Array();
         let datasets3 = new Array();
         let datasets4 = new Array();
+        let datasets5 = new Array();
         let lineX = [];
 
         let cpu_data  = [];
+        let cpu_data1  = [];
+        let cpu_data2  = [];
+        let cpu_data3  = [];
+        let cpu_data4  = [];
+        let cpu_data5  = [];
+        let cpu_data6  = [];
+
         let ram_data  = [];
+        let ram_data1  = [];
+        let ram_data2  = [];
+        let ram_data3  = [];
+        let ram_data4  = [];
+        let ram_data5  = [];
+        let ram_data6  = [];
+
         let disk_data  = [];
-        let newtwork_data  = [];
+        let disk_data1  = [];
+        let disk_data2  = [];
+        let disk_data3  = [];
+        let disk_data4  = [];
+        let disk_data5  = [];
+        let disk_data6  = [];
+
+        let newtwork_data_in  = [];
+        let newtwork_data1_in  = [];
+        let newtwork_data2_in  = [];
+        let newtwork_data3_in  = [];
+        let newtwork_data4_in  = [];
+        let newtwork_data5_in  = [];
+        let newtwork_data6_in  = [];
+
+        let newtwork_data_out  = [];
+        let newtwork_data1_out  = [];
+        let newtwork_data2_out  = [];
+        let newtwork_data3_out  = [];
+        let newtwork_data4_out  = [];
+        let newtwork_data5_out  = [];
+        let newtwork_data6_out  = [];
 
         /*[# th:each="article : ${systemSummarylist}"]*/
         lineX.push(/*[[${article.msmt_time}]]*/);
         cpu_data.push(/*[[${article.cpu_util}]]*/);
-        ram_data.push(/*[[${article.free_mem_avail}]]*/);
         /*[/]*/
 
+        /*[# th:each="article : ${systemSummarylist1}"]*/
+        cpu_data1.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${systemSummarylist2}"]*/
+        cpu_data2.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${systemSummarylist3}"]*/
+        cpu_data3.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${systemSummarylist4}"]*/
+        cpu_data4.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${systemSummarylist5}"]*/
+        cpu_data5.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${systemSummarylist6}"]*/
+        cpu_data6.push(/*[[${article.cpu_util}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist}"]*/
+        ram_data.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist1}"]*/
+        ram_data1.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist2}"]*/
+        ram_data2.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist3}"]*/
+        ram_data3.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist4}"]*/
+        ram_data4.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist5}"]*/
+        ram_data5.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+        /*[# th:each="article : ${memoryusagelist6}"]*/
+        ram_data6.push(/*[[${article.physical_mem_utilze}]]*/);
+        /*[/]*/
+
+
         /*[# th:each="diskspace : ${diskSpacelist}"]*/
-        disk_data.push(/*[[${diskspace.used_space}]]*/);
+        disk_data.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist1}"]*/
+        disk_data1.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist2}"]*/
+        disk_data2.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist3}"]*/
+        disk_data3.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist4}"]*/
+        disk_data4.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist5}"]*/
+        disk_data5.push(/*[[${diskspace.percent_usage}]]*/);
+        /*[/]*/
+
+        /*[# th:each="diskspace : ${diskSpacelist6}"]*/
+        disk_data6.push(/*[[${diskspace.percent_usage}]]*/);
         /*[/]*/
 
         /*[# th:each="network : ${networklist}"]*/
-        console.log(/*[[${network.inp_pkt_rate}]]*/);
-        newtwork_data.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist1}"]*/
+        newtwork_data1_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data1_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist2}"]*/
+        newtwork_data2_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data2_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist3}"]*/
+        newtwork_data3_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data3_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist4}"]*/
+        newtwork_data4_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data4_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist5}"]*/
+        newtwork_data5_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data5_out.push(/*[[${network.out_pkt_rate}]]*/);
+        /*[/]*/
+
+        /*[# th:each="network : ${networklist6}"]*/
+        newtwork_data6_in.push(/*[[${network.inp_pkt_rate}]]*/);
+        newtwork_data6_out.push(/*[[${network.out_pkt_rate}]]*/);
         /*[/]*/
 
         datasets.push(new DataElement("MES_App_1_t",cpu_data));
+        datasets.push(new DataElement("MES_App_2_t",cpu_data1));
+        datasets.push(new DataElement("MES_App_3_t",cpu_data2));
+        datasets.push(new DataElement("MES_App_4_t",cpu_data3));
+        datasets.push(new DataElement("MES_Tibero_1_t",cpu_data4));
+        datasets.push(new DataElement("MES_Tibero_2_t",cpu_data5));
+        datasets.push(new DataElement("MSSQL_Server_t",cpu_data6));
 
 
         datasets2.push(new DataElement("MES_App_1_t",ram_data));
+        datasets2.push(new DataElement("MES_App_2_t",ram_data1));
+        datasets2.push(new DataElement("MES_App_3_t",ram_data2));
+        datasets2.push(new DataElement("MES_App_4_t",ram_data3));
+        datasets2.push(new DataElement("MES_Tibero_1_t",ram_data4));
+        datasets2.push(new DataElement("MES_Tibero_2_t",ram_data5));
+        datasets2.push(new DataElement("MSSQL_Server_t",ram_data6));
 
 
         datasets3.push(new DataElement("MES_App_1_t ",disk_data));
+        datasets3.push(new DataElement("MES_App_2_t ",disk_data1));
+        datasets3.push(new DataElement("MES_App_3_t ",disk_data2));
+        datasets3.push(new DataElement("MES_App_4_t ",disk_data3));
+        datasets3.push(new DataElement("MES_Tibero_1_t ",disk_data4));
+        datasets3.push(new DataElement("MES_Tibero_2_t ",disk_data5));
+        datasets3.push(new DataElement("MSSQL_Server_t ",disk_data6));
 
-        datasets4.push(new DataElement("MES_App_1_t ",newtwork_data));
+        datasets4.push(new DataElement("MES_App_1_t ",newtwork_data_in));
+        datasets4.push(new DataElement("MES_App_2_t ",newtwork_data1_in));
+        datasets4.push(new DataElement("MES_App_3_t ",newtwork_data2_in));
+        datasets4.push(new DataElement("MES_App_4_t ",newtwork_data3_in));
+        datasets4.push(new DataElement("MES_Tibero_1_t ",newtwork_data4_in));
+        datasets4.push(new DataElement("MES_Tibero_2_t ",newtwork_data5_in));
+        datasets4.push(new DataElement("MSSQL_Server_t ",newtwork_data6_in));
+
+
+        datasets5.push(new DataElement("MES_App_1_t ",newtwork_data_out));
+        datasets5.push(new DataElement("MES_App_2_t ",newtwork_data1_out));
+        datasets5.push(new DataElement("MES_App_3_t ",newtwork_data2_out));
+        datasets5.push(new DataElement("MES_App_4_t ",newtwork_data3_out));
+        datasets5.push(new DataElement("MES_Tibero_1_t ",newtwork_data4_out));
+        datasets5.push(new DataElement("MES_Tibero_2_t ",newtwork_data5_out));
+        datasets5.push(new DataElement("MSSQL_Server_t ",newtwork_data6_out));
+
 
         let ajectdata = [];
 
@@ -277,7 +453,7 @@
             chart_gauge("#diskChart",disk_data);
 
 
-            lineCart(lineX,datasets,datasets2,datasets3,datasets4);
+            lineCart(lineX,datasets,datasets2,datasets3,datasets4,datasets5);
 
             setTimeout(function () {
                 location.reload();
@@ -285,42 +461,9 @@
             }, 300000);
         });
 
-        //System Details - Summary
-        /*
-            ["TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  CPU_UTIL  CPU_UTIL_ST  SYS_CPU_UTIL  SYS_CPU_UTIL_ST  RUNNING_PROC  RUNNING_PROC_ST  BLOCKED_PROC  BLOCKED_PROC_ST  SWAP_AVAIL  SWAP_AVAIL_ST  FREE_MEM_AVAIL  FREE_MEM_AVAIL_ST  MEM_SCAN_RATE  MEM_SCAN_RATE_ST  STEAL_TIME  STEAL_TIME_ST  ",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:02:36  0.4977 GOOD 0.2330 GOOD 0.0000 GOOD 0.0000 GOOD 11769.8203 GOOD 6130.1719 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:07:24  0.8100 GOOD 0.3411 GOOD 0.0000 GOOD 0.0000 GOOD 11776.5273 GOOD 6126.7031 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:12:17  1.4796 GOOD 0.4663 GOOD 0.0000 GOOD 0.0000 GOOD 11786.4336 GOOD 6114.5156 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:17:00  1.1916 GOOD 0.7836 GOOD 0.0000 GOOD 0.0000 GOOD 11795.0117 GOOD 6076.7461 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:21:43  1.2806 GOOD 0.6947 GOOD 0.0000 GOOD 0.0000 GOOD 11793.7852 GOOD 6078.5586 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:26:29  0.3286 GOOD 0.2310 GOOD 0.0000 GOOD 0.0000 GOOD 11794.0977 GOOD 6077.6523 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:31:11  0.2723 GOOD 0.2397 GOOD 0.0000 GOOD 0.0000 GOOD 11797.2656 GOOD 6066.1406 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:35:59  0.3796 GOOD 0.3796 GOOD 0.0000 GOOD 0.0000 GOOD 11798.1641 GOOD 6068.4375 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:40:47  0.8626 GOOD 0.7324 GOOD 0.0000 GOOD 0.0000 GOOD 11793.8398 GOOD 6060.0273 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:45:46  0.8378 GOOD 0.4423 GOOD 0.0000 GOOD 0.0000 GOOD 11795.6406 GOOD 6062.9023 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:50:36  0.9331 GOOD 0.7379 GOOD 0.0000 GOOD 0.0000 GOOD 11808.5273 GOOD 6056.8320 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:55:42  0.9747 GOOD 0.4541 GOOD 0.0000 GOOD 0.0000 GOOD 11811.3125 GOOD 6051.3555 GOOD 0.0000 GOOD -5.0000 GOOD"
-            ]*/
-
-        /* Ram
-                "TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  TOTAL_PHY_MEM  TOTAL_PHY_MEM_ST  USED_PHY_MEM  USED_PHY_MEM_ST  FREE_PHY_MEM  FREE_PHY_MEM_ST  PHYSICAL_MEM_UTILZE  PHYSICAL_MEM_UTILZE_ST  PHYSICAL_AVAIL_MEM  PHYSICAL_AVAIL_MEM_ST  MODIFIED_MEM  MODIFIED_MEM_ST  STANDBY_MEM  STANDBY_MEM_ST  CACHED_MEM  CACHED_MEM_ST  MAX_MEM_ALLOCATE  MAX_MEM_ALLOCATE_ST  MAX_MEM_USAGE  MAX_MEM_USAGE_ST  AUTOMATION_STATUS  AUTOMATION_STATUS_ST  ",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:02:41  15838.0000 GOOD 9694.5430 GOOD 246.7227 GOOD 61.2107 GOOD 6130.0000 GOOD 13.4570 GOOD 5883.2773 GOOD 5896.7344 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:08:05  15838.0000 GOOD 9701.9297 GOOD 239.5078 GOOD 61.2573 GOOD 6125.0000 GOOD 11.0703 GOOD 5885.4922 GOOD 5896.5625 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:13:26  15838.0000 GOOD 9716.9570 GOOD 228.5273 GOOD 61.3522 GOOD 6109.0000 GOOD 12.0430 GOOD 5880.4727 GOOD 5892.5156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:18:40  15838.0000 GOOD 9746.0078 GOOD 192.1055 GOOD 61.5356 GOOD 6080.0000 GOOD 11.9922 GOOD 5887.8945 GOOD 5899.8867 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:23:16  15838.0000 GOOD 9749.9102 GOOD 193.4414 GOOD 61.5602 GOOD 6076.0000 GOOD 12.0898 GOOD 5882.5586 GOOD 5894.6484 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:28:28  15838.0000 GOOD 9750.2930 GOOD 197.2266 GOOD 61.5627 GOOD 6076.0000 GOOD 11.7070 GOOD 5878.7734 GOOD 5890.4805 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:33:49  15838.0000 GOOD 9754.9531 GOOD 186.0312 GOOD 61.5921 GOOD 6070.0000 GOOD 13.0469 GOOD 5883.9687 GOOD 5897.0156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:39:02  15838.0000 GOOD 9758.4219 GOOD 180.9805 GOOD 61.6140 GOOD 6066.0000 GOOD 13.5781 GOOD 5885.0195 GOOD 5898.5977 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:43:48  15838.0000 GOOD 9755.5977 GOOD 187.4258 GOOD 61.5961 GOOD 6069.0000 GOOD 13.4023 GOOD 5881.5742 GOOD 5894.9766 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:49:07  15838.0000 GOOD 9767.4258 GOOD 176.7617 GOOD 61.6708 GOOD 6058.0000 GOOD 12.5742 GOOD 5881.2383 GOOD 5893.8125 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:53:43  15838.0000 GOOD 9765.8281 GOOD 166.3320 GOOD 61.6607 GOOD 6058.0000 GOOD 14.1719 GOOD 5891.6680 GOOD 5905.8398 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:59:08  15838.0000 GOOD 9761.9336 GOOD 171.9219 GOOD 61.6362 GOOD 6076.0000 GOOD 0.0664 GOOD 5904.0781 GOOD 5904.1445 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD"
-        */
 
 
-
-        function lineCart(lineX,datasets,datasets2,datasets3,datasets4) {
+        function lineCart(lineX,datasets,datasets2,datasets3,datasets4,datasets5) {
 
             var i = 0;
 
@@ -334,19 +477,21 @@
 
             var configMaker = new ConfigMaker();
 
-            var config = configMaker.createLineChartConfig(lineX,datasets,false,"%");
+            var config = configMaker.createLineChartConfig(lineX,datasets,false,"Used %");
             var lineChartCanvas          = document.getElementById('cpulineChart').getContext('2d');
             var lineChart                = new Chart(lineChartCanvas,config);
 
-            var config2 = configMaker.createLineChartConfig(lineX,datasets2,false,"GB");
+            var config2 = configMaker.createLineChartConfig(lineX,datasets2,false,"Used%");
             var lineChartCanvas2          = document.getElementById('ramChart').getContext('2d');
             var lineChart2                = new Chart(lineChartCanvas2,config2);
 
-            var config3 = configMaker.createLineChartConfig(lineX,datasets3,false,"GB");
+            var config3 = configMaker.createLineChartConfig(lineX,datasets3,false,"Used %");
             var lineChartCanvas3          = document.getElementById('disklineChart').getContext('2d');
             var lineChart3                = new Chart(lineChartCanvas3,config3);
 
             var config4 = configMaker.createLineChartConfig(lineX,datasets4,false,"Packets/sec");
+
+           // var config4 = configMaker.createLineNLine(lineX,datasets4, datasets5 );
             var lineChartCanvas4          = document.getElementById('networkChart').getContext('2d');
             var lineChart4                = new Chart(lineChartCanvas4,config4);
 

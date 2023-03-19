@@ -223,7 +223,7 @@ function ConfigMaker() {
 			},
 			options: {
 				title: {
-					display: true,
+					display: false,
 					position: 'top',
 					text: lineData.title
 				},
@@ -256,7 +256,7 @@ function ConfigMaker() {
 						id: 'energy',
 						scaleLabel: {
 							display: true,
-							labelString: '천TOE'
+							labelString: 'Packets/sec'
 						},
 						ticks: {
 							min: 0,

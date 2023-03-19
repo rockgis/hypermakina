@@ -7,6 +7,7 @@ import com.mslk.dashboard.service.DashBoardMngService;
 import com.mslk.egmanager.service.EgmMetaService;
 import com.mslk.restapi.dto.HyperRestApiDto;
 import com.mslk.restapi.egmanager.domain.DiskSpaceVO;
+import com.mslk.restapi.egmanager.domain.MemoryUsageVO;
 import com.mslk.restapi.egmanager.domain.NetworkVO;
 import com.mslk.restapi.egmanager.domain.SystemSummaryVO;
 import com.mslk.restapi.egmanager.service.RestApiService;
@@ -188,17 +189,46 @@ public class SnsDashboardController {
 
                 systemSummarylist = this.SystemSummaryGet("MES_App_1_t",hyperRestApiDto);
 
+
                 model.addAttribute("systemSummarylist", systemSummarylist);
+                model.addAttribute("systemSummarylist1", this.SystemSummaryGet("MES_App_2_t",hyperRestApiDto));
+                model.addAttribute("systemSummarylist2", this.SystemSummaryGet("MES_App_3_t",hyperRestApiDto));
+                model.addAttribute("systemSummarylist3", this.SystemSummaryGet("MES_App_4_t",hyperRestApiDto));
+                model.addAttribute("systemSummarylist4", this.SystemSummaryGet("MES_Tibero_1_t",hyperRestApiDto));
+                model.addAttribute("systemSummarylist5", this.SystemSummaryGet("MES_Tibero_2_t",hyperRestApiDto));
+                model.addAttribute("systemSummarylist6", this.SystemSummaryGet("MSSQL_Server_t",hyperRestApiDto));
 
 
-                ArrayList diskSpacelist =  this.DiskspaceGet("MES_App_1_t","Disk Space",hyperRestApiDto );
-
-                model.addAttribute("diskSpacelist", diskSpacelist);
 
 
-                ArrayList networklist =  this.NetworkGet("MES_App_1_t","Network Packet Traffic",hyperRestApiDto );
+               // MemoryUsageVO
+                model.addAttribute("memoryusagelist", this.MemoryUsageGet("MES_App_1_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist1", this.MemoryUsageGet("MES_App_2_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist2", this.MemoryUsageGet("MES_App_3_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist3", this.MemoryUsageGet("MES_App_4_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist4", this.MemoryUsageGet("MES_Tibero_1_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist5", this.MemoryUsageGet("MES_Tibero_2_t","Memory Usage",hyperRestApiDto ));
+                model.addAttribute("memoryusagelist6", this.MemoryUsageGet("MSSQL_Server_t","Memory Usage",hyperRestApiDto ));
 
-                model.addAttribute("networklist", networklist);
+
+
+
+                model.addAttribute("diskSpacelist", this.DiskspaceGet("MES_App_1_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist1", this.DiskspaceGet("MES_App_2_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist2", this.DiskspaceGet("MES_App_3_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist3", this.DiskspaceGet("MES_App_4_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist4", this.DiskspaceGet("MES_Tibero_1_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist5", this.DiskspaceGet("MES_Tibero_2_t","Disk Space",hyperRestApiDto ));
+                model.addAttribute("diskSpacelist6", this.DiskspaceGet("MSSQL_Server_t","Disk Space",hyperRestApiDto ));
+
+
+                model.addAttribute("networklist", this.NetworkGet("MES_App_1_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist1", this.NetworkGet("MES_App_2_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist2", this.NetworkGet("MES_App_3_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist3", this.NetworkGet("MES_App_4_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist4", this.NetworkGet("MES_Tibero_1_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist5", this.NetworkGet("MES_Tibero_2_t","Network Packet Traffic",hyperRestApiDto ));
+                model.addAttribute("networklist6", this.NetworkGet("MSSQL_Server_t","Network Packet Traffic",hyperRestApiDto ));
 
 
 
@@ -231,6 +261,8 @@ public class SnsDashboardController {
 
                 model.addAttribute("diskmn", diskmn);
 
+
+
                 systemSummarylist = this.SystemSummaryGet(hosnm,hyperRestApiDto);
 
                 model.addAttribute("systemSummarylist", systemSummarylist);
@@ -243,7 +275,104 @@ public class SnsDashboardController {
                 model.addAttribute("lan", String.format("%02d", 1));
                 model.addAttribute("switch", String.format("%02d", 14));
 
+              //  WLC_C9800_t
 
+                String wlc_c9800_t[] =this.NetworkOneGet("WLC_C9800_t","Network Interfaces", hyperRestApiDto);
+                model.addAttribute("wlc_c9800_t_inp_pkt_rate", wlc_c9800_t[0]);
+                model.addAttribute("wlc_c9800_t_out_pkt_rate", wlc_c9800_t[1]);
+
+                //BB_9300L_t
+
+                String bb_9300l_t[] = this.NetworkOneGet("BB_9300L_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("bb_9300l_t_inp_pkt_rate", bb_9300l_t[0]);
+                model.addAttribute("bb_9300l_t_out_pkt_rate", bb_9300l_t[1]);
+
+                //SR_C1000_1_t
+
+                String sr_c1000_1_t[] = this.NetworkOneGet("SR_C1000_1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sr_c1000_1_t_inp_pkt_rate", sr_c1000_1_t[0]);
+                model.addAttribute("sr_c1000_1_t_out_pkt_rate", sr_c1000_1_t[1]);
+
+                //SR_C1000_2_t
+                String sr_c1000_2_t[] = this.NetworkOneGet("SR_C1000_2_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sr_c1000_2_t_inp_pkt_rate", sr_c1000_2_t[0]);
+                model.addAttribute("sr_c1000_2_t_out_pkt_rate", sr_c1000_2_t[1]);
+
+                //SW_C1000_A1-1_t
+
+                String sw_c1000_a1_1_t[] = this.NetworkOneGet("SW_C1000_A1-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_a1_1_t_inp_pkt_rate", sw_c1000_a1_1_t[0]);
+                model.addAttribute("sw_c1000_a1_1_t_out_pkt_rate", sw_c1000_a1_1_t[1]);
+
+                //SW_C1000_A1-2_t
+                String sw_c1000_a1_2_t[] = this.NetworkOneGet("SW_C1000_A1-2_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_a1_2_t_inp_pkt_rate", sw_c1000_a1_2_t[0]);
+                model.addAttribute("sw_c1000_a1_2_t_out_pkt_rate", sw_c1000_a1_2_t[1]);
+
+
+                //SW_C1000_A2-1_t
+                String sw_c1000_a2_1_t[] = this.NetworkOneGet("SW_C1000_A2-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_a2_1_t_inp_pkt_rate", sw_c1000_a2_1_t[0]);
+                model.addAttribute("sw_c1000_a2_1_t_out_pkt_rate", sw_c1000_a2_1_t[1]);
+
+                //SW_C1000_A2-2_t
+                String sw_c1000_a2_2_t[] = this.NetworkOneGet("SW_C1000_A2-2_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_a2_2_t_inp_pkt_rate", sw_c1000_a2_2_t[0]);
+                model.addAttribute("sw_c1000_a2_2_t_out_pkt_rate", sw_c1000_a2_2_t[1]);
+
+                //SW_C1000_AB1-1_t
+                String sw_c1000_ab1_1_t[] = this.NetworkOneGet("SW_C1000_AB1-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_ab1_1_t_inp_pkt_rate", sw_c1000_ab1_1_t[0]);
+                model.addAttribute("sw_c1000_ab1_1_t_out_pkt_rate", sw_c1000_ab1_1_t[1]);
+
+                //SW_C1000_B1-1_t
+
+                String sw_c1000_b1_1_t[] = this.NetworkOneGet("SW_C1000_B1-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_b1_1_t_inp_pkt_rate", sw_c1000_b1_1_t[0]);
+                model.addAttribute("sw_c1000_b1_1_t_out_pkt_rate", sw_c1000_b1_1_t[1]);
+
+                //SW_C1000_B1-2_t
+
+                String sw_c1000_b1_2_t[] = this.NetworkOneGet("SW_C1000_B1-2_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_b1_2_t_inp_pkt_rate", sw_c1000_b1_2_t[0]);
+                model.addAttribute("sw_c1000_b1_2_t_out_pkt_rate", sw_c1000_b1_2_t[1]);
+
+                //SW_C1000_C1-1_t
+
+                String sw_c1000_c1_1_t[] = this.NetworkOneGet("SW_C1000_C1-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_c1_1_t_inp_pkt_rate", sw_c1000_c1_1_t[0]);
+                model.addAttribute("sw_c1000_c1_1_t_out_pkt_rate", sw_c1000_c1_1_t[1]);
+
+                //SW_C1000_C2-1_t
+                String sw_c1000_c2_1_t[] = this.NetworkOneGet("SW_C1000_C2-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_c2_1_t_inp_pkt_rate", sw_c1000_c2_1_t[0]);
+                model.addAttribute("sw_c1000_c2_1_t_out_pkt_rate", sw_c1000_c2_1_t[1]);
+
+                //SW_C1000_C3-1_t
+
+                String sw_c1000_c3_1_t[] = this.NetworkOneGet("SW_C1000_C3-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_c3_1_t_inp_pkt_rate", sw_c1000_c3_1_t[0]);
+                model.addAttribute("sw_c1000_c3_1_t_out_pkt_rate", sw_c1000_c3_1_t[1]);
+
+                //SW_C1000_C4-1_t
+
+                String sw_c1000_c4_1_t[] = this.NetworkOneGet("SW_C1000_C4-1_t","Network Interfaces", hyperRestApiDto);
+
+                model.addAttribute("sw_c1000_c4_1_t_inp_pkt_rate", sw_c1000_c4_1_t[0]);
+                model.addAttribute("sw_c1000_c4_1_t_out_pkt_rate", sw_c1000_c4_1_t[1]);
 
                 urlgo = "sns/dashboard/network";
                 break;
@@ -255,8 +384,30 @@ public class SnsDashboardController {
 
     }
 
+    private String[] NetworkOneGet(String componetName, String usage , HyperRestApiDto hyperRestApiDto){
 
-    private String  UsageGet(String componetName,String usage,int index, HyperRestApiDto hyperRestApiDto){
+        String usageerest = restApiService.getDataNetwork(componetName, hyperRestApiDto,usage, -10).getBody().toString();
+
+        String usagedata[]=usageerest.split(",");
+
+        logger.info("usagedata :" + usagedata[usagedata.length - 1 ].toString());
+
+        String usageresult[] = usagedata[usagedata.length - 1 ].split(" ");
+
+        logger.info("Rest Get usage result :" + usageresult[usageresult.length - 1 ].toString() );
+
+        String inp_pkt_rate = usageresult[usageresult.length - 28 ].toString();
+        String out_pkt_rate = usageresult[usageresult.length - 26 ].toString();
+
+
+
+        String networkdata[] = {String.format("%.2f", Double.parseDouble(inp_pkt_rate)) + " (Mbps)" ,String.format("%.2f", Double.parseDouble(out_pkt_rate)) + " (Mbps)"  };
+
+        return networkdata;
+    }
+
+
+    private String UsageGet(String componetName,String usage,int index, HyperRestApiDto hyperRestApiDto){
 
         String usageerest = restApiService.getDataUptime(componetName, hyperRestApiDto,usage, -10).getBody().toString();
 
@@ -293,6 +444,67 @@ public class SnsDashboardController {
 
 
         return uptime;
+    }
+
+
+    private ArrayList MemoryUsageGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
+
+        String resultdata = restApiService.getTestData( componetName, test ,hyperRestApiDto).getBody().toString();
+
+        logger.info("Rest Get resultdata :" + resultdata);
+
+        String chartdata[]=resultdata.split(",");
+
+        ArrayList<MemoryUsageVO> memoryUsagelist = new ArrayList<>();
+        String systemsummary[] = {};
+
+        logger.info("Rest Get chartdata :" + chartdata.length);
+
+        for(int i = 1 ; i < chartdata.length ;i++){
+
+            logger.info("chartdata["+i+"] :" + chartdata[i].toString());
+
+            systemsummary = chartdata[i].split(" ");
+
+            MemoryUsageVO memoryUsageVO = new MemoryUsageVO();
+
+            memoryUsageVO.setTrgt_host(systemsummary[0]); //TRGT_HOST
+            memoryUsageVO.setPort_no(systemsummary[1]); // PORT_NO
+            memoryUsageVO.setSite_name(systemsummary[2]); // SITE_NAME
+            memoryUsageVO.setInfo(systemsummary[3]); // INFO
+            memoryUsageVO.setMsmt_host(systemsummary[4]); // MSMT_HOST
+            memoryUsageVO.setMsmt_time(systemsummary[6]);// MSMT_TIME
+            memoryUsageVO.setTotal_phy_mem(systemsummary[8]); //TOTAL_PHY_MEM
+            memoryUsageVO.setTotal_phy_mem_st(systemsummary[9]);//        TOTAL_PHY_MEM_ST
+            memoryUsageVO.setUsed_phy_mem(systemsummary[10]); // USED_PHY_MEM
+            memoryUsageVO.setUsed_phy_mem_st(systemsummary[11]);//        USED_PHY_MEM_ST
+            memoryUsageVO.setFree_phy_mem(systemsummary[12]);//FREE_PHY_MEM
+            memoryUsageVO.setFree_phy_mem_st(systemsummary[13]);//        FREE_PHY_MEM_ST
+            memoryUsageVO.setPhysical_mem_utilze(systemsummary[14]);// PHYSICAL_MEM_UTILZE
+            memoryUsageVO.setPhysical_mem_utilze_st(systemsummary[15]);//        PHYSICAL_MEM_UTILZE_ST
+            memoryUsageVO.setPhysical_avail_mem(systemsummary[16]);//PHYSICAL_AVAIL_MEM
+            memoryUsageVO.setPhysical_avail_mem_st(systemsummary[17]);//         PHYSICAL_AVAIL_MEM_ST
+            memoryUsageVO.setModified_mem(systemsummary[18]);// MODIFIED_MEM
+            memoryUsageVO.setModified_mem_st(systemsummary[19]);//         MODIFIED_MEM_ST
+            memoryUsageVO.setStandby_mem(systemsummary[20]);// STANDBY_MEM
+            memoryUsageVO.setStandby_mem_st(systemsummary[21]);//         STANDBY_MEM_ST
+            memoryUsageVO.setCached_mem(systemsummary[22]);// CACHED_MEM
+            memoryUsageVO.setCached_mem_st(systemsummary[23]);//         CACHED_MEM_ST
+            memoryUsageVO.setMax_mem_allocate(systemsummary[24]);// MAX_MEM_ALLOCATE
+            memoryUsageVO.setMax_mem_allocate_st(systemsummary[25]);//         MAX_MEM_ALLOCATE_ST
+            memoryUsageVO.setMax_mem_usage(systemsummary[26]);//  MAX_MEM_USAGE
+            memoryUsageVO.setMax_mem_usage_st(systemsummary[27]);//          MAX_MEM_USAGE_ST
+            memoryUsageVO.setAutomation_status(systemsummary[28]);// AUTOMATION_STATUS
+            memoryUsageVO.setAutomation_status_st(systemsummary[29]);// AUTOMATION_STATUS_ST
+
+            logger.debug("diskSpaceVO [0] :" + memoryUsageVO.getMsmt_time().toString());
+
+            memoryUsagelist.add(memoryUsageVO);
+
+        }
+
+        return memoryUsagelist;
+
     }
 
     private ArrayList NetworkGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
