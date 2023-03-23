@@ -56,7 +56,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">부서 관리</li>
+                            <li class="breadcrumb-item active">겸직 관리</li>
                         </ol>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 겸직 관리</h3>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
@@ -106,42 +106,38 @@
                                         <input type="checkbox" id="chkAll">
                                     </th>
                                     <th width="5%">번호</th>
-                                    <th>부서ID</th>
-                                    <th>부서명</th>
-                                    <th>상위부서 ID</th>
-                                    <th>Depth</th>
-                                    <th>Full Tree ID</th>
+                                    <th>사용자 ID </th>
+                                    <th>이름</th>
+                                    <th>직급 ID</th>
+                                    <th>직책 ID</th>
+                                    <th>부서 ID</th>
                                     <th>동기화 유무</th>
-                                    <th>삭제 유무</th>
-                                    <th>수정일</th>
-
+                                    <th>생성일</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="department, i : ${departmentlist}">
+                                <tr th:each="concurrent, i : ${concurrentList}">
                                     <td width="5%">
-                                        <input type="checkbox" class="chk" th:value="${department.id}">
+                                        <input type="checkbox" class="chk" th:value="${concurrent.id}">
                                     </td>
                                     <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
-                                    <td><span th:text="${department.uid}"></span></td>
-                                    <td><a th:href="@{'/snsad/departmentpost/' + ${department.id}}">
-                                        <span th:text="${department.name}"></span>
-                                    </a>
-                                    </td>
-                                    <td><span th:text="${department.upperId}"></span></td>
-                                    <td><span th:text="${department.depth}"></span></td>
-                                    <td><span th:text="${department.treeId}"></span></td>
-                                    <td><span th:if="${department.syncUse == 1}">True</span>
-                                        <span th:if="${department.syncUse == 0}">False</span>
+                                    <td><a th:href="@{'/snsad/concurrentpost/' + ${concurrent.id}}">
+                                        <span th:text="${concurrent.uid}"></span>
+                                        </a>
                                     </td>
                                     <td>
-                                        <span th:if="${department.del} == 1 "> True</span>
-                                        <span th:if="${department.del} == 0 "> False</span>
+                                        <a th:href="@{'/snsad/concurrentpost/' + ${concurrent.id}}">
+                                            <span th:text="${concurrent.name}"></span>
+                                        </a>
                                     </td>
-                                    <td><span
-                                            th:text="${#temporals.format(department.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                    <td><span th:text="${concurrent.rankId}"></span></td>
+                                    <td><span th:text="${concurrent.positionId}"></span></td>
+                                    <td><span th:text="${concurrent.departmentId}"></span></td>
+                                    <td> <span th:if="${concurrent.syncUse == 1}">True</span>
+                                         <span th:if="${concurrent.syncUse == 0}">False</span>
                                     </td>
+                                    <td><span th:text="${#temporals.format(concurrent.createdDate, 'yyyy-MM-dd')}"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -154,7 +150,7 @@
                         <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
 
                         <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/departmentlist?page=1'}">First</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/concurrentList?page=1'}">First</a></li>
                             <!-- 이전 페이지로 가기 버튼
                             <li th:class="${pagination.existPrevPage} ? 'disabled'">
                               <a th:href="${list.first} ? '#' :${prevAddr}"
@@ -165,7 +161,7 @@
 
 
                             <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
-                                <a  class="page-link" th:href="@{'/snsad/departmentlist?page=' + ${pageNum}}">[[${pageNum}]]</a>
+                                <a  class="page-link" th:href="@{'/snsad/concurrentList?page=' + ${pageNum}}">[[${pageNum}]]</a>
                             </li>
                             <!--다음 페이지로
                             <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
@@ -174,7 +170,7 @@
                               </a>
                             </li>-->
                             <!--맨 마지막 페이지로 이동 -->
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/departmentlist?page=' + ${pagination.getEndPage()}}">Last</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/concurrentList?page=' + ${pagination.getEndPage()}}">Last</a></li>
 
                         </ul>
 
@@ -198,6 +194,30 @@
 </div>
 <!-- ./wrapper -->
 
+
+<div class="modal fade" id="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Default Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- /.modal
 <div class="modal fade" id="modal-lg">
   <div class="modal-dialog modal-lg">-->
@@ -211,7 +231,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/snsad/departmentsearch" id="app_search" method="POST">
+                <form action="/snsad/concurrentsearch" id="app_search" method="POST">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="row">
                         <div class="col-sm-6">
@@ -219,8 +239,11 @@
                             <div class="form-group">
                                 <label>검색 조건</label>
                                 <select class="form-control select2" name="searchType" style="width: 100%;">
-                                    <option selected="selected" value="uid">부서 ID</option>
-                                    <option value="name">부서명</option>
+                                    <option selected="selected" value="uid">아이디</option>
+                                    <option value="fullName">이름</option>
+                                    <option value="identityNo">사원번호</option>
+                                    <option value="eMail">이메일</option>
+                                    <option value="hp">헨드폰 번호</option>
                                 </select>
                             </div>
                         </div>
@@ -268,69 +291,91 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">부서 관리</h4>
+                <h4 class="modal-title">겸직 관리</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/snsad/departmentpost" method="post" id="app_brd" class="form-horizontal">
+                <form action="/snsad/concurrentpost" method="post" id="app_brd" class="form-horizontal">
                     <input type="hidden" name="_method" value="post"/>
-
                     <div class="row">
                         <div class="col-sm-6">
                             <!-- text input -->
                             <div class="form-group">
-                                <label>부서 ID</label>
-                                <input type="text" class="form-control" name="uid" placeholder="부서 ID">
+                                <label>사용자 ID</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="uid" placeholder="사용자 ID">
+                                    <span class="input-group-append"><button type="button" class="btn btn-info btn-flat">사용자 검색</button></span>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>부서명</label>
-                                <input type="text" class="form-control" name="name" placeholder="부서명">
+                                <label>이름</label>
+                                <input type="text" class="form-control" name="name" placeholder="이름" value="관리자">
                             </div>
                         </div>
                     </div>
 
-
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">상위부서 ID</label>
+                        <label class="col-sm-2 col-form-label">직급 ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="upperId" placeholder="상위부서 ID">
+                            <div class="input-group mb-3">
+                                <select name="rankId"  class="form-control select2" style="width: 100%;">
+                                    <option value="">직급 ID 선택</option>
+                                    <option th:each="rankId : ${ranklist}" th:value="${rankId.name +'('+rankId.uid+')'}"
+                                            th:text="${rankId.name +'('+rankId.uid+')'}">FAST</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">직책 ID</label>
+                        <div class="col-sm-10">
+                            <div class="input-group mb-3">
+                                <select name="positionId"  class="form-control select2" style="width: 100%;">
+                                    <option value="">직책 ID 선택</option>
+                                    <option th:each="positionId : ${positionlist}" th:value="${positionId.name +'('+positionId.uid+')'}"
+                                            th:text="${positionId.name +'('+positionId.uid+')'}">FAST</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">부서 ID</label>
+                        <div class="col-sm-10">
+                            <div class="input-group mb-3">
+                                <select name="departmentId"  class="form-control select2" style="width: 100%;">
+                                    <option value="">부서 ID 선택</option>
+                                    <option th:each="departmentId : ${departmentlist}" th:value="${departmentId.name +'('+departmentId.uid+')'}"
+                                            th:text="${departmentId.name +'('+departmentId.uid+')'}">FAST</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <!-- text input -->
                             <div class="form-group">
-                                <label>Neseted Set Model 좌측 ID</label>
-                                <input type="text" class="form-control" name="lftId"
-                                       placeholder="Neseted Set Model 좌측 ID">
+                                <label>부서장 유무 </label>
+                                <select class="form-control select2" name="head" style="width: 100%;">
+                                    <option value="1">True</option>
+                                    <option selected="selected" value="0">False</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Nelgusmsseted Set Model 우측 ID</label>
-                                <input type="text" class="form-control" name="rgtId"
-                                       placeholder="Nelgusmsseted Set Model 우측 ID">
+                                <label>순서</label>
+                                <input type="text" class="form-control" name="seq" value="1" placeholder="1">
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Depth </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="depth" placeholder="Depth">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">순서</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="seq" value="1">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">동기화 유무</label>
+                        <label class="col-sm-2 col-form-label">동기화 유무 </label>
                         <div class="col-sm-10">
                             <select class="form-control select2" name="syncUse" style="width: 100%;">
                                 <option selected="selected" value="1">True</option>
@@ -339,33 +384,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Full Tree ID </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="treeId" placeholder="Full Tree ID">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">최상위 유무 </label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="root" style="width: 100%;">
-                                <option selected="selected" value="1">True</option>
-                                <option value="0">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-sm-2 col-form-label">memo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="memo" placeholder="메모">
+                            <input type="text" class="form-control" name="memo" placeholder="memo">
                         </div>
                     </div>
-                    <!-- div class="form-group row">
-                      <label class="col-sm-2 col-form-label">작성자</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="writer" placeholder="작성자" value='<span sec:authentication="name"></span>'>
-                      </div>
-                    </div -->
-
                 </form>
 
             </div>
@@ -428,7 +451,7 @@
     });
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/snsad/departmentlist";
+        location.href = "/snsad/concurrentlist";
 
     });
 
@@ -441,9 +464,9 @@
         });
 
         if (chk_id == "") {
-            alert("삭제하고자 하는 부서를 선택하세요 ?")
+            alert("삭제하고자 하는 사용자를 선택하세요 ?")
         } else {
-            location.href = "/snsad/departmentdel?idx=" + chk_id;
+            location.href = "/snsad/concurrentdel?idx=" + chk_id;
         }
 
     });

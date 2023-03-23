@@ -39,6 +39,19 @@ public class DepartmentService {
     }
 
     @Transactional
+    public List<DepartmentDto> getDepartmentlistAll() {
+
+        List<DepartmentEntity> departmentEntities = departmentRepository.findAll( Sort.by(Sort.Direction.DESC, "seq"));
+        List<DepartmentDto> departmentDtotoList = new ArrayList<>();
+
+        for (DepartmentEntity departmentEntity : departmentEntities) {
+            departmentDtotoList.add(this.convertEntityToDto(departmentEntity));
+        }
+
+        return departmentDtotoList;
+    }
+
+    @Transactional
     public Long getDepartmentCount() {
         return departmentRepository.count();
     }

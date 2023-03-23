@@ -127,8 +127,12 @@
                                     </a>
                                     </td>
                                     <td><span th:text="${rank.seq}"></span></td>
-                                    <td><span th:text="${rank.syncUse}"></span></td>
-                                    <td><span th:text="${rank.del}"></span></td>
+                                    <td><span th:if="${rank.syncUse == 1}">True</span>
+                                        <span th:if="${rank.syncUse == 0}">False</span>
+                                    </td>
+                                    <td><span th:if="${rank.del == 1}">True</span>
+                                        <span th:if="${rank.del == 0}">False</span>
+                                    </td>
                                     <td><span
                                             th:text="${#temporals.format(rank.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                                     </td>

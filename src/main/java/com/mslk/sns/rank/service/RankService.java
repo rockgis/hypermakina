@@ -26,9 +26,22 @@ public class RankService {
 
     @Transactional
     public List<RankDto> getRanklist(Integer pageNum) {
-        Page<RankEntity> page = rankRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "createdDate")));
+        Page<RankEntity> page = rankRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.DESC, "seq")));
 
         List<RankEntity> rankEntities = page.getContent();
+        List<RankDto> rankDtoList = new ArrayList<>();
+
+        for (RankEntity rankEntity : rankEntities) {
+            rankDtoList.add(this.convertEntityToDto(rankEntity));
+        }
+
+        return rankDtoList;
+    }
+
+    @Transactional
+    public List<RankDto> getRanklistAll() {
+
+        List<RankEntity> rankEntities =  rankRepository.findAll( Sort.by(Sort.Direction.DESC, "seq"));
         List<RankDto> rankDtoList = new ArrayList<>();
 
         for (RankEntity rankEntity : rankEntities) {

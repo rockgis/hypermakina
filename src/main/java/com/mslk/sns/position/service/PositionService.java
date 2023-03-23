@@ -39,6 +39,19 @@ public class PositionService {
     }
 
     @Transactional
+    public List<PositionDto> getPositionlistAll() {
+
+        List<PositionEntity> positionEntities = positionRepository.findAll( Sort.by(Sort.Direction.DESC, "seq"));
+        List<PositionDto> positionDtotoList = new ArrayList<>();
+
+        for (PositionEntity positionEntity : positionEntities) {
+            positionDtotoList.add(this.convertEntityToDto(positionEntity));
+        }
+
+        return positionDtotoList;
+    }
+
+    @Transactional
     public Long getPositionCount() {
         return positionRepository.count();
     }

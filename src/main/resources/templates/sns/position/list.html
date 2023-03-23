@@ -127,8 +127,13 @@
                                     </a>
                                     </td>
                                     <td><span th:text="${position.seq}"></span></td>
-                                    <td><span th:text="${position.syncUse}"></span></td>
-                                    <td><span th:text="${position.del}"></span></td>
+                                    <td><span th:if="${position.syncUse == 1}">True</span>
+                                        <span th:if="${position.syncUse == 0}">False</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${position.del} == 1 "> True</span>
+                                        <span th:if="${position.del} == 0 "> False</span>
+                                    </td>
                                     <td><span
                                             th:text="${#temporals.format(position.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                                     </td>
