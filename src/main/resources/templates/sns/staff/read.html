@@ -72,21 +72,27 @@
                     <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{'/snsad/post/edit/' + ${concurrentDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                    <form th:action="@{'/snsad/post/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
                         <input type="hidden" name="_method" value="put"/>
-                        <input type="hidden" name="id" id="id" th:value="${concurrentDto.id}"/>
+                        <input type="hidden" name="id" id="id" th:value="${staffDto.id}"/>
                         <div class="row">
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>아이디</label>
-                                    <input type="text" class="form-control" name="uid" th:value="${concurrentDto.uid}">
+                                    <div class="input-group mb-3">
+                                        <span th:text="${staffDto.uid}"></span>
+                                    </div>
+                                    <input type="hidden" class="form-control" name="uid" th:value="${staffDto.uid}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>pw</label>
-                                    <input type="text" class="form-control" name="pw" th:value="${concurrentDto.pw}">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="pw" id="pw" th:value="${staffDto.pw}">
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -96,15 +102,12 @@
                                 <div class="form-group">
                                     <label>이름</label>
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" name="lName" th:value="${concurrentDto.lName}">
+                                        <div class="input-group mb-3">
+                                            <span th:text="${staffDto.fullName}"></span>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="fName" th:value="${concurrentDto.fName}">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="fullName" th:value="${concurrentDto.fullName}">
-                                        </div>
+                                            <input type="hidden" class="form-control" name="lName" th:value="${staffDto.lName}">
+                                            <input type="hidden" class="form-control" name="fName" th:value="${staffDto.fName}">
+                                            <input type="hidden" class="form-control" name="fullName" th:value="${staffDto.fullName}">
                                     </div>
 
                                 </div>
@@ -113,8 +116,8 @@
                                 <div class="form-group">
                                     <label>성별</label>
                                     <select class="form-control select2" name="sex" style="width: 100%;">
-                                        <option th:selected="${concurrentDto.sex} == '남'" value="남">남</option>
-                                        <option th:selected="${concurrentDto.sex} == '여'" value="여">여</option>
+                                        <option th:selected="${staffDto.sex} == '남'" value="남">남</option>
+                                        <option th:selected="${staffDto.sex} == '여'" value="여">여</option>
                                     </select>
                                 </div>
                             </div>
@@ -126,13 +129,16 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>부서</label>
-                                    <input type="text" class="form-control" name="name" th:value="${concurrentDto.name}">
+                                    <input type="text" class="form-control" name="name" th:value="${staffDto.name}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>사원 번호</label>
-                                    <input type="text" class="form-control" name="identityNo" th:value="${concurrentDto.identityNo}">
+                                    <div class="input-group mb-3">
+                                        <span th:text="${staffDto.identityNo}"></span>
+                                    </div>
+                                    <input type="hidden" class="form-control" name="identityNo" th:value="${staffDto.identityNo}">
                                 </div>
                             </div>
                         </div>
@@ -142,13 +148,13 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>이메일</label>
-                                    <input type="text" class="form-control" name="eMail" th:value="${concurrentDto.eMail}">
+                                    <input type="text" class="form-control" name="eMail" th:value="${staffDto.eMail}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>연락처</label>
-                                    <input type="text" class="form-control" name="hp" th:value="${concurrentDto.hp}">
+                                    <input type="text" class="form-control" name="hp" th:value="${staffDto.hp}">
                                 </div>
                             </div>
                         </div>
@@ -159,13 +165,13 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>직급 ID</label>
-                                    <input type="text" class="form-control" name="rankId" th:value="${concurrentDto.rankId}">
+                                    <input type="text" class="form-control" name="rankId" th:value="${staffDto.rankId}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>직책 ID</label>
-                                    <input type="text" class="form-control" name="positionId" th:value="${concurrentDto.positionId}">
+                                    <input type="text" class="form-control" name="positionId" th:value="${staffDto.positionId}">
                                 </div>
                             </div>
                         </div>
@@ -176,15 +182,15 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>부서 ID</label>
-                                    <input type="text" class="form-control" name="departmentId" th:value="${concurrentDto.departmentId}">
+                                    <input type="text" class="form-control" name="departmentId" th:value="${staffDto.departmentId}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>부서장 유무</label>
                                     <select class="form-control select2" name="head" style="width: 100%;">
-                                        <option th:selected="${concurrentDto.head} == '1'" value="1">True</option>
-                                        <option th:selected="${concurrentDto.head} == '0'" value="0">False</option>
+                                        <option th:selected="${staffDto.head} == '1'" value="1">True</option>
+                                        <option th:selected="${staffDto.head} == '0'" value="0">False</option>
                                     </select>
                                 </div>
                             </div>
@@ -197,9 +203,9 @@
                                 <div class="form-group">
                                     <label>사용자 유형</label>
                                     <select class="form-control select2" name="utype" style="width: 100%;">
-                                        <option th:selected="${concurrentDto.utype} == 'USER'" value="USER">User</option>
-                                        <option th:selected="${concurrentDto.utype} == 'ADMIN'" value="ADMIN">Admin</option>
-                                        <option th:selected="${concurrentDto.utype} == 'OP'" value="OP">OP</option>
+                                        <option th:selected="${staffDto.utype} == 'USER'" value="USER">User</option>
+                                        <option th:selected="${staffDto.utype} == 'ADMIN'" value="ADMIN">Admin</option>
+                                        <option th:selected="${staffDto.utype} == 'OP'" value="OP">OP</option>
                                     </select>
                                 </div>
                             </div>
@@ -207,10 +213,10 @@
                                 <div class="form-group">
                                     <label>사용자 권한</label>
                                     <select class="form-control select2" name="auth" style="width: 100%;">
-                                        <option th:selected="${concurrentDto.auth} == 'S'" value="S">S</option>
-                                        <option th:selected="${concurrentDto.auth} == 'R'" value="R">R</option>
-                                        <option th:selected="${concurrentDto.auth} == 'L'" value="L">L</option>
-                                        <option th:selected="${concurrentDto.auth} == 'C'" value="C">C</option>
+                                        <option th:selected="${staffDto.auth} == 'S'" value="S">S</option>
+                                        <option th:selected="${staffDto.auth} == 'R'" value="R">R</option>
+                                        <option th:selected="${staffDto.auth} == 'L'" value="L">L</option>
+                                        <option th:selected="${staffDto.auth} == 'C'" value="C">C</option>
                                     </select>
                                 </div>
                             </div>
@@ -221,13 +227,13 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>겸직</label>
-                                    <input type="text" class="form-control" name="concurrentPosition" th:value="${concurrentDto.concurrentPosition}">
+                                    <input type="text" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>겸직 사용자 ID</label>
-                                    <input type="text" class="form-control" name="userId" th:value="${concurrentDto.userId}">
+                                    <input type="text" class="form-control" name="userId" th:value="${staffDto.userId}">
                                 </div>
                             </div>
                         </div>
@@ -237,7 +243,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">순서</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="seq" th:value="${concurrentDto.seq}">
+                                <input type="text" class="form-control" name="seq" th:value="${staffDto.seq}">
                             </div>
                         </div>
 
@@ -245,33 +251,33 @@
                             <label class="col-sm-2 col-form-label">동기화 유무 </label>
                             <div class="col-sm-10">
                                 <select class="form-control select2" name="syncUse" style="width: 100%;">
-                                    <option th:selected="${concurrentDto.syncUse} == '1'" value="1">True</option>
-                                    <option th:selected="${concurrentDto.syncUse} == '0'" value="0">False</option>
+                                    <option th:selected="${staffDto.syncUse} == '1'" value="1">True</option>
+                                    <option th:selected="${staffDto.syncUse} == '0'" value="0">False</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">동기화시스템</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="syncSystem" th:value="${concurrentDto.syncSystem}">
+                                <input type="text" class="form-control" name="syncSystem" th:value="${staffDto.syncSystem}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">지문정보</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="fingerPrint" th:value="${concurrentDto.fingerPrint}">
+                                <input type="text" class="form-control" name="fingerPrint" th:value="${staffDto.fingerPrint}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">카드정보</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="cardNo" th:value="${concurrentDto.cardNo}">
+                                <input type="text" class="form-control" name="cardNo" th:value="${staffDto.cardNo}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">memo</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="memo" th:value="${concurrentDto.memo}">
+                                <input type="text" class="form-control" name="memo" th:value="${staffDto.memo}">
                             </div>
                         </div>
                     </form>
@@ -357,6 +363,16 @@
 
 
     });
+
+    $(document).on('click', '#pw', function () {	// 삭제버튼 클릭 시
+        var chk_id = $("#pw").val();
+        alert(chk_id);
+        //location.href = "/snsad/staffdel?idx=" + chk_id;
+
+
+    });
+
+
 </script>
 </body>
 </html>

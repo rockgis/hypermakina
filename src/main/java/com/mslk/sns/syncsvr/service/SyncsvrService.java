@@ -38,6 +38,20 @@ public class SyncsvrService {
         return syncsvrDtoList;
     }
 
+
+    @Transactional
+    public List<SyncsvrDto> getSyncsvrlistAll() {
+
+        List<SyncsvrEntity> syncsvrEntities = syncsvrRepository.findAll( Sort.by(Sort.Direction.DESC, "seq"));
+        List<SyncsvrDto> syncsvrDtoList = new ArrayList<>();
+
+        for (SyncsvrEntity syncsvrEntity : syncsvrEntities) {
+            syncsvrDtoList.add(this.convertEntityToDto(syncsvrEntity));
+        }
+
+        return syncsvrDtoList;
+    }
+
     @Transactional
     public Long getSyncsvrCount() {
         return syncsvrRepository.count();

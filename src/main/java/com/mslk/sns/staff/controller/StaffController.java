@@ -1,10 +1,19 @@
 package com.mslk.sns.staff.controller;
 
+import com.google.gson.Gson;
 import com.mslk.common.paging.Pagination;
 import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.board.dto.BoardDto;
+import com.mslk.sns.department.dto.DepartmentDto;
+import com.mslk.sns.department.service.DepartmentService;
+import com.mslk.sns.position.dto.PositionDto;
+import com.mslk.sns.position.service.PositionService;
+import com.mslk.sns.rank.dto.RankDto;
+import com.mslk.sns.rank.service.RankService;
 import com.mslk.sns.staff.dto.StaffDto;
 import com.mslk.sns.staff.service.StaffService;
+import com.mslk.sns.syncsvr.dto.SyncsvrDto;
+import com.mslk.sns.syncsvr.service.SyncsvrService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -27,6 +38,17 @@ public class StaffController {
     private StaffService staffService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
+    private RankService rankService;
+
+    private PositionService positionService;
+
+    private DepartmentService departmentService;
+
+    private SyncsvrService syncsvrService;
+
+
 
 
     /* 게시글 목록 */
@@ -56,6 +78,22 @@ public class StaffController {
         model.addAttribute("staffList", staffList);
         model.addAttribute("pagination", pagination);
 
+        List<RankDto> ranklist = rankService.getRanklistAll();
+
+        model.addAttribute("ranklist", ranklist);
+
+
+        List<PositionDto> positionlist = positionService.getPositionlistAll();
+        model.addAttribute("positionlist", positionlist);
+
+
+        List<DepartmentDto> departmentlist = departmentService.getDepartmentlistAll();
+        model.addAttribute("departmentlist", departmentlist);
+
+
+        List<SyncsvrDto> syncsvrlist = syncsvrService.getSyncsvrlistAll();
+        model.addAttribute("syncsvrlist", syncsvrlist);
+
 
         return "sns/staff/list";
     }
@@ -64,6 +102,8 @@ public class StaffController {
     @GetMapping("/snsad/post/{no}")
     public String staffdetail(@PathVariable("no") Long no, Model model) {
         StaffDto staffDto = staffService.getPost(no);
+
+        logger.info("사용자 ID : " + no);
 
         model.addAttribute("staffDto", staffDto);
         return "sns/staff/read";
@@ -163,5 +203,55 @@ public class StaffController {
 
         return "sns/staff/list";
     }
+
+
+    @PostMapping(value="/id_check")
+    @ResponseBody
+    public String id_check(@RequestBody String info) {
+        String json = null;
+        String input_json = null;
+
+        try {
+            Gson gson = new Gson();
+            Map<Object, Object> map = new HashMap<Object, Object>();
+            map = (Map<Object, Object>) gson.fromJson(info, map.getClass());
+
+            input_json = gson.toJson(map);
+
+        logger.info("info : " + input_json );
+
+            // -> info : {"id":"m","pw":"서울"}
+            logger.info("uid : " + map.get("uid").toString() );
+            logger.info("check : " + map.get("check").toString() );
+
+            int id_check = staffService.getStaffCountUid(map.get("uid").toString(),  map.get("check").toString());
+
+
+            String requestJson = "{\n" +
+                    "  \"check\": \""+map.get("check")+"\",\n" +
+                    "  \"result\":\""+id_check+"\"\n"+
+                    "}";
+
+
+            json = gson.toJson(requestJson);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return json;
+    }
+
+
+    @PostMapping(" /sns/staffcheck")
+    public String staff_check(@RequestParam(value="uid") String uid , @RequestParam(value="identityNo") String identityNo, Model model) {
+
+        logger.info("/user/staff_check ===>  uid : "+ uid);
+        logger.info("/user/staff_check ===>  identityNo : "+ identityNo);
+
+
+        return "redirect:/sns/main";
+    }
+
 
 }
