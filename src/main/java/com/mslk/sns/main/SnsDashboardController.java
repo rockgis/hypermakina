@@ -87,7 +87,7 @@ public class SnsDashboardController {
         Integer regCount = (int) regcount;
         model.addAttribute("regCount", regCount);
 
-
+       /*
         HyperRestApiDto hyperRestApiDto =  hyperRestApiService.getPost("getAlarmCount");
 
         String result = restApiService.getAlarmCountData(hyperRestApiDto).getBody().toString();
@@ -103,6 +103,8 @@ public class SnsDashboardController {
         model.addAttribute("critical", jsonObject.get("critical").toString());
         model.addAttribute("major", jsonObject.get("major").toString());
         model.addAttribute("minor", jsonObject.get("minor").toString());
+
+        */
 
 
         return "sns/sns_main";

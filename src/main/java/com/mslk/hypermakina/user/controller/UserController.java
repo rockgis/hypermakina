@@ -116,14 +116,4 @@ public class UserController {
         return "admin/userlist";
     }
 
-
-    @RequestMapping(value = "/admin/logout", method = RequestMethod.GET)
-    public String loout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "redirect:/admin/login";
-    }
-
 }
