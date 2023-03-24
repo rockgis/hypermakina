@@ -243,14 +243,22 @@ public class StaffController {
     }
 
 
-    @PostMapping(" /sns/staffcheck")
+    @GetMapping("/sns/staffcheck")
     public String staff_check(@RequestParam(value="uid") String uid , @RequestParam(value="identityNo") String identityNo, Model model) {
 
-        logger.info("/user/staff_check ===>  uid : "+ uid);
-        logger.info("/user/staff_check ===>  identityNo : "+ identityNo);
+        logger.info("/user/staffcheck ===>  uid : "+ uid);
+        logger.info("/user/staffcheck ===>  identityNo : "+ identityNo);
+
+        Long no =staffService.getfindeUserNo(uid,identityNo);
+
+        StaffDto staffDto = staffService.getPost(no);
+
+        logger.info("사용자 ID : " + no);
+
+        model.addAttribute("staffDto", staffDto);
 
 
-        return "redirect:/sns/main";
+        return "sns/staff/user_read";
     }
 
 

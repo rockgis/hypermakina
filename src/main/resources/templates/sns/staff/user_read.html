@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HyperMSLK 서비스</title>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+    <div th:insert="com/sns_user_header.html" id="header"></div>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"> HyperMSLK 서비스 <small>Version 1.0</small></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">DashBoard</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container">
+
+
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{'/snsad/post/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                                    <input type="hidden" name="_method" value="put"/>
+                                    <input type="hidden" name="id" id="id" th:value="${staffDto.id}"/>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>아이디</label>
+                                                <div class="input-group mb-3">
+                                                    <span th:text="${staffDto.uid}"></span>
+                                                </div>
+                                                <input type="hidden" class="form-control" name="uid" th:value="${staffDto.uid}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>이름</label>
+                                                <div class="row">
+                                                    <div class="input-group mb-3">
+                                                        <span th:text="${staffDto.fullName}"></span>
+                                                    </div>
+                                                    <input type="hidden" class="form-control" name="lName" th:value="${staffDto.lName}">
+                                                    <input type="hidden" class="form-control" name="fName" th:value="${staffDto.fName}">
+                                                    <input type="hidden" class="form-control" name="fullName" th:value="${staffDto.fullName}">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>사원 번호</label>
+                                                <div class="input-group mb-3">
+                                                    <span th:text="${staffDto.identityNo}"></span>
+                                                </div>
+                                                <input type="hidden" class="form-control" name="identityNo" th:value="${staffDto.identityNo}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>성별</label>
+                                                <select class="form-control select2" name="sex" style="width: 100%;">
+                                                    <option th:selected="${staffDto.sex} == '남'" value="남">남</option>
+                                                    <option th:selected="${staffDto.sex} == '여'" value="여">여</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>pw</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" name="pw" id="pw" th:value="${staffDto.pw}">
+                                                </div>
+
+                                            </div>
+
+                                            <!-- text input -->
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>pw</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" name="pw1" id="pw1">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>이메일</label>
+                                                <input type="text" class="form-control" name="eMail" th:value="${staffDto.eMail}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>연락처</label>
+                                                <input type="text" class="form-control" name="hp" th:value="${staffDto.hp}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>부서</label>
+                                                <input type="text" class="form-control" name="name" th:value="${staffDto.name}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>부서 ID</label>
+                                                <input type="text" class="form-control" name="departmentId" th:value="${staffDto.departmentId}">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>직급 ID</label>
+                                                <input type="text" class="form-control" name="rankId" th:value="${staffDto.rankId}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>직책 ID</label>
+                                                <input type="text" class="form-control" name="positionId" th:value="${staffDto.positionId}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>겸직</label>
+                                                <input type="text" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>겸직 사용자 ID</label>
+                                                <input type="text" class="form-control" name="userId" th:value="${staffDto.userId}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">memo</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="memo" th:value="${staffDto.memo}">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary float-right"
+                                                    style="margin-right: 5px;">
+                                                <i class="fas fa-edit"></i> PassWord 변경
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- FOOTER -->
+    <div th:insert="com/footer.html" id="footer"></div>
+
+</div>
+<!-- ./wrapper -->
+</div>
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Ekko Lightbox -->
+<script src="/webjars/AdminLTE/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
+<!-- Filterizr-->
+<script src="/webjars/AdminLTE/plugins/filterizr/jquery.filterizr.min.js"></script>
+
+<script type="text/javascript" src="/js/crossdomain/jquery.ajax-cross-origin.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+    });
+
+
+</script>
+
+</body>
+</html>

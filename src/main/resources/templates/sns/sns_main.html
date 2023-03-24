@@ -216,47 +216,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     $(document).ready(function(){
 
-        setTimeout(function () {
-            //location.reload();
-            //alert("페이지 리로드 하기 ");
-        }, 60 * 1000);
-
     });
-
-    function ajax_rest(){
-
-
-        let person = {name:"abc", age:10};
-        let person2 = {};
-
-        let managerurl = "http://172.30.1.109:7077";
-        let user = "admin";
-        let pwd ="bHlpanVuIUAwOQ==";
-
-
-        $.ajax({
-            crossOrigin : true,
-            type:'POST', //요청 메서드
-            url: 'http://172.30.1.109:7077/api/eg/analytics/getAlarmCount', //요청 URI
-            contentType : 'application/json',
-            headers : { 'managerurl':managerurl,
-                'user':user,
-                'pwd':pwd,
-                'Accept':'application/json'
-            }, //요청 헤더
-            dataType : 'json', //전송할 데이터 타입
-            //data : JSON.stringify(person), //서버로 전송할 데이터. 직렬화.
-            success : function(result) {
-
-                alert(JSON.parse(result));
-            },
-            error : function(request, status, error) {
-                //alert("error: " + error)
-            } //에러가 발생했을 때 호출될 함수
-        }); //$.ajax()
-
-
-    }
 
 
 </script>

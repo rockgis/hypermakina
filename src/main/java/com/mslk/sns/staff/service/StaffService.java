@@ -61,6 +61,19 @@ public class StaffService {
         return result;
     }
 
+
+    @Transactional
+    public long getfindeUserNo(String uid, String identityNo) {
+
+        long result = staffRepository.findeUserNo(uid,identityNo);
+
+
+        return result;
+    }
+
+
+
+
     @Transactional
     public Long getStaffCount() {
         return staffRepository.count();
