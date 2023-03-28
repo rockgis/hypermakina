@@ -46,6 +46,8 @@ public class RollmnController {
         model.addAttribute("gittf0001List", gittf0001List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/rollmn");
+
 
         return "manager/rollmn/main.html";
     }

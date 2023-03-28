@@ -49,6 +49,8 @@ public class RankController {
         model.addAttribute("ranklist", ranklist);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/snsad/ranklist");
+
         return "sns/rank/list";
     }
 
@@ -104,6 +106,37 @@ public class RankController {
         return "redirect:/snsad/ranklist";
     }
 
+    @GetMapping("/snsad/rankdelyn")
+    public String rankdelyn(@RequestParam(value="idx") String idx) {
+
+        RankDto rankDto = new RankDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+                rankDto = rankService.getPost(no);
+                rankDto.setDel(1);
+                rankService.savePost(rankDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            rankDto = rankService.getPost(no);
+            rankDto.setDel(1);
+            rankService.savePost(rankDto);
+
+        }
+        return "redirect:/snsad/ranklist";
+    }
+
 
     @PostMapping("/snsad/ranksearch")
     public String ranksearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
@@ -135,6 +168,8 @@ public class RankController {
 
         model.addAttribute("ranklist", ranklist);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/ranksearch");
 
         return "sns/rank/list";
     }

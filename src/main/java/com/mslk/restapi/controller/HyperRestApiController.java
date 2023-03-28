@@ -87,6 +87,8 @@ public class HyperRestApiController {
         Integer dashCount = (int) dashcount;
         model.addAttribute("dashCount", dashCount);
 
+        model.addAttribute("pageURL", "/admin/restlist");
+
         return "manager/restapimng/index.html";
     }
 
@@ -155,6 +157,8 @@ public class HyperRestApiController {
 
         model.addAttribute("hyperRestApiList", hyperRestApiList);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/admin/restsearch");
 
         return "manager/restapimng/index.html";
     }

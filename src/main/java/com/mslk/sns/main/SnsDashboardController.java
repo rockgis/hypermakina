@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +56,7 @@ public class SnsDashboardController {
     private HyperRestApiService hyperRestApiService;
 
     @GetMapping("/sns/main")
-    public String sns(  Model model, @ModelAttribute("params") final SearchDto params) throws Exception {
+    public String sns(Authentication authentication, Model model, @ModelAttribute("params") final SearchDto params) throws Exception {
 
         logger.info("URL : /sns/main");
 
@@ -105,6 +106,8 @@ public class SnsDashboardController {
         model.addAttribute("minor", jsonObject.get("minor").toString());
 
         */
+
+        model.addAttribute("pageURL", "/sns/main");
 
 
         return "sns/sns_main";

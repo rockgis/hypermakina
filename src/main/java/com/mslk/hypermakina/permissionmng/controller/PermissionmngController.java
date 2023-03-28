@@ -48,6 +48,8 @@ public class PermissionmngController {
         model.addAttribute("gittc0001List", gittc0001List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/permissionmng");
+
 
         return "manager/permissionmng/main.html";
     }

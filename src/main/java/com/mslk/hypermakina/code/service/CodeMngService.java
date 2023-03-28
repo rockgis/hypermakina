@@ -3,6 +3,8 @@ package com.mslk.hypermakina.code.service;
 import com.mslk.hypermakina.code.domain.entity.CodeMngEntity;
 import com.mslk.hypermakina.code.domain.repostory.CodeMngRepository;
 import com.mslk.hypermakina.code.dto.CodeMngDto;
+import com.mslk.sns.position.domain.entity.PositionEntity;
+import com.mslk.sns.position.dto.PositionDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -39,6 +42,14 @@ public class CodeMngService {
     @Transactional
     public Long getCodeMngCount() {
         return codeMngRepository.count();
+    }
+
+    @Transactional
+    public CodeMngDto getPost(Long id) {
+        Optional<CodeMngEntity> CodeMngEntityWrapper = codeMngRepository.findById(id);
+        CodeMngEntity codeMngEntity = CodeMngEntityWrapper.get();
+
+        return this.convertEntityToDto(codeMngEntity);
     }
 
     @Transactional

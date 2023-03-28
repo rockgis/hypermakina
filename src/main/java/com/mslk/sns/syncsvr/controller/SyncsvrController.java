@@ -49,6 +49,8 @@ public class SyncsvrController {
         model.addAttribute("syncsvrlist", syncsvrlist);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/snsad/syncsvrlist");
+
         return "sns/syncsvr/list";
     }
 
@@ -111,6 +113,37 @@ public class SyncsvrController {
         return "redirect:/snsad/syncsvrlist";
     }
 
+    @GetMapping("/snsad/syncsvrdelyn")
+    public String syncsvrdelyn(@RequestParam(value="idx") String idx) {
+
+        SyncsvrDto syncsvrDto = new SyncsvrDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+                syncsvrDto = syncsvrService.getPost(no);
+                syncsvrDto.setDel(1);
+                syncsvrService.savePost(syncsvrDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            syncsvrDto = syncsvrService.getPost(no);
+            syncsvrDto.setDel(1);
+            syncsvrService.savePost(syncsvrDto);
+
+        }
+        return "redirect:/snsad/syncsvrlist";
+    }
+
 
     @PostMapping("/snsad/syncsvrsearch")
     public String syncsvrsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
@@ -142,6 +175,8 @@ public class SyncsvrController {
 
         model.addAttribute("syncsvrlist", syncsvrlist);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/syncsvrsearch");
 
         return "sns/syncsvr/list";
     }

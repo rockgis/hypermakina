@@ -45,6 +45,8 @@ public class LogmngController {
         model.addAttribute("gitte0001List", gitte0001List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/logmng");
+
 
         return "manager/logmng/main.html";
     }

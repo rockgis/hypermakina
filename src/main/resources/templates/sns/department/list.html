@@ -69,7 +69,7 @@
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 부서 관리</h3>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
@@ -150,33 +150,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
 
-                        <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
-                        <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
-
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/departmentlist?page=1'}">First</a></li>
-                            <!-- 이전 페이지로 가기 버튼
-                            <li th:class="${pagination.existPrevPage} ? 'disabled'">
-                              <a th:href="${list.first} ? '#' :${prevAddr}"
-                                 aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                              </a>
-                            </li>-->
-
-
-                            <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
-                                <a  class="page-link" th:href="@{'/snsad/departmentlist?page=' + ${pageNum}}">[[${pageNum}]]</a>
-                            </li>
-                            <!--다음 페이지로
-                            <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
-                              <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                              </a>
-                            </li>-->
-                            <!--맨 마지막 페이지로 이동 -->
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/departmentlist?page=' + ${pagination.getEndPage()}}">Last</a></li>
-
-                        </ul>
+                        <div th:insert="com/page.html" id="page"></div>
 
                     </div>
                 </div>
@@ -293,11 +267,31 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>상위부서 선택</label>
+                                <select id="departmentId" class="form-control select2" style="width: 100%;" >
+                                    <option value="">상위부서 선택</option>
+                                    <option th:each="departmentId_top : ${departmentlist_top}" th:value="${departmentId_top.name +'('+departmentId_top.uid+')'}"
+                                            th:text="${departmentId_top.name +'('+departmentId_top.uid+')'}">FAST</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>상위부서 ID</label>
+                                <input type="text" class="form-control" name="upperId" id="upperId" readonly placeholder="상위부서 ID">
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">상위부서 ID</label>
+                        <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="upperId" placeholder="상위부서 ID">
+
                         </div>
                     </div>
                     <div class="row">
@@ -443,10 +437,17 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 부서를 선택하세요 ?")
         } else {
-            location.href = "/snsad/departmentdel?idx=" + chk_id;
+            location.href = "/snsad/departmentdelyn?idx=" + chk_id;
         }
 
     });
+
+
+    $(document).on('change', '#departmentId', function () {	// 부서 ID 클릭 시
+        var id = $("#departmentId").val();
+        $("#upperId").val(id.substring(id.indexOf("(")+1,id.indexOf(")")));
+    });
+
 </script>
 </body>
 </html>

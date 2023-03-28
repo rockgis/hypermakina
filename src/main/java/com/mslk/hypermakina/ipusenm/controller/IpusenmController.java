@@ -47,6 +47,8 @@ public class IpusenmController {
         model.addAttribute("gittf0002List", gittf0002List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/ipusenm");
+
 
 
         return "manager/ipusenm/main.html";

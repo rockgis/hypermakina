@@ -109,7 +109,6 @@
                                     <th>CODE Group</th>
                                     <th>CODE 업무명</th>
                                     <th>CODE 이름</th>
-                                    <th>Code 비고</th>
                                     <th>사용 유무</th>
                                 </tr>
                                 </thead>
@@ -119,13 +118,15 @@
                                     <td width="5%">
                                         <input type="checkbox" class="chk" th:value="${codeMngList.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${codeMngList.id}"></span></td>
+                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
                                     <td><span th:text="${codeMngList.codeType}"></span></td>
-                                    <td><span th:text="${codeMngList.codeEu}"></span></td>
+                                    <td><a th:href="@{'/admin/codemngpost/' + ${codeMngList.id}}">
+                                        <span th:text="${codeMngList.codeEu}"></span>
+                                    </a>
+                                    </td>
                                     <td><span th:text="${codeMngList.codeGm}"></span></td>
                                     <td><span th:text="${codeMngList.codeWm}"></span></td>
                                     <td><span th:text="${codeMngList.codeNm}"></span></td>
-                                    <td><span th:text="${codeMngList.codeNote}"></span></td>
                                     <td><span th:text="${codeMngList.seTf}"></span></td>
                                 </tr>
                                 </tbody>
@@ -135,33 +136,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
 
-                        <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
-                        <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
-
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=1'}">First</a></li>
-                            <!-- 이전 페이지로 가기 버튼
-                            <li th:class="${pagination.existPrevPage} ? 'disabled'">
-                              <a th:href="${list.first} ? '#' :${prevAddr}"
-                                 aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                              </a>
-                            </li>-->
-
-
-                            <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
-                                <a  class="page-link" th:href="@{'/admin/codemnglist?page=' + ${pageNum}}">[[${pageNum}]]</a>
-                            </li>
-                            <!--다음 페이지로
-                            <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
-                              <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                              </a>
-                            </li>-->
-                            <!--맨 마지막 페이지로 이동 -->
-                            <li class="page-item"><a class="page-link" th:href="@{'/admin/codemnglist?page=' + ${pagination.getEndPage()}}">Last</a></li>
-
-                        </ul>
+                        <div th:insert="com/page.html" id="page"></div>
 
                     </div>
                 </div>
@@ -273,7 +248,10 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">CODE TYPE </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="codeType" value="EGM" placeholder="CODE TYPE">
+                            <select class="form-control select2" name="codeType" style="width: 100%;">
+                                <option value="EGM">EGM</option>
+                                <option value="EGM_A">EGM_A</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -285,7 +263,16 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">CODE Group</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="codeGm" value="EGBODY" placeholder="EGBODY">
+                            <select class="form-control select2" name="codeGm" style="width: 100%;">
+                                <option value="EGBODY">EGBODY</option>
+                                <option value="NETWORK">NETWORK</option>
+                                <option value="SERVER">Server</option>
+                                <option value="LINUX">Linux Server</option>
+                                <option value="WINDOW">Window Server</option>
+                                <option value="ORACLE">Oracle Server</option>
+                                <option value="MSSQL">MS-SQL Server</option>
+                                <option value="TIBERO">TIBERO Server</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

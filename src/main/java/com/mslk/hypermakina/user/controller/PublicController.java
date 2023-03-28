@@ -54,6 +54,8 @@ public class PublicController {
         model.addAttribute("gitta0002List", gitta0002List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/publiclist");
+
 
 
         return "public/publiclist";

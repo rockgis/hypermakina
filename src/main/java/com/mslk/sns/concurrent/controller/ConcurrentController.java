@@ -74,6 +74,8 @@ public class ConcurrentController {
         List<DepartmentDto> departmentlist = departmentService.getDepartmentlistAll();
         model.addAttribute("departmentlist", departmentlist);
 
+        model.addAttribute("pageURL", "/snsad/concurrentlist");
+
 
 
         return "sns/concurrent/list";
@@ -160,6 +162,37 @@ public class ConcurrentController {
         return "redirect:/snsad/concurrentlist";
     }
 
+    @GetMapping("/snsad/concurrentdelyn")
+    public String concurrentdelyn(@RequestParam(value="idx") String idx) {
+
+        ConcurrentDto concurrentDto = new ConcurrentDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+                concurrentDto = concurrentService.getPost(no);
+                concurrentDto.setDel(1);
+                concurrentService.savePost(concurrentDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            concurrentDto = concurrentService.getPost(no);
+            concurrentDto.setDel(1);
+            concurrentService.savePost(concurrentDto);
+
+        }
+        return "redirect:/snsad/concurrentlist";
+    }
+
 
     @PostMapping("/snsad/concurrentsearch")
     public String concurrentsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
@@ -191,6 +224,8 @@ public class ConcurrentController {
 
         model.addAttribute("concurrentList", concurrentList);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/concurrentsearch");
 
 
         return "sns/concurrent/list";

@@ -1,0 +1,23 @@
+<span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
+<span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
+
+<ul class="pagination pagination-sm m-0 float-right">
+    <li class="page-item"><a class="page-link" th:href="@{ ${pageURL} + '?page=1'}">First</a></li>
+    <!-- 이전 페이지로 가기 버튼-->
+    <li th:style="${pagination.existPrevPage} ? 'display: block;' : 'display: none;'">
+        <a class="page-link" th:href="@{${pageURL} + '?page=' + ${pagination.startPage-1}}">
+            <span aria-hidden="true">&lt;</span>
+        </a>
+    </li>
+    <li class="page-item" th:each="pageNum :${#numbers.sequence(pagination.startPage,pagination.endPage)}" th:inline="text">
+        <a  class="page-link" th:href="@{${pageURL} + '?page=' + ${pageNum}}">[[${pageNum}]]</a>
+    </li>
+    <!--다음 페이지로-->
+    <li class="page-item" th:style="${pagination.existNextPage} ? 'display: block;' : 'display: none;'">
+        <a class="page-link" th:href="@{${pageURL} + '?page=' + ${pagination.endPage+1}}">
+            <span aria-hidden="true">&gt;</span>
+        </a>
+    </li>
+    <!--맨 마지막 페이지로 이동 -->
+    <li class="page-item"><a class="page-link" th:href="@{${pageURL} + '?page=' + ${pagination.totalPageCount}}">Last</a></li>
+</ul>

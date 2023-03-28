@@ -94,6 +94,8 @@ public class StaffController {
         List<SyncsvrDto> syncsvrlist = syncsvrService.getSyncsvrlistAll();
         model.addAttribute("syncsvrlist", syncsvrlist);
 
+        model.addAttribute("pageURL", "/snsad/stafflist");
+
 
         return "sns/staff/list";
     }
@@ -168,6 +170,40 @@ public class StaffController {
         return "redirect:/snsad/stafflist";
     }
 
+    @GetMapping("/snsad/staffdelyn")
+    public String staffdelyn(@RequestParam(value="idx") String idx) {
+
+        StaffDto staffDto = new StaffDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+
+                 staffDto = staffService.getPost(no);
+
+                staffDto.setDel(1);
+                staffService.savePost(staffDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            staffDto = staffService.getPost(no);
+
+            staffDto.setDel(1);
+            staffService.savePost(staffDto);
+
+        }
+        return "redirect:/snsad/stafflist";
+    }
+
 
     @PostMapping("/snsad/staffsearch")
     public String staffsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
@@ -199,6 +235,8 @@ public class StaffController {
 
         model.addAttribute("staffList", staffList);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/staffsearch");
 
 
         return "sns/staff/list";

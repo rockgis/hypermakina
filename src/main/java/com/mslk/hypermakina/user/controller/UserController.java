@@ -56,6 +56,8 @@ public class UserController {
         model.addAttribute("gitta0001List", gitta0001List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/userlist");
+
         return "admin/userlist";
     }
 

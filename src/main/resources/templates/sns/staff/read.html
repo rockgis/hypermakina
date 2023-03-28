@@ -116,8 +116,8 @@
                                 <div class="form-group">
                                     <label>성별</label>
                                     <select class="form-control select2" name="sex" style="width: 100%;">
-                                        <option th:selected="${staffDto.sex} == '남'" value="남">남</option>
-                                        <option th:selected="${staffDto.sex} == '여'" value="여">여</option>
+                                        <option th:selected="${staffDto.sex} == 'M'" value="M">남</option>
+                                        <option th:selected="${staffDto.sex} == 'F'" value="F">여</option>
                                     </select>
                                 </div>
                             </div>
@@ -358,9 +358,15 @@
 
     $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
         var chk_id = $("#id").val();
-        alert(chk_id);
-        //location.href = "/snsad/staffdel?idx=" + chk_id;
 
+        var result = confirm('정말 사용자를 저장소에서 삭제하실 것인가요 ?');
+
+        if(result) {
+            //yes
+            location.href = "/snsad/staffdel?idx=" + chk_id;
+        } else {
+            //no
+        }
 
     });
 

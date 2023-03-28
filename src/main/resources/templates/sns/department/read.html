@@ -235,8 +235,14 @@
 
     $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
         var chk_id = $("#id").val();
-        alert(chk_id);
-        //location.href = "/snsad/staffdel?idx=" + chk_id;
+        var result = confirm('정말 부서를 저장소에서 삭제하실 것인가요 ?');
+
+        if(result) {
+            //yes
+            location.href = "/snsad/departmentdel?idx=" + chk_id;
+        } else {
+            //no
+        }
 
 
     });

@@ -56,7 +56,8 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">싱크 서버 관리</li>
+                            <li class="breadcrumb-item">시스템 관리</li>
+                            <li class="breadcrumb-item active">코드 관리</li>
                         </ol>
                     </div>
                 </div>
@@ -69,55 +70,89 @@
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 싱크 서버 관리</h3>
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 코드 관리</h3>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{'/snsad/syncsvrpost/edit/' + ${syncsvrDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                    <form th:action="@{'/admin/codemngpost/edit/' + ${codeMngDto.id}}" method="post" id="app_brd" class="form-horizontal">
                         <input type="hidden" name="_method" value="put"/>
-                        <input type="hidden" name="id" id="id" th:value="${syncsvrDto.id}"/>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <!-- text input -->
-                                <div class="form-group">
-                                    <label>서버 ID</label>
-                                    <input type="text" class="form-control" name="uid" th:value="${syncsvrDto.uid}">
+                        <input type="hidden" name="id" id="id" th:value="${codeMngDto.id}"/>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE TYPE </label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2" name="codeType" style="width: 100%;">
+                                        <option th:selected="${codeMngDto.codeType} == 'EGM'" value="EGM">EGM</option>
+                                        <option th:selected="${codeMngDto.codeType} == 'EGM_A'" value="EGM_A">EGM_A</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>서버명</label>
-                                    <input type="text" class="form-control" name="name" th:value="${syncsvrDto.name}">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE 용도 </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="codeEu" th:value="${codeMngDto.codeEu}" >
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">서버 IP</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="ip" th:value="${syncsvrDto.ip}">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE Group</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2" name="codeGm" style="width: 100%;">
+                                        <option th:selected="${codeMngDto.codeGm} == 'EGBODY'" value="EGBODY">EGBODY</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'NETWORK'" value="NETWORK">NETWORK</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'SERVER'" value="SERVER">Server</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'LINUX'" value="LINUX">Linux Server</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'WINDOW'" value="WINDOW">Window Server</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'ORACLE'" value="ORACLE">Oracle Server</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'MSSQL'" value="MSSQL">MS-SQL Server</option>
+                                        <option th:selected="${codeMngDto.codeGm} == 'TIBERO'"value="TIBERO">TIBERO Server</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">순서</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="seq" th:value="${syncsvrDto.seq}">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE 업무명</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="codeWm" th:value="${codeMngDto.codeWm}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">동기화 유무</label>
-                            <div class="col-sm-10">
-                                <select class="form-control select2" name="syncUse" style="width: 100%;">
-                                    <option th:selected="${syncsvrDto.syncUse} == '1'" value="1">True</option>
-                                    <option th:selected="${syncsvrDto.syncUse} == '0'" value="0">False</option>
-                                </select>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE 이름</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="codeNm" th:value="${codeMngDto.codeNm}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">memo</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="memo" th:value="${syncsvrDto.memo}">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">CODE 값</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="codeVm" th:value="${codeMngDto.codeVm}">
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Code 비고</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="codeNote" th:value="${codeMngDto.codeNote}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">사용유무</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control select2" name="seTf" style="width: 100%;">
+                                        <option th:selected="${codeMngDto.seTf} == 'Y'" value="Y">사용</option>
+                                        <option th:selected="${codeMngDto.seTf} == 'N'" value="N">미사용</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- div class="form-group row">
+                              <label class="col-sm-2 col-form-label">작성자</label>
+                              <div class="col-sm-10">
+                              <select class="form-control select2" name="restType" style="width: 100%;">
+                                        <option selected="selected" value="batch">배치</option>
+                                        <option value="real">실시간</option>
+                                    </select>
+                                <input type="text" class="form-control" name="writer" placeholder="작성자" value='<span sec:authentication="name"></span>'>
+                              </div>
+                            </div -->
+
+                        </form>
 
                  </div>
                     <!-- /.card-body -->
@@ -189,23 +224,18 @@
 
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/snsad/syncsvrlist";
+        location.href = "/admin/codemnglist";
 
     });
 
     $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
         var chk_id = $("#id").val();
-        var result = confirm('정말 싱크서버 정보를 저장소에서 삭제하실 것인가요 ?');
-
-        if(result) {
-            //yes
-            location.href = "/snsad/syncsvrdel?idx=" + chk_id;
-        } else {
-            //no
-        }
+        alert(chk_id);
+        //location.href = "/snsad/staffdel?idx=" + chk_id;
 
 
     });
+
 </script>
 </body>
 </html>

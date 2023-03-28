@@ -49,6 +49,8 @@ public class PositionController {
         model.addAttribute("positionlist", positionlist);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/snsad/positionlist");
+
         return "sns/position/list";
     }
 
@@ -105,6 +107,39 @@ public class PositionController {
     }
 
 
+    @GetMapping("/snsad/positiondelyn")
+    public String positiondelyn(@RequestParam(value="idx") String idx) {
+
+        PositionDto positionDto = new PositionDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+                positionDto = positionService.getPost(no);
+                positionDto.setDel(1);
+                positionService.savePost(positionDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            positionDto = positionService.getPost(no);
+            positionDto.setDel(1);
+            positionService.savePost(positionDto);
+
+        }
+        return "redirect:/snsad/positionlist";
+    }
+
+
+
     @PostMapping("/snsad/positionsearch")
     public String positionsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
 
@@ -135,6 +170,8 @@ public class PositionController {
 
         model.addAttribute("positionlist", positionlist);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/positionsearch");
 
 
         return "sns/position/list";

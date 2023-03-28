@@ -5,6 +5,7 @@ import com.mslk.common.paging.dto.SearchDto;
 import com.mslk.hypermakina.code.dto.CodeMngDto;
 import com.mslk.hypermakina.code.service.CodeMngService;
 import com.mslk.hypermakina.board.service.BoardService;
+import com.mslk.sns.position.dto.PositionDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -12,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -57,7 +55,9 @@ public class CodeMngController {
         model.addAttribute("codeMngList", codeMngList);
         model.addAttribute("pagination", pagination);
 
-        return "system/codemng//index";
+        model.addAttribute("pageURL", "/admin/codemnglist");
+
+        return "system/codemng/index";
     }
 
 
@@ -98,6 +98,27 @@ public class CodeMngController {
             codeMngService.deletePost(no);
 
         }
+        return "redirect:/admin/codemnglist";
+    }
+
+    @GetMapping("/admin/codemngpost/{no}")
+    public String positiondetail(@PathVariable("no") Long no, Model model) {
+        CodeMngDto codeMngDto = codeMngService.getPost(no);
+
+        model.addAttribute("codeMngDto", codeMngDto);
+        return "system/codemng/read";
+    }
+
+    @PutMapping("/admin/codemngpost/edit/{no}")
+    public String update(Principal principal, CodeMngDto codeMngDto ) {
+
+        LocalDateTime now = LocalDateTime.now();
+
+        codeMngDto.setAltEn(principal.getName());
+
+
+        codeMngService.savePost(codeMngDto);
+
         return "redirect:/admin/codemnglist";
     }
 

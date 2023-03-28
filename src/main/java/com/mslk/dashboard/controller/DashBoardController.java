@@ -84,6 +84,8 @@ public class DashBoardController {
         Integer dashCount = (int) dashcount;
         model.addAttribute("dashCount", dashCount);
 
+        model.addAttribute("pageURL", "/admin/dbmnglist");
+
 
         return "dashboard/admin/index";
     }

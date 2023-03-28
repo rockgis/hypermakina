@@ -60,6 +60,8 @@ public class InspectionmngController {
         model.addAttribute("gittd0001List", gittd0001List);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/inspectionmng");
+
         return "manager/inspectionmng/main.html";
     }
 

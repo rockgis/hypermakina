@@ -47,6 +47,8 @@ public class NoticeController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/notice");
+
         return "notice/main";
     }
 

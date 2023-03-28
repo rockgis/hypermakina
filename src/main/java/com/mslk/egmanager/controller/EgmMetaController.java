@@ -57,6 +57,8 @@ public class EgmMetaController {
         model.addAttribute("egmMetaList", egmMetaList);
         model.addAttribute("pagination", pagination);
 
+        model.addAttribute("pageURL", "/admin/egmmetalist");
+
 
         return "egmmeta/index.html";
     }

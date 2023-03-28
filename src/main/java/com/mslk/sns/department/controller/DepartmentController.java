@@ -49,6 +49,11 @@ public class DepartmentController {
         model.addAttribute("departmentlist", departmentlist);
         model.addAttribute("pagination", pagination);
 
+        List<DepartmentDto> departmentlist_top = departmentService.getDepartmentlistAll();
+        model.addAttribute("departmentlist_top", departmentlist_top);
+
+        model.addAttribute("pageURL", "/snsad/departmentlist");
+
         return "sns/department/list";
     }
 
@@ -106,6 +111,42 @@ public class DepartmentController {
         return "redirect:/snsad/departmentlist";
     }
 
+    @GetMapping("/snsad/departmentdelyn")
+    public String departmentdelyn(@RequestParam(value="idx") String idx) {
+
+        DepartmentDto departmentDto = new DepartmentDto();
+
+        long no = 0;
+
+        int beginIndex = idx.indexOf(",");
+
+        if(beginIndex > 0){
+
+            String[] ArraysStr = idx.split(",");
+
+            for(String s : ArraysStr){
+                no = Long.parseLong(s);
+
+                departmentDto = departmentService.getPost(no);
+
+                departmentDto.setDel(1);
+
+                departmentService.savePost(departmentDto);
+            }
+
+        }else{
+
+            no = Long.parseLong(idx);
+            departmentDto = departmentService.getPost(no);
+
+            departmentDto.setDel(1);
+
+            departmentService.savePost(departmentDto);
+
+        }
+        return "redirect:/snsad/departmentlist";
+    }
+
 
     @PostMapping("/snsad/departmentsearch")
     public String departmentsearch(@RequestParam(value="keyword") String keyword, @ModelAttribute("params") final SearchDto params , Model model) {
@@ -137,6 +178,8 @@ public class DepartmentController {
 
         model.addAttribute("departmentlist", departmentlist);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("pageURL", "/snsad/departmentsearch");
 
 
         return "sns/department/list";

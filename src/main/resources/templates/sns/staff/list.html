@@ -111,7 +111,9 @@
                                     <th>login ID</th>
                                     <th>이메일</th>
                                     <th>부서명</th>
+                                    <th>직급</th>
                                     <th>연락처</th>
+                                    <th>삭제유무</th>
                                     <th>생성일</th>
                                 </tr>
                                 </thead>
@@ -138,7 +140,11 @@
                                     </td>
                                     <td><span th:text="${staff.eMail}"></span></td>
                                     <td><span th:text="${staff.name}"></span></td>
+                                    <td><span th:text="${staff.rankId}"></span></td>
                                     <td><span th:text="${staff.hp}"></span></td>
+                                    <td><span th:if="${staff.del == 1}">True</span>
+                                        <span th:if="${staff.del == 0}">False</span>
+                                    </td>
                                     <td><span th:text="${#temporals.format(staff.createdDate, 'yyyy-MM-dd')}"></span></td>
                                 </tr>
                                 </tbody>
@@ -148,33 +154,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
 
-                        <span th:if="${pagination.totalRecordCount} > 0 "> Pages:</span>
-                        <span th:if="${pagination.totalRecordCount} == 0 "> 데이터가 없습니다.</span>
-
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/stafflist?page=1'}">First</a></li>
-                            <!-- 이전 페이지로 가기 버튼
-                            <li th:class="${pagination.existPrevPage} ? 'disabled'">
-                              <a th:href="${list.first} ? '#' :${prevAddr}"
-                                 aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                              </a>
-                            </li>-->
-
-
-                            <li class="page-item" th:each="pageNum :${#numbers.sequence(1,pagination.totalPageCount)}" th:inline="text">
-                                <a  class="page-link" th:href="@{'/snsad/stafflist?page=' + ${pageNum}}">[[${pageNum}]]</a>
-                            </li>
-                            <!--다음 페이지로
-                            <li class="page-item" th:class="${list.existNextPage} ? 'disabled'">
-                              <a th:href="${list.last} ? '#' : ${nextAddr}" aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                              </a>
-                            </li>-->
-                            <!--맨 마지막 페이지로 이동 -->
-                            <li class="page-item"><a class="page-link" th:href="@{'/snsad/stafflist?page=' + ${pagination.getEndPage()}}">Last</a></li>
-
-                        </ul>
+                        <div th:insert="com/page.html" id="page"></div>
 
                     </div>
                 </div>
@@ -422,8 +402,8 @@
                         <label class="col-sm-2 col-form-label">부서장 유무</label>
                         <div class="col-sm-10">
                             <select class="form-control select2" name="head" style="width: 100%;">
-                                <option selected="selected" value="1">True</option>
-                                <option value="0">False</option>
+                                <option value="1">True</option>
+                                <option selected="selected" value="0">False</option>
                             </select>
                         </div>
                     </div>
@@ -615,7 +595,7 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 사용자를 선택하세요 ?")
         } else {
-            location.href = "/snsad/staffdel?idx=" + chk_id;
+            location.href = "/snsad/staffdelyn?idx=" + chk_id;
         }
 
     });

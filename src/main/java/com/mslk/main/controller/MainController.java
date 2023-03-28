@@ -57,7 +57,7 @@ public class MainController {
     @GetMapping("/")
     public String main(Authentication authentication, Model model) {
 
-        /*if (authentication != null) {
+        if (authentication != null) {
             logger.info("타입정보 : " + authentication.getClass());
             logger.info("권한 정보 : " + authentication.getAuthorities().toString().equals("[ROLE_ADMIN]"));
 
@@ -67,18 +67,20 @@ public class MainController {
             logger.info("접속IP : " + web.getRemoteAddress());
 
             if (authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
-                return "redirect:/admin";
+                //return "redirect:/admin";
+                return "redirect:/sns/main";
             } else {
-                return "redirect:/user";
+                return "redirect:/user/login";
             }
 
         } else {
 
-            return "redirect:/dashboard";
+            //return "redirect:/dashboard";
+             return "redirect:/admin";
 
-        }*/
+        }
 
-        return "redirect:/sns/main";
+
 
 
     }
@@ -125,6 +127,8 @@ public class MainController {
         double  dashcount = Double.valueOf(dashBoardMngService.getDashBoardMngCount());
         Integer dashCount = (int) dashcount;
         model.addAttribute("dashCount", dashCount);
+
+        model.addAttribute("pageURL", "/admin");
 
         return "main/index.html";
     }
