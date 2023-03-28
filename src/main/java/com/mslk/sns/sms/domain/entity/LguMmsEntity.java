@@ -1,9 +1,7 @@
 package com.mslk.sns.sms.domain.entity;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "lgusms.MMS_MSG")
-public class MmsEntity {
+public class LguMmsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -50,7 +48,7 @@ public class MmsEntity {
     private String type;
 
     @Builder
-    public MmsEntity(String subject,String phone, String callback,String status, LocalDateTime reqdate, String msg ,String type){
+    public LguMmsEntity(String subject, String phone, String callback, String status, LocalDateTime reqdate, String msg , String type){
         this.subject = subject;
         this.phone = phone;
         this.callback = callback;
@@ -61,7 +59,7 @@ public class MmsEntity {
     }
 
 
-    public MmsEntity() {
+    public LguMmsEntity() {
 
     }
 }

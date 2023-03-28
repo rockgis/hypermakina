@@ -1,6 +1,6 @@
 package com.mslk.sns.sms.dto;
 
-import com.mslk.sns.sms.domain.entity.MmsEntity;
+import com.mslk.sns.sms.domain.entity.LguMmsEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class MmsDto {
+public class LguMmsDto {
 
     private String subject;
     private String phone;
@@ -19,8 +19,8 @@ public class MmsDto {
     private String msg;
     private String type;
 
-    public MmsEntity toEntity() {
-        MmsEntity mmsEntity = MmsEntity.builder()
+    public LguMmsEntity toEntity() {
+        LguMmsEntity lguMmsEntity = LguMmsEntity.builder()
                 .subject(subject)
                 .phone(phone)
                 .callback(callback)
@@ -29,11 +29,11 @@ public class MmsDto {
                 .msg(msg)
                 .type(type)
                 .build();
-        return mmsEntity;
+        return lguMmsEntity;
     }
 
     @Builder
-    public MmsDto(String subject, String phone, String callback, String status, LocalDateTime reqdate, String msg , String type){
+    public LguMmsDto(String subject, String phone, String callback, String status, LocalDateTime reqdate, String msg , String type){
         this.subject = subject;
         this.phone = phone;
         this.callback = callback;
