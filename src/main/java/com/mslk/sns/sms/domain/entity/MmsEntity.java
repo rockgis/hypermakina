@@ -7,15 +7,17 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "MMS_MSG_TEST", catalog = "lgusms")
-public class LguMmsEntity {
+@Table(name = "tb_mms_code")
+public class MmsEntity {
     @Id
-    @Column(name = "msgkey", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; //'고유 인덱스'
+
+
+    private Long codemng_id;
 
     //보내려는 메세지 SMS 단문 전송 가능 용량은 90byte 입니다.
     //
@@ -42,22 +44,25 @@ public class LguMmsEntity {
     private String callback;
     @Column(length = 2, nullable = false)
     private String status;
-    private LocalDateTime reqdate;
     @Column(length = 4000, nullable = false)
     private String msg;
     @Column(length = 2, nullable = false)
     private String type;
 
+    @Column(columnDefinition = "TEXT")
+    private String memo; // '메모',
+
     @Builder
-    public LguMmsEntity(long id,String subject, String phone, String callback, String status, LocalDateTime reqdate, String msg , String type){
+    public MmsEntity(Long id,Long codemng_id, String subject, String phone, String callback, String status, String msg , String type,String memo){
         this.id = id;
+        this.codemng_id = codemng_id;
         this.subject = subject;
         this.phone = phone;
         this.callback = callback;
         this.status = status;
-        this.reqdate = reqdate;
         this.msg = msg;
         this.type = type;
+        this.memo = memo;
     }
 
 }

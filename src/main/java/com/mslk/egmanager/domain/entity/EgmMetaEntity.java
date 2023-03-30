@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "EGMMETA")
+@Table(name = "egmmeta")
 public class EgmMetaEntity extends TimeEntity {
 
     @Id

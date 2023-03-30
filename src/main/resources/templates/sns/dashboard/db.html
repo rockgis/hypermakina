@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="/js/billboard/css/datalab.min.css">
     <link rel="stylesheet" href="/js/billboard/css/insight.min.css">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/toastr/toastr.min.css">
 </head>
 <!-- 주석처리 꼭 읽어주세요 -->
 <body>
@@ -57,11 +60,11 @@
                        ****************************** -->
                         <div class="dbBox-result__right">
                             <div class="result__right-sign">
-                                <span class="green"></span>
+                                <span id="host_T" class=""></span>
                                 <span>정상</span>
                             </div>
                             <div class="result__right-sign">
-                                <span class=""></span><!-- class명 red 생략 -->
+                                <span id="host_F"class=""></span><!-- class명 red 생략 -->
                                 <span>비정상</span>
                             </div>
                         </div>
@@ -96,11 +99,11 @@
                             <div class="sign-graph-data sign-graph-data2">
                                 <div>
                                     <div class="t-lightGray fs-15 tit">CPU Core</div>
-                                    <div class=""><em  class="fs-21">B</em></div>
+                                    <div class=""><em id="hostcpu" class="fs-21">B</em></div>
                                 </div>
                                 <div>
                                     <div class="t-lightGray fs-15 tit">RAM Total</div>
-                                    <div><em  class="fs-21">16GB</em></div>
+                                    <div><em id="hostram"  class="fs-21">16GB</em></div>
                                 </div>
                             </div>
                             <div class="sign-graph-halfCircle">
@@ -126,7 +129,7 @@
                             <div class="sign-graph-uptime sign-graph-data2">
                                 <div>
                                     <div class="t-lightGray fs-24 tit">Uptime</div>
-                                    <div><em  class="fs-21" th:text="${uptime}" >3.1 day</em></div>
+                                    <div><em  id="hostuptime" class="fs-21" th:text="${uptime}" >3.1 day</em></div>
                                 </div>
                             </div>
                             <script>
@@ -201,6 +204,9 @@
     <script src="/webjars/AdminLTE/plugins/chart.js/Chart.js"></script>
     <script src="/js/chart/ConfigCreator.js"></script>
 
+    <!-- Toastr -->
+    <script src="/webjars/AdminLTE/plugins/toastr/toastr.min.js"></script>
+
 
 
     <script th:inline="javascript">
@@ -251,76 +257,121 @@
         ajectdata.push(/*[[${usedmn}]]*/)
         ajectdata.push(/*[[${diskmn}]]*/)
 
-
-    </script>
-
-
-
-    <script>
-
         var initMinute;  // 최초 설정할 시간(min)
         var remainSecond;  // 남은시간(sec)
 
+
         $(document).ready(function() {
 
-            let cpu_data = [
-                ["CPU Used", ajectdata[0]]
-            ];
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "60000",
+                "hideDuration": "60000",
+                "timeOut": "60000",
+                "extendedTimeOut": "60000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
 
-            let ram_data = [
-                ["Ram Used", ajectdata[1]]
-            ];
 
-            let disk_data = [
-                ["Disk Used", ajectdata[2]]
-            ];
 
-            chart_gauge("#cpuChart",cpu_data);
-            chart_gauge("#memChart",ram_data);
-            chart_gauge("#diskChart",disk_data);
+            check_go("MES_Tibero_1_t","uptime","8", "16GB");
+
 
             lineCart(lineX,datasets,datasets2,datasets3,datasets4);
 
             setTimeout(function () {
                 location.reload();
                 //alert("페이지 리로드 하기 ");
-            }, 300000);
+            }, 360000);
+
+            setTimeout(function () {
+                check_go("MSSQL_Server_t","uptime","8", "16GB");
+            }, 120000);
+
+            setTimeout(function () {
+                check_go("MES_Tibero_2_t","uptime","8", "16GB");
+            }, 240000);
+
         });
 
-        //System Details - Summary
-        /*
-            ["TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  CPU_UTIL  CPU_UTIL_ST  SYS_CPU_UTIL  SYS_CPU_UTIL_ST  RUNNING_PROC  RUNNING_PROC_ST  BLOCKED_PROC  BLOCKED_PROC_ST  SWAP_AVAIL  SWAP_AVAIL_ST  FREE_MEM_AVAIL  FREE_MEM_AVAIL_ST  MEM_SCAN_RATE  MEM_SCAN_RATE_ST  STEAL_TIME  STEAL_TIME_ST  ",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:02:36  0.4977 GOOD 0.2330 GOOD 0.0000 GOOD 0.0000 GOOD 11769.8203 GOOD 6130.1719 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:07:24  0.8100 GOOD 0.3411 GOOD 0.0000 GOOD 0.0000 GOOD 11776.5273 GOOD 6126.7031 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:12:17  1.4796 GOOD 0.4663 GOOD 0.0000 GOOD 0.0000 GOOD 11786.4336 GOOD 6114.5156 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:17:00  1.1916 GOOD 0.7836 GOOD 0.0000 GOOD 0.0000 GOOD 11795.0117 GOOD 6076.7461 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:21:43  1.2806 GOOD 0.6947 GOOD 0.0000 GOOD 0.0000 GOOD 11793.7852 GOOD 6078.5586 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:26:29  0.3286 GOOD 0.2310 GOOD 0.0000 GOOD 0.0000 GOOD 11794.0977 GOOD 6077.6523 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:31:11  0.2723 GOOD 0.2397 GOOD 0.0000 GOOD 0.0000 GOOD 11797.2656 GOOD 6066.1406 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:35:59  0.3796 GOOD 0.3796 GOOD 0.0000 GOOD 0.0000 GOOD 11798.1641 GOOD 6068.4375 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:40:47  0.8626 GOOD 0.7324 GOOD 0.0000 GOOD 0.0000 GOOD 11793.8398 GOOD 6060.0273 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:45:46  0.8378 GOOD 0.4423 GOOD 0.0000 GOOD 0.0000 GOOD 11795.6406 GOOD 6062.9023 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:50:36  0.9331 GOOD 0.7379 GOOD 0.0000 GOOD 0.0000 GOOD 11808.5273 GOOD 6056.8320 GOOD 0.0000 GOOD -5.0000 GOOD",
-                "MES_App_1_t NULL NULL +Summary MES_App_1_t 2023-03-07 15:55:42  0.9747 GOOD 0.4541 GOOD 0.0000 GOOD 0.0000 GOOD 11811.3125 GOOD 6051.3555 GOOD 0.0000 GOOD -5.0000 GOOD"
-            ]*/
+        function check_go(componetName,check,cpu,ram) {
 
-        /* Ram
-                "TRGT_HOST  PORT_NO  SITE_NAME  INFO  MSMT_HOST  MSMT_TIME  TOTAL_PHY_MEM  TOTAL_PHY_MEM_ST  USED_PHY_MEM  USED_PHY_MEM_ST  FREE_PHY_MEM  FREE_PHY_MEM_ST  PHYSICAL_MEM_UTILZE  PHYSICAL_MEM_UTILZE_ST  PHYSICAL_AVAIL_MEM  PHYSICAL_AVAIL_MEM_ST  MODIFIED_MEM  MODIFIED_MEM_ST  STANDBY_MEM  STANDBY_MEM_ST  CACHED_MEM  CACHED_MEM_ST  MAX_MEM_ALLOCATE  MAX_MEM_ALLOCATE_ST  MAX_MEM_USAGE  MAX_MEM_USAGE_ST  AUTOMATION_STATUS  AUTOMATION_STATUS_ST  ",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:02:41  15838.0000 GOOD 9694.5430 GOOD 246.7227 GOOD 61.2107 GOOD 6130.0000 GOOD 13.4570 GOOD 5883.2773 GOOD 5896.7344 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:08:05  15838.0000 GOOD 9701.9297 GOOD 239.5078 GOOD 61.2573 GOOD 6125.0000 GOOD 11.0703 GOOD 5885.4922 GOOD 5896.5625 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:13:26  15838.0000 GOOD 9716.9570 GOOD 228.5273 GOOD 61.3522 GOOD 6109.0000 GOOD 12.0430 GOOD 5880.4727 GOOD 5892.5156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:18:40  15838.0000 GOOD 9746.0078 GOOD 192.1055 GOOD 61.5356 GOOD 6080.0000 GOOD 11.9922 GOOD 5887.8945 GOOD 5899.8867 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:23:16  15838.0000 GOOD 9749.9102 GOOD 193.4414 GOOD 61.5602 GOOD 6076.0000 GOOD 12.0898 GOOD 5882.5586 GOOD 5894.6484 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:28:28  15838.0000 GOOD 9750.2930 GOOD 197.2266 GOOD 61.5627 GOOD 6076.0000 GOOD 11.7070 GOOD 5878.7734 GOOD 5890.4805 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:33:49  15838.0000 GOOD 9754.9531 GOOD 186.0312 GOOD 61.5921 GOOD 6070.0000 GOOD 13.0469 GOOD 5883.9687 GOOD 5897.0156 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:39:02  15838.0000 GOOD 9758.4219 GOOD 180.9805 GOOD 61.6140 GOOD 6066.0000 GOOD 13.5781 GOOD 5885.0195 GOOD 5898.5977 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:43:48  15838.0000 GOOD 9755.5977 GOOD 187.4258 GOOD 61.5961 GOOD 6069.0000 GOOD 13.4023 GOOD 5881.5742 GOOD 5894.9766 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:49:07  15838.0000 GOOD 9767.4258 GOOD 176.7617 GOOD 61.6708 GOOD 6058.0000 GOOD 12.5742 GOOD 5881.2383 GOOD 5893.8125 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:53:43  15838.0000 GOOD 9765.8281 GOOD 166.3320 GOOD 61.6607 GOOD 6058.0000 GOOD 14.1719 GOOD 5891.6680 GOOD 5905.8398 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD",
-                "MES_App_1_t NULL NULL - MES_App_1_t 2023-03-07 15:59:08  15838.0000 GOOD 9761.9336 GOOD 171.9219 GOOD 61.6362 GOOD 6076.0000 GOOD 0.0664 GOOD 5904.0781 GOOD 5904.1445 GOOD -5.0000 GOOD -5.0000 GOOD 5.0000 GOOD"
-        */
+            var inputData = {"componetName":componetName, "testdata":check};
+
+            $.ajax({
+                url: "/db_check",
+                type: "post",
+                data: JSON.stringify(inputData),
+                dataType: "json",
+                contentType:"application/json;charset=UTF-8",
+                async: false,
+                success: function(data){
+                    var obj;
+
+                    if (data.length == 0) {
+                        toastr.error('조회 결과가 없습니다.');
+                    } else {
+                        obj = JSON.parse(data);
 
 
+
+                            document.getElementById("hostNM").innerHTML = componetName;
+                            document.getElementById("hostcpu").innerHTML = obj.hostcpu;
+                            document.getElementById("hostram").innerHTML =  obj.hostram;
+
+                            let cpu_data = [
+                                ["CPU Used", obj.cpumn]
+                            ];
+
+                            let ram_data = [
+                                ["Ram Used", obj.usedmn]
+                            ];
+
+                            let disk_data = [
+                                ["Disk Used", obj.diskmn]
+                            ];
+
+                            chart_gauge("#cpuChart",cpu_data);
+                            chart_gauge("#memChart",ram_data);
+                            chart_gauge("#diskChart",disk_data);
+
+                        document.getElementById("hostuptime").innerHTML = obj.uptime;
+
+                        if(obj.result == "True"){
+                            //정상
+
+                            $("#host_T").addClass( 'green' );
+                            $("#host_F").removeClass( 'red' );
+
+                        }else{
+                            //비정상
+
+                            toastr.error(obj.result);
+
+                            $("#host_T").removeClass( 'green' );
+                            $("#host_F").addClass( 'red' );
+
+                        }
+
+
+                    }
+                },
+                error: function(xhr, status, error){
+                    toastr.error(xhr.responseText);
+                },
+                complete: function(xhr, status){}
+            });
+
+        }
 
         function lineCart(lineX,datasets,datasets2,datasets3,datasets4) {
 
@@ -354,58 +405,6 @@
 
         }
 
-
-
-        function getClock(){
-            const date = new Date()
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const day = date.getDate();
-            day.innerText = `${year}년 ${month} 월 ${day}일`;
-
-            const hour = String(date.getHours()).padStart(2,"0");
-            const minutes = String(date.getMinutes()).padStart(2,"0");
-            const second = String(date.getSeconds()).padStart(2,"0");//number이기 때문에 padStart 붙일 수 없음. String 변환해주어야한다.
-            clock.innerText = `${hour}:${minutes}:${second}`;
-        }
-
-
-
-
-        function ajax_rest(){
-
-
-            let person = {name:"abc", age:10};
-            let person2 = {};
-
-            let managerurl = "http://172.30.1.109:7077";
-            let user = "admin";
-            let pwd ="bHlpanVuIUAwOQ==";
-
-
-            $.ajax({
-                crossOrigin : true,
-                type:'POST', //요청 메서드
-                url: 'http://172.30.1.109:7077/api/eg/analytics/getAlarmCount', //요청 URI
-                contentType : 'application/json',
-                headers : { 'managerurl':managerurl,
-                    'user':user,
-                    'pwd':pwd,
-                    'Accept':'application/json'
-                }, //요청 헤더
-                dataType : 'json', //전송할 데이터 타입
-                //data : JSON.stringify(person), //서버로 전송할 데이터. 직렬화.
-                success : function(result) {
-
-                    alert(JSON.parse(result));
-                },
-                error : function(request, status, error) {
-                    //alert("error: " + error)
-                } //에러가 발생했을 때 호출될 함수
-            }); //$.ajax()
-
-
-        }
 
 
     </script>

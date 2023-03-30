@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HyperMSLK 서비스</title>
     <link rel="stylesheet" href="/sns/css/style.css">
+    <link rel="stylesheet" href="/sns/css/modal.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="/js/billboard/css/datalab.min.css">
     <link rel="stylesheet" href="/js/billboard/css/insight.min.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/toastr/toastr.min.css">
+
 </head>
 <!-- 주석처리 꼭 읽어주세요 -->
 <body>
@@ -32,7 +40,7 @@
                     </div>
                     <div class="user-box">
                         <div class="user b-blakBox Convex">
-                            <output name="hostNM" for="" id="hostNM" class="t-gray t-nomal" th:text="${hosnm}" ></output>
+                            <output name="hostNM" for="" id="hostNM" class="t-gray t-nomal" th:text="${hosnm}" >CPU host_01</output>
                         </div> 
                     </div>
                 </div>
@@ -60,11 +68,11 @@
                        ****************************** -->
                         <div class="dbBox-result__right">
                             <div class="result__right-sign">
-                                <span  class="green"></span>
+                                <span id="host_T" class=""></span>
                                 <span>정상</span>
                             </div>
                             <div class="result__right-sign">
-                                <span  class=""></span><!-- class명 red 생략 -->
+                                <span  id="host_F" class=""></span><!-- class명 red 생략 -->
                                 <span>비정상</span>
                             </div>
                         </div>
@@ -99,11 +107,11 @@
                             <div class="sign-graph-data sign-graph-data2">
                                 <div>
                                     <div class="t-lightGray fs-15 tit">CPU Core</div>
-                                    <div class=""><em  class="fs-21" th:text="${cpucore}" ></em></div>
+                                    <div class=""><em id="hostcpu" class="fs-21" th:text="${cpucore}" ></em></div>
                                 </div>
                                 <div>
                                     <div class="t-lightGray fs-15 tit">RAM Total</div>
-                                    <div><em  class="fs-21" th:text="${ramuse}"></em></div>
+                                    <div><em id="hostram" class="fs-21" th:text="${ramuse}"></em></div>
                                 </div>
                             </div>
                             <div class="sign-graph-halfCircle">
@@ -129,7 +137,7 @@
                             <div class="sign-graph-uptime sign-graph-data2">
                                 <div>
                                     <div class="t-lightGray fs-24 tit">Uptime</div>
-                                    <div><em  class="fs-21" th:text="${uptime}" ></em></div>
+                                    <div><em id="hostuptime" class="fs-21" th:text="${uptime}" ></em></div>
                                 </div>
                             </div>
                             <script>
@@ -192,9 +200,30 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-danger">
+        <div class="modal-dialog">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">경고</h4>
+                </div>
+                <div class="modal-body">
+                    <h4 id="result">경고</h4>
+                </div>
+                <div class="modal-footer justify-content-between">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 
     <!-- jQuery -->
     <script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="/js/billboard/js/billboard.pkgd.min.js"></script>
 
@@ -203,6 +232,9 @@
     <!-- ChartJS -->
     <script src="/webjars/AdminLTE/plugins/chart.js/Chart.js"></script>
     <script src="/js/chart/ConfigCreator.js"></script>
+
+    <!-- Toastr -->
+    <script src="/webjars/AdminLTE/plugins/toastr/toastr.min.js"></script>
 
 
 
@@ -436,21 +468,26 @@
 
         $(document).ready(function() {
 
-            let cpu_data = [
-                ["CPU Used", ajectdata[0]]
-            ];
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "60000",
+                "hideDuration": "60000",
+                "timeOut": "60000",
+                "extendedTimeOut": "60000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
 
-            let ram_data = [
-                ["Ram Used", ajectdata[1]]
-            ];
 
-            let disk_data = [
-                ["Disk Used", ajectdata[2]]
-            ];
-
-            chart_gauge("#cpuChart",cpu_data);
-            chart_gauge("#memChart",ram_data);
-            chart_gauge("#diskChart",disk_data);
+            check_go("MES_App_1_t","uptime","8", "16GB");
 
 
             lineCart(lineX,datasets,datasets2,datasets3,datasets4,datasets5);
@@ -458,8 +495,106 @@
             setTimeout(function () {
                 location.reload();
                 //alert("페이지 리로드 하기 ");
+            }, 420000);
+
+            setTimeout(function () {
+                check_go("MES_App_2_t","uptime","8", "16GB");
+            }, 60000);
+
+            setTimeout(function () {
+                check_go("MES_App_3_t","uptime","8", "16GB");
+            }, 120000);
+
+            setTimeout(function () {
+                check_go("MES_App_4_t","uptime","8", "16GB");
+            }, 180000);
+
+            setTimeout(function () {
+                check_go("MES_Tibero_1_t","uptime","8", "16GB");
+            }, 240000);
+
+            setTimeout(function () {
+                check_go("MES_Tibero_2_t","uptime","8", "16GB");
             }, 300000);
+
+            setTimeout(function () {
+                check_go("MSSQL_Server_t","uptime","8", "16GB");
+            }, 360000);
+
+
         });
+
+
+        function check_go(componetName,check,cpu,ram) {
+
+            var inputData = {"componetName":componetName, "testdata":check};
+
+            $.ajax({
+                url: "/host_check",
+                type: "post",
+                data: JSON.stringify(inputData),
+                dataType: "json",
+                contentType:"application/json;charset=UTF-8",
+                async: false,
+                success: function(data){
+
+                    $('#modal-danger').modal('hide');
+                    var obj;
+
+                    if (data.length == 0) {
+
+                        toastr.error('조회 결과가 없습니다.');
+
+                    } else {
+                        obj = JSON.parse(data);
+
+                        document.getElementById("hostNM").innerHTML = componetName;
+                        document.getElementById("hostcpu").innerHTML = obj.hostcpu;
+                        document.getElementById("hostram").innerHTML =  obj.hostram;
+
+                        let cpu_data = [
+                            ["CPU Used", obj.cpumn]
+                        ];
+
+                        let ram_data = [
+                            ["Ram Used", obj.usedmn]
+                        ];
+
+                        let disk_data = [
+                            ["Disk Used", obj.diskmn]
+                        ];
+
+                        chart_gauge("#cpuChart",cpu_data);
+                        chart_gauge("#memChart",ram_data);
+                        chart_gauge("#diskChart",disk_data);
+
+                        document.getElementById("hostuptime").innerHTML = obj.uptime;
+
+                        if(obj.result == "True"){
+                            //정상
+
+                            $("#host_T").addClass( 'green' );
+                            $("#host_F").removeClass( 'red' );
+
+                        }else{
+                            //비정상
+                            toastr.error(obj.result);
+
+                            $("#host_T").removeClass( 'green' );
+                            $("#host_F").addClass( 'red' );
+
+                        }
+
+
+                    }
+                },
+                error: function(xhr, status, error){
+                    toastr.error(xhr.responseText);
+                },
+                complete: function(xhr, status){}
+            });
+
+        }
 
 
 
@@ -494,42 +629,6 @@
            // var config4 = configMaker.createLineNLine(lineX,datasets4, datasets5 );
             var lineChartCanvas4          = document.getElementById('networkChart').getContext('2d');
             var lineChart4                = new Chart(lineChartCanvas4,config4);
-
-        }
-
-
-        function ajax_rest(){
-
-
-            let person = {name:"abc", age:10};
-            let person2 = {};
-
-            let managerurl = "http://172.30.1.109:7077";
-            let user = "admin";
-            let pwd ="bHlpanVuIUAwOQ==";
-
-
-            $.ajax({
-                crossOrigin : true,
-                type:'POST', //요청 메서드
-                url: 'http://172.30.1.109:7077/api/eg/analytics/getAlarmCount', //요청 URI
-                contentType : 'application/json',
-                headers : { 'managerurl':managerurl,
-                    'user':user,
-                    'pwd':pwd,
-                    'Accept':'application/json'
-                }, //요청 헤더
-                dataType : 'json', //전송할 데이터 타입
-                //data : JSON.stringify(person), //서버로 전송할 데이터. 직렬화.
-                success : function(result) {
-
-                    alert(JSON.parse(result));
-                },
-                error : function(request, status, error) {
-                    //alert("error: " + error)
-                } //에러가 발생했을 때 호출될 함수
-            }); //$.ajax()
-
 
         }
 

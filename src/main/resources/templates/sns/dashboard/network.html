@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HyperMSLK 서비스</title>
     <link rel="stylesheet" href="/sns/css/style.css">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/toastr/toastr.min.css">
+
 </head>
 <body>
 <div id="wrap" class="noseBg">
@@ -52,11 +56,11 @@
                    ****************************** -->
                     <div class="dbBox-result__right">
                         <div class="result__right-sign on">
-                            <span id="" class="green"></span>
+                            <span id="network_T" class=""></span>
                             <span>정상</span>
                         </div>
                         <div class="result__right-sign">
-                            <span id="" class=""></span><!-- class명 b-red 생략 -->
+                            <span id="network_F" class=""></span><!-- class명 b-red 생략 -->
                             <span>비정상</span>
                         </div>
                     </div>
@@ -80,11 +84,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="">
-                                        <span id="on" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_ab1_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class=""><!-- class 'on', 현재상태를 표시 스크립트로 on이 되었을 경우 자식 span태그에 .b-red 또는 .b-green 클래스가 삽입 되게끔 개발 -->
-                                        <span id="" class="sign"></span><!-- class명 b-red 생략 -->
+                                        <span id="sw_c1000_ab1_1_t_F" class="sign"></span><!-- class명 b-red 생략 -->
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -136,11 +140,11 @@
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
-                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span id="wlc_c9800_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                                 <span>정상</span>
                                             </div>
                                             <div class="">
-                                                <span id="" class="sign"></span>
+                                                <span id="wlc_c9800_t_F" class="sign"></span>
                                                 <span>비정상</span>
                                             </div>
                                         </div>
@@ -160,11 +164,11 @@
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
-                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span id="bb_9300l_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                                 <span>정상</span>
                                             </div>
                                             <div class="">
-                                                <span id="" class="sign"></span>
+                                                <span id="bb_9300l_t_F" class="sign"></span>
                                                 <span>비정상</span>
                                             </div>
                                         </div>
@@ -187,11 +191,11 @@
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
-                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span id="sr_c1000_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                                 <span>정상</span>
                                             </div>
                                             <div class="">
-                                                <span id="" class="sign"></span>
+                                                <span id="sr_c1000_1_t_F" class="sign"></span>
                                                 <span>비정상</span>
                                             </div>
                                         </div>
@@ -211,11 +215,11 @@
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
-                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span id="sr_c1000_2_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                                 <span>정상</span>
                                             </div>
                                             <div class="">
-                                                <span id="" class="sign"></span>
+                                                <span id="sr_c1000_2_t_F" class="sign"></span>
                                                 <span>비정상</span>
                                             </div>
                                         </div>
@@ -230,16 +234,16 @@
                                 <div class="dirBoxCnt-right">
                                     <div class="dirBoxCnt-right-area">
                                         <div class="dirBoxCnt-dataBox">
-                                            <p id="" th:text="${sw_c1000_a1_2_t_inp_pkt_rate}" >(Mbps)</p>
-                                            <p id="" th:text="${sw_c1000_a1_2_t_out_pkt_rate}"> (Mbps)</p>
+                                            <p id="" th:text="${sw_sg220_26_t_inp_pkt_rate}" >(Mbps)</p>
+                                            <p id="" th:text="${sw_sg220_26_t_out_pkt_rate}"> (Mbps)</p>
                                         </div>
                                         <div class="dirBoxCnt-signBox">
                                             <div class="on">
-                                                <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                                <span id="sw_sg220_26_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                                 <span>정상</span>
                                             </div>
                                             <div class="">
-                                                <span id="" class="sign"></span>
+                                                <span id="sw_sg220_26_t_F" class="sign"></span>
                                                 <span>비정상</span>
                                             </div>
                                         </div>
@@ -301,11 +305,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_b1_2_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_b1_2_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -329,11 +333,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_b1_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_b1_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -365,11 +369,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_c3_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_c3_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -391,11 +395,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_c1_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_c1_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -419,11 +423,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_c4_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_c4_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -445,11 +449,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_c2_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_c2_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -479,11 +483,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_a2_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_a2_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -505,11 +509,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_a1_1_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_a1_1_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -533,11 +537,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign  b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_a2_2_t_T" class="sign"></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_a2_2_t_F" class="sign"></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -559,11 +563,11 @@
                                 </div>
                                 <div class="dirBoxCnt-signBox">
                                     <div class="on">
-                                        <span id="" class="sign b-green"></span><!-- class명 b-green 생략 -->
+                                        <span id="sw_c1000_a1_2_t_T" class="sign "></span><!-- class명 b-green 생략 -->
                                         <span>정상</span>
                                     </div>
                                     <div class="">
-                                        <span id="" class="sign"></span>
+                                        <span id="sw_c1000_a1_2_t_F" class="sign "></span>
                                         <span>비정상</span>
                                     </div>
                                 </div>
@@ -579,15 +583,110 @@
 <!-- jQuery -->
 <script src="/webjars/AdminLTE/plugins/jquery/jquery.min.js"></script>
 
+<!-- Toastr -->
+<script src="/webjars/AdminLTE/plugins/toastr/toastr.min.js"></script>
+
 <script>
 
     $(document).ready(function() {
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "60000",
+            "hideDuration": "60000",
+            "timeOut": "60000",
+            "extendedTimeOut": "60000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
 
         setTimeout(function () {
             location.reload();
             //alert("페이지 리로드 하기 ");
         }, 300000);
+
+
+
+//패킷 체크
+        check_go("sw_c1000_ab1_1_t","Network");
+        check_go("wlc_c9800_t","Network");
+        check_go("bb_9300l_t","Network");
+        check_go("sr_c1000_1_t","Network");
+        check_go("sr_c1000_2_t","Network");
+        check_go("sw_sg220_26_t","Network"); //server의 네트워크 정보가 없음
+        check_go("sw_c1000_b1_2_t","Network");
+        check_go("sw_c1000_b1_1_t","Network");
+        check_go("sw_c1000_c3_1_t","Network");
+        check_go("sw_c1000_c1_1_t","Network");
+        check_go("sw_c1000_c4_1_t","Network");
+        check_go("sw_c1000_c2_1_t","Network");
+        check_go("sw_c1000_a2_1_t","Network");
+        check_go("sw_c1000_a1_1_t","Network");
+        check_go("sw_c1000_a2_2_t","Network");
+        check_go("sw_c1000_a1_2_t","Network");
+
     });
+
+
+    function check_go(componetName,check) {
+
+        var inputData = {"componetName":componetName, "testdata":check};
+        var val_check_t = "#"+componetName + "_T";
+        var val_check_f = "#"+componetName + "_F";
+
+        $.ajax({
+            url: "/network_check",
+            type: "post",
+            data: JSON.stringify(inputData),
+            dataType: "json",
+            contentType:"application/json;charset=UTF-8",
+            async: false,
+            success: function(data){
+                var obj;
+
+                if (data.length == 0) {
+                    alert('조회 결과가 없습니다.');
+                } else {
+                    obj = JSON.parse(data);
+
+                    if(obj.result == "True"){
+                        //정상
+                        $(val_check_t).addClass( 'b-green' );
+                        $(val_check_f).removeClass( 'b-red' );
+
+                        $("#network_T").addClass( 'green' );
+                        $("#network_F").removeClass( 'red' );
+
+                    }else{
+                        //비정상
+                        toastr.error(obj.result);
+
+                        $(val_check_t).removeClass( 'b-green' );
+                        $(val_check_f).addClass( 'b-red' );
+
+                        $("#network_T").removeClass( 'green' );
+                        $("#network_F").addClass( 'red' );
+
+                    }
+
+                }
+            },
+            error: function(xhr, status, error){
+                toastr.error(xhr.responseText);
+            },
+            complete: function(xhr, status){}
+        });
+
+    }
 
 
 </script>

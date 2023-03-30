@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EgmMetaRepository extends JpaRepository<EgmMetaEntity, Long> {
@@ -20,6 +21,9 @@ public interface EgmMetaRepository extends JpaRepository<EgmMetaEntity, Long> {
     List<EgmMetaEntity> findByMetaMmContaining(@Param("q") String keyword);
 
     List<EgmMetaEntity> findByMetaWmContaining(@Param("q") String keyword);
+
+    Optional<EgmMetaEntity> findByMetaHm(@Param("q") String keyword);
+
 
 
 

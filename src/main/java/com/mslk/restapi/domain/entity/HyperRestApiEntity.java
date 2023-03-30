@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "HYPERRESTAPI")
+@Table(name = "hyperrestapi")
 public class HyperRestApiEntity extends TimeEntity {
 
     @Id

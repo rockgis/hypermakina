@@ -1,6 +1,7 @@
 package com.mslk.sns.sms.dto;
 
 import com.mslk.sns.sms.domain.entity.LguMmsEntity;
+import com.mslk.sns.sms.domain.entity.MmsEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,39 +10,51 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-public class LguMmsDto {
+public class MmsDto {
+
+    private Long id;
+
+    private Long codemng_id;
 
     private String subject;
     private String phone;
     private String callback;
     private String status;
-    private LocalDateTime reqdate;
     private String msg;
+
     private String type;
 
-    public LguMmsEntity toEntity() {
-        LguMmsEntity lguMmsEntity = LguMmsEntity.builder()
+    private String memo;
+
+
+
+
+    public MmsEntity toEntity() {
+        MmsEntity mmsEntity = MmsEntity.builder()
+                .id(id)
+                .codemng_id(codemng_id)
                 .subject(subject)
                 .phone(phone)
                 .callback(callback)
                 .status(status)
-                .reqdate(reqdate)
                 .msg(msg)
                 .type(type)
+                .memo(memo)
                 .build();
-        return lguMmsEntity;
+        return mmsEntity;
     }
 
     @Builder
-    public LguMmsDto( String subject, String phone, String callback, String status, LocalDateTime reqdate, String msg , String type){
-
+    public MmsDto(Long id,Long codemng_id, String subject, String phone, String callback, String status, String msg , String type,String memo){
+        this.id = id;
+        this.codemng_id = codemng_id;
         this.subject = subject;
         this.phone = phone;
         this.callback = callback;
         this.status = status;
-        this.reqdate = reqdate;
         this.msg = msg;
         this.type = type;
+        this.memo = memo;
     }
 
 

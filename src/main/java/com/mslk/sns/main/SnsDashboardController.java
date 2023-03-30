@@ -88,7 +88,6 @@ public class SnsDashboardController {
         Integer regCount = (int) regcount;
         model.addAttribute("regCount", regCount);
 
-       /*
         HyperRestApiDto hyperRestApiDto =  hyperRestApiService.getPost("getAlarmCount");
 
         String result = restApiService.getAlarmCountData(hyperRestApiDto).getBody().toString();
@@ -105,7 +104,7 @@ public class SnsDashboardController {
         model.addAttribute("major", jsonObject.get("major").toString());
         model.addAttribute("minor", jsonObject.get("minor").toString());
 
-        */
+
 
         model.addAttribute("pageURL", "/sns/main");
 
@@ -249,7 +248,7 @@ public class SnsDashboardController {
                 model.addAttribute("mssql", String.format("%02d", 1));
                 model.addAttribute("tibero", String.format("%02d", 2));
 
-                uptime = this.UptimeGet("MES_App_1_t", hyperRestApiDto);
+                uptime = this.UptimeGet(hosnm, hyperRestApiDto);
 
                 model.addAttribute("uptime", uptime);
 
@@ -305,6 +304,11 @@ public class SnsDashboardController {
 
                 model.addAttribute("sr_c1000_2_t_inp_pkt_rate", sr_c1000_2_t[0]);
                 model.addAttribute("sr_c1000_2_t_out_pkt_rate", sr_c1000_2_t[1]);
+
+
+                String sw_sg220_26_t[] = this.NetworkOneGet("SW_SG220_26_t","Network Interfaces", hyperRestApiDto);
+                model.addAttribute("sw_sg220_26_t_inp_pkt_rate", sw_sg220_26_t[0]);
+                model.addAttribute("sw_sg220_26_t_out_pkt_rate", sw_sg220_26_t[1]);
 
                 //SW_C1000_A1-1_t
 

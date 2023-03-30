@@ -23,8 +23,10 @@
     <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <!-- BS Stepper -->
     <link rel="stylesheet" href="/webjars/AdminLTE/plugins/bs-stepper/css/bs-stepper.min.css">
-    <!-- dropzonejs -->
+    <!-- summernote -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="/webjars/AdminLTE/plugins/dropzone/min/dropzone.min.css">
+
     <!-- jsGrid -->
     <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid.min.css">
     <link rel="stylesheet" href="/webjars/AdminLTE/plugins/jsgrid/jsgrid-theme.min.css">
@@ -40,7 +42,7 @@
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <div th:insert="com/leftmenuAdminSnsMain.html" id="leftMenu"></div>
+        <div th:insert="com/leftmenuAdminMain.html" id="leftMenu"></div>
         <!-- /.sidebar -->
     </aside>
 
@@ -56,7 +58,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">부서 관리</li>
+                            <li class="breadcrumb-item active">알람 서비스 관리</li>
                         </ol>
                     </div>
                 </div>
@@ -69,7 +71,7 @@
             <!-- /.card -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 부서 관리</h3>
+                    <h3 class="card-title"><i class="fas fa-user-secret"></i> 알람 서비스 관리</h3>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
@@ -106,42 +108,31 @@
                                         <input type="checkbox" id="chkAll">
                                     </th>
                                     <th width="5%">번호</th>
-                                    <th>부서ID</th>
-                                    <th>부서명</th>
-                                    <th>상위부서 ID</th>
-                                    <th>Depth</th>
-                                    <th>Full Tree ID</th>
-                                    <th>동기화 유무</th>
-                                    <th>삭제 유무</th>
-                                    <th>수정일</th>
-
+                                    <th>알람 조건</th>
+                                    <th>제목</th>
+                                    <th>메세지 전달번호</th>
+                                    <th>callback 전화번호</th>
+                                    <th>상태 값</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <!-- CONTENTS !-->
-                                <tr th:each="department, i : ${departmentlist}">
+                                <tr th:each="mms, i : ${mmslist}">
                                     <td width="5%">
-                                        <input type="checkbox" class="chk" th:value="${department.id}">
+                                        <input type="checkbox" class="chk" th:value="${mms.id}">
                                     </td>
-                                    <td width="5%"><span th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span></td>
-                                    <td><span th:text="${department.uid}"></span></td>
-                                    <td><a th:href="@{'/snsad/departmentpost/' + ${department.id}}">
-                                        <span th:text="${department.name}"></span>
+                                    <td width="5%"><span
+                                            th:text="${pagination.totalRecordCount - (pagination.page - 1 ) * 10 - i.index }"></span>
+                                    </td>
+                                    <td><span th:text="${mms.codemng_id}"></span></td>
+                                    <td><a th:href="@{'/snsad/mmspost/' + ${mms.id}}">
+                                        <span th:text="${mms.subject}"></span>
                                     </a>
                                     </td>
-                                    <td><span th:text="${department.upperId}"></span></td>
-                                    <td><span th:text="${department.depth}"></span></td>
-                                    <td><span th:text="${department.treeId}"></span></td>
-                                    <td><span th:if="${department.syncUse == 1}">True</span>
-                                        <span th:if="${department.syncUse == 0}">False</span>
-                                    </td>
-                                    <td>
-                                        <span th:if="${department.del} == 1 "> True</span>
-                                        <span th:if="${department.del} == 0 "> False</span>
-                                    </td>
-                                    <td><span
-                                            th:text="${#temporals.format(department.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                                    </td>
+                                    <td><span th:text="${mms.phone}"></span></td>
+                                    <td><span th:text="${mms.callback}"></span></td>
+                                    <td><span th:text="${mms.status}"></span></td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -185,7 +176,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/snsad/departmentsearch" id="app_search" method="POST">
+                <form action="/snsad/mmssearch" id="app_search" method="POST">
                     <input type="hidden" name="_method" value="post"/>
                     <div class="row">
                         <div class="col-sm-6">
@@ -193,8 +184,7 @@
                             <div class="form-group">
                                 <label>검색 조건</label>
                                 <select class="form-control select2" name="searchType" style="width: 100%;">
-                                    <option selected="selected" value="uid">부서 ID</option>
-                                    <option value="name">부서명</option>
+                                    <option selected="selected" value="phone">전달 폰 정보</option>
                                 </select>
                             </div>
                         </div>
@@ -242,102 +232,76 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">부서 관리</h4>
+                <h4 class="modal-title">알람 서비스 관리</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/snsad/departmentpost" method="post" id="app_brd" class="form-horizontal">
+                <form action="/snsad/mmspost" method="post" id="app_brd" class="form-horizontal">
                     <input type="hidden" name="_method" value="post"/>
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <!-- text input -->
-                            <div class="form-group">
-                                <label>부서 ID</label>
-                                <input type="text" class="form-control" name="uid" placeholder="부서 ID">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>부서명</label>
-                                <input type="text" class="form-control" name="name" placeholder="부서명">
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">알람 조건 선택</label>
+                        <div class="col-sm-10">
+                            <select name="codemng_id"  class="form-control select2" style="width: 100%;">
+                                <option value="">알람 조건 선택</option>
+                                <option th:each="codemng : ${codeMngList}"
+                                        th:value="${codemng.id}"
+                                        th:text="${codemng.codeWm}">FAST
+                                </option>
+                            </select>
+
                         </div>
                     </div>
 
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">제목 </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="subject">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <!-- text input -->
                             <div class="form-group">
-                                <label>상위부서 선택</label>
-                                <select id="departmentId" class="form-control select2" style="width: 100%;" >
-                                    <option value="">상위부서 선택</option>
-                                    <option th:each="departmentId_top : ${departmentlist_top}" th:value="${departmentId_top.name +'('+departmentId_top.uid+')'}"
-                                            th:text="${departmentId_top.name +'('+departmentId_top.uid+')'}">FAST</option>
+                                <label>phone</label>
+                                <input type="text" class="form-control" name="phone" value="01023796894">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Callback</label>
+                                <input type="text" class="form-control" name="callback" readonly value="0318859833" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">메세지 내용 </label>
+                        <div class="offset-sm-2 col-sm-10">
+                            <textarea name="msg" id="msg"  ></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>상태</label>
+                                <select class="form-control select2" name="status" style="width: 100%;">
+                                    <option selected="selected" value="0">전송 준비 </option>
+                                    <option value="1">전송 완료</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>상위부서 ID</label>
-                                <input type="text" class="form-control" name="upperId" id="upperId" readonly placeholder="상위부서 ID">
+                                <label>Type</label>
+                                <select class="form-control select2" name="type" style="width: 100%;">
+                                    <option selected="selected" value="0">Type 0 </option>
+                                    <option value="1">Type 1</option>
+                                </select>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <!-- text input -->
-                            <div class="form-group">
-                                <label>Neseted Set Model 좌측 ID</label>
-                                <input type="text" class="form-control" name="lftId"
-                                       placeholder="Neseted Set Model 좌측 ID">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Nelgusmsseted Set Model 우측 ID</label>
-                                <input type="text" class="form-control" name="rgtId"
-                                       placeholder="Nelgusmsseted Set Model 우측 ID">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Depth </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="depth" placeholder="Depth">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">순서</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="seq" value="1">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">동기화 유무</label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="syncUse" style="width: 100%;">
-                                <option selected="selected" value="1">True</option>
-                                <option value="0">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Full Tree ID </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="treeId" placeholder="Full Tree ID">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">최상위 유무 </label>
-                        <div class="col-sm-10">
-                            <select class="form-control select2" name="root" style="width: 100%;">
-                                <option selected="selected" value="1">True</option>
-                                <option value="0">False</option>
-                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -346,14 +310,7 @@
                             <input type="text" class="form-control" name="memo" placeholder="메모">
                         </div>
                     </div>
-                    <!-- div class="form-group row">
-                      <label class="col-sm-2 col-form-label">작성자</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="writer" placeholder="작성자" value='<span sec:authentication="name"></span>'>
-                      </div>
-                    </div -->
-
-                </form>
+                 </form>
 
             </div>
             <div class="modal-footer">
@@ -392,14 +349,18 @@
 <script src="/webjars/AdminLTE/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- date-range-picker -->
 <script src="/webjars/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Summernote -->
+<script src="/webjars/AdminLTE/plugins/summernote/summernote-bs4.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="/webjars/AdminLTE/dist/js/adminlte.min.js"></script>
 
 <!-- Page specific script -->
 
-<script>
+<script th:inline="javascript">
     $(function () {
 
+        $('#msg').summernote();
 
     });
 
@@ -415,7 +376,7 @@
     });
     $(document).on('click', '#list', function () {	// 삭제버튼 클릭 시
 
-        location.href = "/snsad/departmentlist";
+        location.href = "/snsad/mmslist";
 
     });
 
@@ -430,15 +391,9 @@
         if (chk_id == "") {
             alert("삭제하고자 하는 부서를 선택하세요 ?")
         } else {
-            location.href = "/snsad/departmentdelyn?idx=" + chk_id;
+            location.href = "/snsad/mmsdel?idx=" + chk_id;
         }
 
-    });
-
-
-    $(document).on('change', '#departmentId', function () {	// 부서 ID 클릭 시
-        var id = $("#departmentId").val();
-        $("#upperId").val(id.substring(id.indexOf("(")+1,id.indexOf(")")));
     });
 
 </script>

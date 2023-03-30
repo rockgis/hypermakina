@@ -3,12 +3,15 @@ package com.mslk.hypermakina.code.service;
 import com.mslk.hypermakina.code.domain.entity.CodeMngEntity;
 import com.mslk.hypermakina.code.domain.repostory.CodeMngRepository;
 import com.mslk.hypermakina.code.dto.CodeMngDto;
+import com.mslk.sns.department.domain.entity.DepartmentEntity;
+import com.mslk.sns.department.dto.DepartmentDto;
 import com.mslk.sns.position.domain.entity.PositionEntity;
 import com.mslk.sns.position.dto.PositionDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,6 +41,22 @@ public class CodeMngService {
 
         return dashBoardMngDtoList;
     }
+
+
+
+    @Transactional
+    public List<CodeMngDto> getCodeMnglistAll(String codeType, String codeGm) {
+
+        List<CodeMngEntity> codeMngEnties = codeMngRepository.findByCodeTypeAndCodeGmNot(codeType,codeGm);
+        List<CodeMngDto> dashBoardMngDtoList = new ArrayList<>();
+
+        for (CodeMngEntity codeMngMngEntity : codeMngEnties) {
+            dashBoardMngDtoList.add(this.convertEntityToDto(codeMngMngEntity));
+        }
+
+        return dashBoardMngDtoList;
+    }
+
 
     @Transactional
     public Long getCodeMngCount() {

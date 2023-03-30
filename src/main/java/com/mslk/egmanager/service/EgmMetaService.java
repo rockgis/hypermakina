@@ -76,6 +76,16 @@ public class EgmMetaService {
         return this.convertEntityToDto(egmMetaEntity);
     }
 
+    @Transactional
+    public EgmMetaDto getComponetName(String componetName ) {
+        Optional<EgmMetaEntity> egmMetaEntityyWrapper = egmMetaRepository.findByMetaHm(componetName);
+        EgmMetaEntity egmMetaEntity = egmMetaEntityyWrapper.get();
+
+        return this.convertEntityToDto(egmMetaEntity);
+    }
+
+
+
 
     @Transactional
     public List<EgmMetaDto> searchPosts(String searchType, String keyword) {

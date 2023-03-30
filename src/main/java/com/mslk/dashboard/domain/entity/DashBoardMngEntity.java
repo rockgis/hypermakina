@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "DASHBOARDMNG")
+@Table(name = "dashboardmng")
 public class DashBoardMngEntity extends TimeEntity {
 
     @Id

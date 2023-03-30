@@ -12,7 +12,7 @@ import com.mslk.common.domain.TimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "MSLKBOARD")
+@Table(name = "mslkboard")
 public class BoardEntity extends TimeEntity {
 
     @Id
