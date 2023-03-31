@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-    Optional<MemberEntity> findByEmail(@Param("q") String userEmail);
-    Optional<MemberEntity> findByRole(@Param("q") String userEmail);
+    Optional<MemberEntity> findByUid(@Param("q") String uid);
+    Optional<MemberEntity> findByRole(@Param("q") String uid);
 }

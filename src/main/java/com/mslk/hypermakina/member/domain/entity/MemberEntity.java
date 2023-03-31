@@ -13,17 +13,17 @@ import com.mslk.common.domain.TimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "MSLKMEMBER")
+@Table(name = "tb_staff")
 public class MemberEntity extends TimeEntity{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 20, unique = true , nullable = false)
-    private String email;
+    private String uid;
 
     @Column(length = 20,unique = true , nullable = false)
-    private String name;
+    private String fullName;
 
     @Column(length = 100, nullable = false)
     private String password;
@@ -33,10 +33,10 @@ public class MemberEntity extends TimeEntity{
     private Role role;
 
     @Builder
-    public MemberEntity(Long id, String email, String name, String password, Role role) {
+    public MemberEntity(Long id, String uid, String fullName, String password, Role role) {
         this.id = id;
-        this.email = email;
-        this.name = name;
+        this.uid = uid;
+        this.fullName = fullName;
         this.password = password;
         this.role = role;
     }
@@ -45,9 +45,9 @@ public class MemberEntity extends TimeEntity{
         return this.role.getKey();
     }
 
-    public MemberEntity update(String email, String name){
-        this.email = email;
-        this.name = name;
+    public MemberEntity update(String uid, String fullName){
+        this.uid = uid;
+        this.fullName = fullName;
         return this;
     }
 }

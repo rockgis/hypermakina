@@ -36,8 +36,8 @@ public class MemberService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<MemberEntity> userEntityWrapper = memberRepository.findByEmail(userEmail);
+    public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
+        Optional<MemberEntity> userEntityWrapper = memberRepository.findByUid(uid);
         MemberEntity userEntity = userEntityWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -49,8 +49,10 @@ public class MemberService implements UserDetailsService {
         } else {
             authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getKey()));
         }
-        log.info("UserName : " + userEmail);
 
-        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
+
+        log.info("UserName : " + uid);
+
+        return new User(userEntity.getUid(), userEntity.getPassword(), authorities);
     }
 }
