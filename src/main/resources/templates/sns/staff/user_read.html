@@ -32,7 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">DashBoard</li>
+                            <li class="breadcrumb-item active">사용자 패스워드 변경 </li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -56,9 +56,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <h3 class="card-title"><i class="fas fa-user-secret"></i> 사용자 관리</h3>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{'/snsad/post/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
+                                <form th:action="@{'/sns/user/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
                                     <input type="hidden" name="_method" value="put"/>
                                     <input type="hidden" name="id" id="id" th:value="${staffDto.id}"/>
+                                    <input type="hidden" name="auth" id="auth" th:value="${staffDto.auth}"/>
+                                    <input type="hidden" name="cardNo" id="cardNo" th:value="${staffDto.cardNo}"/>
+                                    <input type="hidden" name="fingerPrint" id="fingerPrint" th:value="${staffDto.fingerPrint}"/>
+                                    <input type="hidden" name="syncSystem" id="syncSystem" th:value="${staffDto.syncSystem}"/>
+                                    <input type="hidden" name="utype" id="utype" th:value="${staffDto.utype}"/>
+
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <!-- text input -->
@@ -98,8 +104,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="form-group">
                                                 <label>성별</label>
                                                 <select class="form-control select2" name="sex" style="width: 100%;">
-                                                    <option th:selected="${staffDto.sex} == '남'" value="남">남</option>
-                                                    <option th:selected="${staffDto.sex} == '여'" value="여">여</option>
+                                                    <option th:selected="${staffDto.sex} == 'M'" value="남">남</option>
+                                                    <option th:selected="${staffDto.sex} == 'F'" value="여">여</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -109,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="form-group">
                                                 <label>pw</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" name="pw" id="pw" th:value="${staffDto.pw}">
+                                                    <input type="text" class="form-control" name="pw" id="pw">
                                                 </div>
 
                                             </div>
@@ -122,6 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <label>pw</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" name="pw1" id="pw1">
+                                                    <input type="text" class="form-control" name="password" id="password" placeholder="password">
                                                 </div>
 
                                             </div>
@@ -132,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>이메일</label>
-                                                <input type="text" class="form-control" name="eMail" th:value="${staffDto.eMail}">
+                                                <input type="text" class="form-control" name="eMail" id="eMail" th:value="${staffDto.eMail}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -147,13 +154,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>부서</label>
-                                                <input type="text" class="form-control" name="name" th:value="${staffDto.name}">
+                                                <span th:text="${staffDto.name}"></span>
+                                                <input type="hidden" class="form-control" name="name" readonly th:value="${staffDto.name}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>부서 ID</label>
-                                                <input type="text" class="form-control" name="departmentId" th:value="${staffDto.departmentId}">
+                                                <span th:text="${staffDto.departmentId}"></span>
+                                                <input type="hidden" class="form-control" name="departmentId" readonly th:value="${staffDto.departmentId}">
                                             </div>
 
                                         </div>
@@ -166,35 +175,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <!-- text input -->
                                             <div class="form-group">
                                                 <label>직급 ID</label>
-                                                <input type="text" class="form-control" name="rankId" th:value="${staffDto.rankId}">
+                                                <span th:text="${staffDto.rankId}"></span>
+                                                <input type="hidden" class="form-control" name="rankId" readonly th:value="${staffDto.rankId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label>직책 ID</label>
-                                                <input type="text" class="form-control" name="positionId" th:value="${staffDto.positionId}">
+                                                <span th:text="${staffDto.positionId}"></span>
+                                                <input type="hidden" class="form-control" name="positionId" readonly th:value="${staffDto.positionId}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <!-- text input -->
-                                            <div class="form-group">
-                                                <label>겸직</label>
-                                                <input type="text" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>겸직 사용자 ID</label>
-                                                <input type="text" class="form-control" name="userId" th:value="${staffDto.userId}">
-                                            </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">겸직 정보</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="concurrentPosition" readonly th:value="${staffDto.concurrentPosition}">
+                                            <input type="text" class="form-control" name="userId" readonly th:value="${staffDto.userId}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">memo</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="memo" th:value="${staffDto.memo}">
+                                            <input type="text" class="form-control" name="memo" readonly th:value="${staffDto.memo}">
                                         </div>
                                     </div>
                                 </form>
@@ -206,6 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <div class="col-md-12 ">
                                         <div class="form-group">
                                             <button type="button" class="btn btn-primary float-right"
+                                                    onclick="document.getElementById('app_brd').submit();"
                                                     style="margin-right: 5px;">
                                                 <i class="fas fa-edit"></i> PassWord 변경
                                             </button>
@@ -259,6 +264,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     $(document).ready(function(){
 
+    });
+
+    $(document).on('blur', '#pw1', function () {	// 이름 클릭 시
+        var pw = $("#pw").val();
+        var pw1 = $("#pw1").val();
+        if(pw == pw1){
+            $("#password").val(pw1);
+            $("#eMail").focus();
+
+        }else{
+            alert("Password가 맞지 않습니다. !");
+            $("#pw").focus();
+        }
     });
 
 

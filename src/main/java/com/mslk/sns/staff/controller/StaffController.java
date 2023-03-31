@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +27,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+import com.mslk.common.util.SHA256;
 
 @Controller
 @AllArgsConstructor
@@ -108,22 +113,60 @@ public class StaffController {
         logger.info("사용자 ID : " + no);
 
         model.addAttribute("staffDto", staffDto);
+
+        List<RankDto> ranklist = rankService.getRanklistAll();
+
+        model.addAttribute("ranklist", ranklist);
+
+
+        List<PositionDto> positionlist = positionService.getPositionlistAll();
+        model.addAttribute("positionlist", positionlist);
+
+
+        List<DepartmentDto> departmentlist = departmentService.getDepartmentlistAll();
+        model.addAttribute("departmentlist", departmentlist);
+
+
+        List<SyncsvrDto> syncsvrlist = syncsvrService.getSyncsvrlistAll();
+        model.addAttribute("syncsvrlist", syncsvrlist);
+
         return "sns/staff/read";
     }
 
     @PutMapping("/snsad/post/edit/{no}")
-    public String update(StaffDto staffDto) {
+    public String update(StaffDto staffDto) throws NoSuchAlgorithmException {
+
         staffService.savePost(staffDto);
 
         return "redirect:/snsad/stafflist";
     }
 
+    @PutMapping("/sns/user/edit/{no}")
+    public String userupdate(StaffDto staffDto) throws NoSuchAlgorithmException {
+
+        logger.info("staffDto.getPw() ===>  pw : "+ staffDto.getPw().toString());
+        logger.info("staffDto.getPassword() ===>  password : "+ staffDto.getPassword().toString());
+
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        staffDto.setPassword(passwordEncoder.encode(staffDto.getPw().toString()));
+
+        SHA256 sha256 = new SHA256();
+        staffDto.setPw(sha256.encrypt(staffDto.getPw().toString()));
+
+
+        staffService.savePost(staffDto);
+
+        return "redirect:/user/login";
+    }
+
     @PostMapping("/snsad/staffpost")
-    public String userpost(Principal principal, StaffDto staffDto) {
+    public String userpost(Principal principal, StaffDto staffDto) throws NoSuchAlgorithmException {
 
-        LocalDateTime now = LocalDateTime.now();
-
-        // System.out.println(now);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        staffDto.setPassword(passwordEncoder.encode(staffDto.getPw()));
+        SHA256 sha256 = new SHA256();
+        staffDto.setPw(sha256.encrypt(staffDto.getPw().toString()));
 
         staffService.savePost(staffDto);
 
@@ -133,11 +176,16 @@ public class StaffController {
 
 
     @PostMapping("/snsad/staffuppost")
-    public String uppost(Principal principal, StaffDto staffDto) {
+    public String uppost(Principal principal, StaffDto staffDto) throws NoSuchAlgorithmException {
 
         LocalDateTime now = LocalDateTime.now();
 
         staffDto.setModifiedDate(now);
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        staffDto.setPassword(passwordEncoder.encode(staffDto.getPw()));
+        SHA256 sha256 = new SHA256();
+        staffDto.setPw(sha256.encrypt(staffDto.getPw().toString()));
 
         staffService.savePost(staffDto);
 
@@ -281,22 +329,37 @@ public class StaffController {
     }
 
 
-    @GetMapping("/sns/staffcheck")
-    public String staff_check(@RequestParam(value="uid") String uid , @RequestParam(value="identityNo") String identityNo, Model model) {
+    @PostMapping("/sns/staffcheck")
+    public String staff_check(@RequestParam(value="uid") String uid , @RequestParam(value="pw") String pw, Model model) throws NoSuchAlgorithmException {
 
         logger.info("/user/staffcheck ===>  uid : "+ uid);
-        logger.info("/user/staffcheck ===>  identityNo : "+ identityNo);
+        logger.info("/user/staffcheck ===>  pw : "+ pw);
 
-        Long no =staffService.getfindeUserNo(uid,identityNo);
-
-        StaffDto staffDto = staffService.getPost(no);
-
-        logger.info("사용자 ID : " + no);
-
-        model.addAttribute("staffDto", staffDto);
+        SHA256 sha256 = new SHA256();
 
 
-        return "sns/staff/user_read";
+
+        Long no =staffService.getfindeUserNo(uid,sha256.encrypt(pw));
+
+
+        if(no == null){
+
+            return "redirect:/user/login";
+
+        }else{
+            StaffDto staffDto = staffService.getPost(no);
+
+            logger.info("사용자 ID : " + no);
+
+            model.addAttribute("staffDto", staffDto);
+
+
+            return "sns/staff/user_read";
+        }
+
+
+
+
     }
 
 

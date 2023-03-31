@@ -1,5 +1,6 @@
 package com.mslk.sns.staff.domain.entity;
 
+import com.mslk.hypermakina.member.domain.Role;
 import com.mslk.sns.common.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -89,9 +90,13 @@ public class StaffEntity extends TimeEntity {
     @Column(columnDefinition = "TEXT")
     private String memo; // '메모',
 
+    @Column(length = 100, nullable = false)
+    private String password;
+
+
 
     @Builder
-    public StaffEntity(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, String memo) {
+    public StaffEntity(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, String memo,String password) {
         this.id = id;
         this.uid = uid;
         this.name = name;
@@ -118,6 +123,7 @@ public class StaffEntity extends TimeEntity {
         this.cardNo = cardNo;
         this.del = del;
         this.memo = memo;
+        this.password = password;
     }
 
 

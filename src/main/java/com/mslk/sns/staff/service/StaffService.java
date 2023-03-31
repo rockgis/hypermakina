@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,10 +64,9 @@ public class StaffService {
 
 
     @Transactional
-    public long getfindeUserNo(String uid, String identityNo) {
+    public Long getfindeUserNo(String uid, String pw) {
 
-        long result = staffRepository.findeUserNo(uid,identityNo);
-
+        Long result = staffRepository.findeUserNo(uid,pw);
 
         return result;
     }

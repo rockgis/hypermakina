@@ -34,8 +34,8 @@ public interface StaffRepository extends JpaRepository<StaffEntity, Long> {
     @Query("select count(p.uid) from StaffEntity p where p.eMail = :eMail")
     int findeMailCount(@Param("eMail") String eMail);
 
-    @Query("select p.id from StaffEntity p where p.uid = :uid and p.identityNo = :identityNo")
-    Long findeUserNo(@Param("uid") String uid, @Param("identityNo") String identityNo);
+    @Query("select p.id from StaffEntity p where p.uid = :uid and p.pw = :pw")
+    Long findeUserNo(@Param("uid") String uid, @Param("pw") String pw);
 
 
 

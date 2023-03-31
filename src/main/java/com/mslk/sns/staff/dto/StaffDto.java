@@ -44,6 +44,8 @@ public class StaffDto {
 
     private LocalDateTime deleteDate;
 
+    private String password;
+
 
     public StaffEntity toEntity() {
         StaffEntity staffEntity = StaffEntity.builder()
@@ -73,12 +75,13 @@ public class StaffDto {
                 .cardNo(cardNo)
                 .del(del)
                 .memo(memo)
+                .password(password)
                 .build();
         return staffEntity;
     }
 
     @Builder
-    public StaffDto(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, LocalDateTime createdDate, LocalDateTime modifiedDate, LocalDateTime deleteDate, String memo) {
+    public StaffDto(Long id, String uid, String name, String fName, String lName, String fullName, String identityNo, String pw, String sex, String rankId, String positionId, String departmentId, int head, String utype, String auth, String concurrentPosition, String userId, String eMail, String hp, int seq, int syncUse, String syncSystem, String fingerPrint, String cardNo, int del, LocalDateTime createdDate, LocalDateTime modifiedDate, LocalDateTime deleteDate, String memo, String password) {
         this.id = id;
         this.uid = uid;
         this.name = name;
@@ -108,6 +111,7 @@ public class StaffDto {
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.deleteDate = deleteDate;
+        this.password = password;
     }
 
 

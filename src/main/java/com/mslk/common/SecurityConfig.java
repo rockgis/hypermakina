@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
              .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/admin/login")
-                .defaultSuccessUrl("/admin")
+                .defaultSuccessUrl("/")
                 .permitAll()
              .and() // 로그아웃 설정
                 .logout()
@@ -78,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/snsad/*search")
                 .ignoringAntMatchers("/snsad/*/edit")
                 .ignoringAntMatchers("/snsad/post/*")
+                .ignoringAntMatchers("/sns/staffcheck")
                 .ignoringAntMatchers("/*_check")
 
                 //.ignoringAntMatchers("/post")

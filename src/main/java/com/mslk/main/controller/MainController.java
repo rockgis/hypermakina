@@ -76,7 +76,7 @@ public class MainController {
         } else {
 
             //return "redirect:/dashboard";
-             return "redirect:/admin";
+             return "redirect:/user/login";
 
         }
 

@@ -75,6 +75,9 @@
                     <form th:action="@{'/snsad/post/edit/' + ${staffDto.id}}" method="post" id="app_brd" class="form-horizontal">
                         <input type="hidden" name="_method" value="put"/>
                         <input type="hidden" name="id" id="id" th:value="${staffDto.id}"/>
+                        <input type="hidden" name="pw" id="pw" th:value="${staffDto.pw}"/>
+                        <input type="hidden" name="password" id="password" th:value="${staffDto.password}"/>
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <!-- text input -->
@@ -88,9 +91,14 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>pw</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="pw" id="pw" th:value="${staffDto.pw}">
+                                    <label>이름</label>
+                                    <div class="row">
+                                        <div class="input-group mb-3">
+                                            <span th:text="${staffDto.fullName}"></span>
+                                        </div>
+                                        <input type="hidden" class="form-control" name="lName" th:value="${staffDto.lName}">
+                                        <input type="hidden" class="form-control" name="fName" th:value="${staffDto.fName}">
+                                        <input type="hidden" class="form-control" name="fullName" th:value="${staffDto.fullName}">
                                     </div>
 
                                 </div>
@@ -100,16 +108,11 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>이름</label>
-                                    <div class="row">
-                                        <div class="input-group mb-3">
-                                            <span th:text="${staffDto.fullName}"></span>
-                                        </div>
-                                            <input type="hidden" class="form-control" name="lName" th:value="${staffDto.lName}">
-                                            <input type="hidden" class="form-control" name="fName" th:value="${staffDto.fName}">
-                                            <input type="hidden" class="form-control" name="fullName" th:value="${staffDto.fullName}">
+                                    <label>사원 번호</label>
+                                    <div class="input-group mb-3">
+                                        <span th:text="${staffDto.identityNo}"></span>
                                     </div>
-
+                                    <input type="hidden" class="form-control" name="identityNo" th:value="${staffDto.identityNo}">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -128,17 +131,22 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>부서</label>
-                                    <input type="text" class="form-control" name="name" th:value="${staffDto.name}">
+                                    <label>부서 ID(<span th:text="${staffDto.departmentId}"></span>)</label>
+                                    <select name="departmentId" id="departmentId" class="form-control select2" style="width: 100%;" >
+                                        <option value="">부서 ID 선택</option>
+                                        <option th:each="departmentId : ${departmentlist}"
+                                                th:value="${departmentId.name +'('+departmentId.uid+')'}"
+                                                th:selected="${departmentId.name +'('+departmentId.uid+')'} == ${staffDto.departmentId}"
+                                                th:text="${departmentId.name +'('+departmentId.uid+')'}">FAST</option>
+                                    </select>
+
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>사원 번호</label>
-                                    <div class="input-group mb-3">
-                                        <span th:text="${staffDto.identityNo}"></span>
-                                    </div>
-                                    <input type="hidden" class="form-control" name="identityNo" th:value="${staffDto.identityNo}">
+                                    <label>부서</label>
+                                    <input type="text" class="form-control" name="name" id="name" readonly th:value="${staffDto.name}">
+
                                 </div>
                             </div>
                         </div>
@@ -159,19 +167,31 @@
                             </div>
                         </div>
 
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>직급 ID</label>
-                                    <input type="text" class="form-control" name="rankId" th:value="${staffDto.rankId}">
+                                    <label>직책 ID(<span th:text="${staffDto.positionId}"></span>)</label>
+                                    <select name="positionId"  class="form-control select2" style="width: 100%;">
+                                        <option value="">직책 ID 선택</option>
+                                        <option th:each="positionId : ${positionlist}"
+                                                th:value="${positionId.name +'('+positionId.uid+')'}"
+                                                th:selected="${positionId.name +'('+positionId.uid+')'} == ${staffDto.positionId}"
+                                                th:text="${positionId.name +'('+positionId.uid+')'}">FAST</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                <!-- text input -->
                                 <div class="form-group">
-                                    <label>직책 ID</label>
-                                    <input type="text" class="form-control" name="positionId" th:value="${staffDto.positionId}">
+                                    <label>직급 ID(<span th:text="${staffDto.rankId}"></span>)</label>
+                                    <select name="rankId"  class="form-control select2" style="width: 100%;">
+                                        <option value="">직급 ID 선택</option>
+                                        <option th:each="rankId : ${ranklist}"
+                                                th:value="${rankId.name +'('+rankId.uid+')'}"
+                                                th:selected="${rankId.name +'('+rankId.uid+')'} == ${staffDto.rankId}"
+                                                th:text="${rankId.name +'('+rankId.uid+')'}">FAST</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -181,8 +201,12 @@
                             <div class="col-sm-6">
                                 <!-- text input -->
                                 <div class="form-group">
-                                    <label>부서 ID</label>
-                                    <input type="text" class="form-control" name="departmentId" th:value="${staffDto.departmentId}">
+                                    <div class="form-group">
+                                        <label>겸직</label>
+                                        <input type="hidden" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
+                                        <input type="hidden" class="form-control" name="userId" th:value="${staffDto.userId}">
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -221,25 +245,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <!-- text input -->
-                                <div class="form-group">
-                                    <label>겸직</label>
-                                    <input type="text" class="form-control" name="concurrentPosition" th:value="${staffDto.concurrentPosition}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>겸직 사용자 ID</label>
-                                    <input type="text" class="form-control" name="userId" th:value="${staffDto.userId}">
-                                </div>
-                            </div>
-                        </div>
-
-
-
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">순서</label>
                             <div class="col-sm-10">
@@ -258,10 +263,23 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">동기화시스템</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="syncSystem" th:value="${staffDto.syncSystem}">
+                            <div class="col-sm-3">
+                                <select name="syncList" id="syncList" class="form-control select2" style="width: 100%;">
+                                    <option value="">동기화 시스템 선택</option>
+                                    <option th:each="syncsvr : ${syncsvrlist}" th:value="${syncsvr.uid}"
+                                            th:text="${syncsvr.name +'('+syncsvr.uid+')'}">FAST</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="syncSystem" id="syncSystem" readonly th:value="${staffDto.syncSystem}">
+                                    <span class="input-group-append"><button type="button" id="syncSystem_rest" class="btn btn-info btn-flat">초기화</button></span>
+                                </div>
+
+
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">지문정보</label>
                             <div class="col-sm-10">
@@ -356,6 +374,17 @@
 
     });
 
+    $(document).on('click', '#syncSystem_rest', function () {	// 삭제버튼 클릭 시
+
+        $("#syncSystem").val("");
+
+    });
+
+
+
+
+
+
     $(document).on('click', '#delete', function () {	// 삭제버튼 클릭 시
         var chk_id = $("#id").val();
 
@@ -376,6 +405,30 @@
         //location.href = "/snsad/staffdel?idx=" + chk_id;
 
 
+    });
+
+    $(document).on('change', '#departmentId', function () {	// 부서 ID 클릭 시
+        var id = $("#departmentId").val();
+        $("#name").val(id.substring(0,id.indexOf("(")));
+    });
+
+    $(document).on('change', '#syncList', function () {	// 싱크 서버 관리 클릭 시
+        var id = $("#syncList").val();
+        var syncSystem = $("#syncSystem").val();
+
+        var syncSystemList = syncSystem;
+
+        if(syncSystem == ""){
+
+            syncSystemList = id;
+
+
+        }else{
+            syncSystemList = syncSystem + "," + id;
+        }
+
+
+        $("#syncSystem").val(syncSystemList);
     });
 
 

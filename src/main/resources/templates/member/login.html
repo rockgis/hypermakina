@@ -17,26 +17,27 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="/user" class="h1"><b>User</b></a>
+            <a href="/user/login" class="h1"><b>User</b></a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg" >사용자 ID 또는 암호를 확인해 보세요. </p>
 
-            <form action="/sns/staffcheck" method="get">
-                <input type="hidden" name="_method" value="get"/>
+            <form action="/sns/staffcheck" method="post">
+                <input type="hidden" name="_method" value="post"/>
                 <div class="input-group mb-3">
                     <input type="text" name="uid" class="form-control" placeholder="id를 입력해 주세요 ">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                            <span class="fas fa-envelope"></span>
                         </div>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" name="identityNo" class="form-control"  placeholder="사원번호를 입력해 주세요 ?">
+                    <input type="password" name="pw" class="form-control"  placeholder="비밀번호를 입력해 주세요 ?">
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
+                            <span class="fas fa-lock"></span>
+
                         </div>
                     </div>
                 </div>
