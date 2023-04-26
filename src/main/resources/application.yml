@@ -5,8 +5,8 @@ spring:
       local: common, locdb, loc
       localssl: common, locdb, locssl
       dev: common, devdb, develop
-      devssl: common, makinadb, developssl
-      prod: common, makinadb, prodop
+      devssl: common, devdb, developssl
+      prod: common, proddb, prodop
 ---
 spring:
   config:
@@ -261,7 +261,6 @@ spring:
     #username: dashusr
     #password: Sns!@9833
 
-
 ---
 spring:
   config:
@@ -276,28 +275,10 @@ spring:
 spring:
   config:
     activate:
-      on-profile: makinadb
+      on-profile: proddb
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db.hypermakina.com:3306/mslkdashboard?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
-    username: hyperg
-    password: dldPwns!@09
----
-spring:
-  config:
-    activate:
-      on-profile: h2db
-  datasource:
-    url: jdbc:h2:mem:test
-    username: rockgis
-    password: dldPwns!@09
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
+    url: jdbc:mysql://192.168.10.55:3306/dash_board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: dashusr
+    password: Sns!@9833
+

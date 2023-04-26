@@ -69,6 +69,15 @@ public class MmsService {
         return this.convertEntityToDto(mmsEntity);
     }
 
+
+    @Transactional
+    public MmsDto getTypePost(String type) {
+        Optional<MmsEntity> mmsEntityWrapper = mmsRepository.findByType(type);
+        MmsEntity mmsEntity = mmsEntityWrapper.get();
+
+        return this.convertEntityToDto(mmsEntity);
+    }
+
     @Transactional
     public String savePost(MmsDto mmsDto) {
         return mmsRepository.save(mmsDto.toEntity()).getStatus();

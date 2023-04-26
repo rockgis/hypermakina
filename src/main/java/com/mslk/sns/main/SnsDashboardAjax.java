@@ -6,6 +6,8 @@ import com.mslk.egmanager.service.EgmMetaService;
 import com.mslk.restapi.dto.HyperRestApiDto;
 import com.mslk.restapi.egmanager.service.RestApiService;
 import com.mslk.restapi.service.HyperRestApiService;
+import com.mslk.sns.logmng.dto.MmsLogDto;
+import com.mslk.sns.logmng.service.MmsLogService;
 import com.mslk.sns.sms.dto.LguMmsDto;
 import com.mslk.sns.sms.dto.MmsDto;
 import com.mslk.sns.sms.service.LguMmsService;
@@ -39,6 +41,8 @@ public class SnsDashboardAjax {
     private MmsService mmsService;
 
     private LguMmsService lguMmsService;
+
+    private MmsLogService mmsLogService;
 
 
 
@@ -79,6 +83,8 @@ public class SnsDashboardAjax {
             if(100.0 <= Double.parseDouble(network_check.substring(0,network_check.indexOf(".")))){
 
                 result = "<알림>"+ componetName + "가 Packet loss 100% 입니다.";
+
+                this.setMmsIntsert(componetName,"NW Switch", result , "3"); //CPU 알람 조건
 
             }
 
@@ -143,11 +149,15 @@ public class SnsDashboardAjax {
 
                 result = "<알림>"+ componetName + "이 사용하는 메모리 사용량이  "+ egmMetaDto.getMetaMemcheck().toString() +"을 넘었습니다.";
 
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "1"); //RAM 알람 조건
+
             }
 
             if(Double.parseDouble(cpumn) >= Double.parseDouble(egmMetaDto.getMetaCpucheck().toString())){
 
                 result = "<알림>"+ componetName + "이 사용하는 CPU 사용량이 "+ egmMetaDto.getMetaCpucheck().toString() +"을 넘었습니다.";
+
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "0"); //CPU 알람 조건
 
             }
 
@@ -155,6 +165,8 @@ public class SnsDashboardAjax {
             if(Double.parseDouble(diskmn) >= Double.parseDouble(egmMetaDto.getMetaDiskcheck().toString())){
 
                 result = "<알림>"+ componetName + "이 사용하는 DISK 사용량이 "+ egmMetaDto.getMetaDiskcheck().toString() +"을 넘었습니다.";
+
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "2"); //DISK 알람 조건
 
             }
 
@@ -226,13 +238,17 @@ public class SnsDashboardAjax {
 
                 result = "<알림>"+ componetName + "이 사용하는 메모리 사용량이  "+ egmMetaDto.getMetaMemcheck().toString() +"을 넘었습니다.";
 
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "1"); //Ram 알람 조건
+
             }
 
             if(Double.parseDouble(cpumn) >= Double.parseDouble(egmMetaDto.getMetaCpucheck().toString())){
 
                 result = "<알림>"+ componetName + "이 사용하는 CPU 사용량이 "+ egmMetaDto.getMetaCpucheck().toString() +"을 넘었습니다.";
 
-                this.setMmsIntsert(componetName, result , egmMetaDto,1l); //CPU 알람 조건
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "0"); //CPU 알람 조건
+
+
 
             }
 
@@ -240,6 +256,8 @@ public class SnsDashboardAjax {
             if(Double.parseDouble(diskmn) >= Double.parseDouble(egmMetaDto.getMetaDiskcheck().toString())){
 
                 result = "<알림>"+ componetName + "이 사용하는 DISK 사용량이 "+ egmMetaDto.getMetaDiskcheck().toString() +"을 넘었습니다.";
+
+                this.setMmsIntsert(componetName,egmMetaDto.getMetaEu(), result , "2"); //Disk 알람 조건
 
             }
 
@@ -310,26 +328,42 @@ public class SnsDashboardAjax {
         return uptime;
     }
 
-    private void setMmsIntsert(String componetName, String result , EgmMetaDto egmMetaDto,long mmsid){
+    private void setMmsIntsert(String componetName,String componetType, String result , String type){
 
         LocalDateTime now = LocalDateTime.now();
 
         //result = "<알림>"+ componetName + "이 사용하는 DISK 사용량이 "+ egmMetaDto.getMetaDiskcheck().toString() +"을 넘었습니다.";
 
-        MmsDto mmsDto = mmsService.getPost(mmsid);
+        MmsDto mmsDto = mmsService.getTypePost(type);
+
+        String msg_subject = componetName+"("+componetType+") 시스템 ";
+
+        String msg_result = "대상 시스템 :  "+componetName+"("+componetType+")\n" +
+                "임계값 : "+ mmsDto.getSubject() +"\n" +
+                "발생 원인 : "+ result +" \n" +
+                "발생 시간 : " + now;
+
 
         LguMmsDto lguMmsDto = new LguMmsDto();
 
-        lguMmsDto.setSubject(mmsDto.getSubject());
+        lguMmsDto.setSubject(msg_subject);
         lguMmsDto.setPhone(mmsDto.getPhone());
         lguMmsDto.setCallback(mmsDto.getCallback());
         lguMmsDto.setStatus(mmsDto.getStatus());
         lguMmsDto.setReqdate(now);
-        lguMmsDto.setMsg(result);
+        lguMmsDto.setMsg(msg_result);
         lguMmsDto.setType(mmsDto.getType());
 
-        logger.info("mmsDto_ MMS Data : " + lguMmsDto.toString());
 
-        lguMmsService.savePost(lguMmsDto);
+        //lguMmsService.savePost(lguMmsDto);
+
+        MmsLogDto mmsLogDto = new MmsLogDto();
+
+        mmsLogDto.setMmsSub(msg_subject);
+        mmsLogDto.setMmsTel(mmsDto.getPhone());
+        mmsLogDto.setMmsContent(msg_result);
+
+        mmsLogService.savePost(mmsLogDto);
+
     }
 }

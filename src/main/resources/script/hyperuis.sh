@@ -16,11 +16,11 @@ addParameter()
 
 start()
 {
-    java -jar $JAVA_PARAMETER "$LIB_PATH"/hypergit_idp-0.0.1-SNAPSHOT.jar &
+    java -jar $JAVA_PARAMETER "$LIB_PATH"/hypermars_mis-0.0.1-SNAPSHOT.jar &
 }
 stop() {
   echo "stop application"
-  kill $(cat "$SCRIPT_HOME"/pid/hyperuis.pid)
+  kill $(cat "$SCRIPT_HOME"/pid/hypermslk.pid)
 }
 
 helpFunction()

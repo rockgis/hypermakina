@@ -135,8 +135,8 @@
                                     <select name="departmentId" id="departmentId" class="form-control select2" style="width: 100%;" >
                                         <option value="">부서 ID 선택</option>
                                         <option th:each="departmentId : ${departmentlist}"
-                                                th:value="${departmentId.name +'('+departmentId.uid+')'}"
-                                                th:selected="${departmentId.name +'('+departmentId.uid+')'} == ${staffDto.departmentId}"
+                                                th:value="${departmentId.uid}"
+                                                th:selected="${departmentId.uid} == ${staffDto.departmentId}"
                                                 th:text="${departmentId.name +'('+departmentId.uid+')'}">FAST</option>
                                     </select>
 
@@ -175,8 +175,8 @@
                                     <select name="positionId"  class="form-control select2" style="width: 100%;">
                                         <option value="">직책 ID 선택</option>
                                         <option th:each="positionId : ${positionlist}"
-                                                th:value="${positionId.name +'('+positionId.uid+')'}"
-                                                th:selected="${positionId.name +'('+positionId.uid+')'} == ${staffDto.positionId}"
+                                                th:value="${positionId.uid}"
+                                                th:selected="${positionId.uid} == ${staffDto.positionId}"
                                                 th:text="${positionId.name +'('+positionId.uid+')'}">FAST</option>
                                     </select>
                                 </div>
@@ -188,8 +188,8 @@
                                     <select name="rankId"  class="form-control select2" style="width: 100%;">
                                         <option value="">직급 ID 선택</option>
                                         <option th:each="rankId : ${ranklist}"
-                                                th:value="${rankId.name +'('+rankId.uid+')'}"
-                                                th:selected="${rankId.name +'('+rankId.uid+')'} == ${staffDto.rankId}"
+                                                th:value="${rankId.uid}"
+                                                th:selected="${rankId.uid} == ${staffDto.rankId}"
                                                 th:text="${rankId.name +'('+rankId.uid+')'}">FAST</option>
                                     </select>
                                 </div>

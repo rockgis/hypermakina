@@ -6,10 +6,7 @@ import com.mslk.dashboard.dto.DashBoardMngDto;
 import com.mslk.dashboard.service.DashBoardMngService;
 import com.mslk.egmanager.service.EgmMetaService;
 import com.mslk.restapi.dto.HyperRestApiDto;
-import com.mslk.restapi.egmanager.domain.DiskSpaceVO;
-import com.mslk.restapi.egmanager.domain.MemoryUsageVO;
-import com.mslk.restapi.egmanager.domain.NetworkVO;
-import com.mslk.restapi.egmanager.domain.SystemSummaryVO;
+import com.mslk.restapi.egmanager.domain.*;
 import com.mslk.restapi.egmanager.service.RestApiService;
 import com.mslk.restapi.service.HyperRestApiService;
 import com.mslk.common.util.DayUtil;
@@ -17,7 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.json.simple.parser.ParseException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -31,7 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.web.client.RestTemplate;
+import org.json.simple.JSONArray; //JSON배열 사용
+import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -240,6 +238,10 @@ public class SnsDashboardController {
                 break;
             case 2:
 
+
+                ArrayList tiberoTablespacesList = new ArrayList();
+                ArrayList tiberoGrowthList = new ArrayList();
+
                 String hosnm ="MES_Tibero_1_t";
 
                 model.addAttribute("hosnm", hosnm);
@@ -266,10 +268,17 @@ public class SnsDashboardController {
                 model.addAttribute("diskmn", diskmn);
 
 
+                tiberoTablespacesList = this.TiberoTablespacesGet(hosnm,"Tibero Tablespaces ",hyperRestApiDto);
 
-                systemSummarylist = this.SystemSummaryGet(hosnm,hyperRestApiDto);
+                model.addAttribute("tiberoTablespacesList", tiberoTablespacesList);
 
-                model.addAttribute("systemSummarylist", systemSummarylist);
+
+                hyperRestApiDto = hyperRestApiService.getPost("getHistoricalData");
+
+                tiberoGrowthList = this.TiberoGrowthGet("MES_Tibero_1_t:1521","Tibero Database","Tibero Database Growth", hyperRestApiDto);
+
+                model.addAttribute("tiberoGrowthList", tiberoGrowthList);
+
 
 
                 urlgo =  "sns/dashboard/db";
@@ -455,10 +464,144 @@ public class SnsDashboardController {
         return uptime;
     }
 
+    private ArrayList TiberoGrowthGet(String componetName,String componentType, String test,HyperRestApiDto hyperRestApiDto ) throws ParseException {
+
+        JSONParser parser = new JSONParser();
+
+        String resultdata = restApiService.getHistoricalData( componetName, componentType, test ,"Used space in database", hyperRestApiDto).getBody().toString();
+
+        logger.info("Rest Get resultdata :" + resultdata);
+
+        JSONObject jsonObject = (JSONObject) parser.parse(restApiService.getHistoricalData( componetName, componentType, test ,"Used space in database", hyperRestApiDto).getBody());
+
+        logger.info("Rest Get sonObject.get(\"Tibero Database Growth\") :" + jsonObject.get("Tibero Database Growth").toString());
+
+
+        JSONArray usedSpace = (JSONArray)jsonObject.get("Tibero Database Growth");
+
+        logger.info("Rest Get usedSpace :" + usedSpace.toString());
+
+        jsonObject = (JSONObject) parser.parse(restApiService.getHistoricalData( componetName, componentType, test ,"Total size of database", hyperRestApiDto).getBody());
+
+        JSONArray totalSize = (JSONArray)jsonObject.get("Tibero Database Growth");
+
+        jsonObject = (JSONObject) parser.parse(restApiService.getHistoricalData( componetName, componentType, test ,"Free space in database ", hyperRestApiDto).getBody());
+
+        JSONArray freespace = (JSONArray)jsonObject.get("Tibero Database Growth");
+
+
+
+
+        ArrayList<TiberoGrowthVO> tiberoGrowthlist = new ArrayList<>();
+
+        logger.info("Rest Get usedSpace :" + usedSpace.size());
+
+        for(int i = 1 ; i < usedSpace.size() ;i++){
+
+            JSONObject usedSpacetmp = (JSONObject)usedSpace.get(i);//인덱스 번호로 접근해서 가져온다.
+
+            String usedSpacevalue = (String)usedSpacetmp.get("value");
+
+            JSONObject totalSizetmp = (JSONObject)totalSize.get(i);//인덱스 번호로 접근해서 가져온다.
+
+            String totalSizevalue = (String)totalSizetmp.get("value");
+
+            JSONObject freespacetmp = (JSONObject)freespace.get(i);//인덱스 번호로 접근해서 가져온다.
+
+            String freespacevalue = (String)freespacetmp.get("value");
+
+            TiberoGrowthVO tiberoGrowthVO = new TiberoGrowthVO();
+
+            tiberoGrowthVO.setTrgt_host(componetName.substring(0,componetName.indexOf(":"))); //TRGT_HOST
+            tiberoGrowthVO.setPort_no(componetName.substring(componetName.indexOf(":")));
+            tiberoGrowthVO.setInfo(test); // SITE_NAME
+            tiberoGrowthVO.setMsmt_host(componetName.substring(0,componetName.indexOf(":"))); // MSMT_HOST
+            //tiberoGrowthVO.setMsmt_time();//MSMT_TIME
+            tiberoGrowthVO.setTotal_size(totalSizevalue);// // TOTAL_SIZE
+            // TOTAL_SIZE_ST
+            tiberoGrowthVO.setUsed_space(usedSpacevalue);// USED_SPACE
+            // USED_SPACE_ST
+            tiberoGrowthVO.setFree_space(freespacevalue);// FREE_SPACE
+            // FREE_SPACE_ST
+            // USED_PERCENTAGE
+            // USED_PERCENTAGE_ST
+            // FREE_PERCENTAGE
+            // FREE_PERCENTAGE_ST
+
+
+            tiberoGrowthlist.add(tiberoGrowthVO);
+
+        }
+
+        return tiberoGrowthlist;
+
+    }
+
+
+    private ArrayList TiberoTablespacesGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
+
+        String resultdata = restApiService.getTestData( componetName, test,-5 ,hyperRestApiDto).getBody().toString();
+
+        logger.info("Rest Get resultdata :" + resultdata);
+
+        String chartdata[]=resultdata.split(",");
+
+        ArrayList<TiberoTablespacesVO> tiberoTablespaceslist = new ArrayList<>();
+        String systemsummary[] = {};
+
+        logger.info("Rest Get chartdata :" + chartdata.length);
+
+        for(int i = 1 ; i < chartdata.length ;i++){
+
+            logger.info("chartdata["+i+"] :" + chartdata[i].toString());
+
+            systemsummary = chartdata[i].split(" ");
+
+            TiberoTablespacesVO tiberoTablespacesVO = new TiberoTablespacesVO();
+
+            tiberoTablespacesVO.setTrgt_host(systemsummary[0]); //TRGT_HOST
+            tiberoTablespacesVO.setPort_no(systemsummary[1]); // PORT_NO
+            tiberoTablespacesVO.setSite_name(systemsummary[2]); // SITE_NAME
+            tiberoTablespacesVO.setInfo(systemsummary[3]); // INFO
+            tiberoTablespacesVO.setMsmt_host(systemsummary[4]); // MSMT_HOST
+            tiberoTablespacesVO.setMsmt_time(systemsummary[6]);// MSMT_TIME
+            tiberoTablespacesVO.setCurrent_usage(systemsummary[8]);//CURRENT_USAGE
+            tiberoTablespacesVO.setCurrent_usage_st(systemsummary[9]);//CURRENT_USAGE_ST
+            tiberoTablespacesVO.setPhysical_read_rate(systemsummary[10]);// PHYSICAL_READ_RATE
+            tiberoTablespacesVO.setPhysical_read_rate_st(systemsummary[11]);// PHYSICAL_READ_RATE_ST
+            tiberoTablespacesVO.setPhysical_write_rate(systemsummary[12]);// PHYSICAL_WRITE_RATE
+            tiberoTablespacesVO.setPhysical_write_rate_st(systemsummary[13]);// PHYSICAL_WRITE_RATE_ST
+            tiberoTablespacesVO.setAutoextensible(systemsummary[14]);// AUTOEXTENSIBLE
+            tiberoTablespacesVO.setAutoextensible_st(systemsummary[15]);// AUTOEXTENSIBLE_ST
+            tiberoTablespacesVO.setMax_size(systemsummary[16]);// MAX_SIZE
+            tiberoTablespacesVO.setMax_size_st(systemsummary[17]);// MAX_SIZE_ST
+            tiberoTablespacesVO.setCurrent_size(systemsummary[18]);// CURRENT_SIZE
+            tiberoTablespacesVO.setCurrent_size_st(systemsummary[19]);// CURRENT_SIZE_ST
+            tiberoTablespacesVO.setFree_space(systemsummary[20]);// FREE_SPACE
+            tiberoTablespacesVO.setFree_space_st(systemsummary[21]);// FREE_SPACE_ST
+            tiberoTablespacesVO.setPct_free_space(systemsummary[22]);// PCT_FREE_SPACE
+            tiberoTablespacesVO.setPct_free_space_st(systemsummary[23]);// PCT_FREE_SPACE_ST
+            tiberoTablespacesVO.setBiggest_extent(systemsummary[24]);// BIGGEST_EXTENT
+            tiberoTablespacesVO.setBiggest_extent_st(systemsummary[25]);// BIGGEST_EXTENT_ST
+            tiberoTablespacesVO.setSmallest_extent(systemsummary[26]);// SMALLEST_EXTENT
+            tiberoTablespacesVO.setSmallest_extent_st(systemsummary[27]);// SMALLEST_EXTENT_ST
+            tiberoTablespacesVO.setRemaining_extents(systemsummary[28]);// REMAINING_EXTENTS
+            tiberoTablespacesVO.setRemaining_extents_st(systemsummary[29]);//REMAINING_EXTENTS_ST
+
+            logger.debug("tiberoTablespacesVO [0] :" + tiberoTablespacesVO.getMsmt_time().toString());
+
+            tiberoTablespaceslist.add(tiberoTablespacesVO);
+
+        }
+
+        return tiberoTablespaceslist;
+
+    }
+
 
     private ArrayList MemoryUsageGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
 
-        String resultdata = restApiService.getTestData( componetName, test ,hyperRestApiDto).getBody().toString();
+        String resultdata = restApiService.getTestData( componetName, test ,-120,hyperRestApiDto).getBody().toString();
 
         logger.info("Rest Get resultdata :" + resultdata);
 
@@ -518,7 +661,7 @@ public class SnsDashboardController {
 
     private ArrayList NetworkGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
 
-        String resultdata = restApiService.getTestData( componetName, test ,hyperRestApiDto).getBody().toString();
+        String resultdata = restApiService.getTestData( componetName, test ,-120, hyperRestApiDto).getBody().toString();
 
         logger.info("Rest Get resultdata :" + resultdata);
 
@@ -562,7 +705,7 @@ public class SnsDashboardController {
 
     private ArrayList DiskspaceGet(String componetName,String test, HyperRestApiDto hyperRestApiDto ){
 
-        String resultdata = restApiService.getTestData( componetName, test ,hyperRestApiDto).getBody().toString();
+        String resultdata = restApiService.getTestData( componetName, test ,-120, hyperRestApiDto).getBody().toString();
 
         logger.info("Rest Get resultdata :" + resultdata);
 

@@ -80,6 +80,11 @@ public class MmsController {
         MmsDto mmsDto = mmsService.getPost(no);
 
         model.addAttribute("mmsDto", mmsDto);
+
+        List<CodeMngDto> codeMngList = codeMngService.getCodeMnglistAll("EGM","EGBODY");
+        model.addAttribute("codeMngList", codeMngList);
+
+
         return "sns/mms/read";
     }
 

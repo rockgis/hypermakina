@@ -134,7 +134,7 @@ public class RestApiService {
     }
 
 
-    public ResponseEntity<String> getTestData(String componentName,String test,HyperRestApiDto hyperRestApiDto){
+    public ResponseEntity<String> getTestData(String componentName, String test,int time, HyperRestApiDto hyperRestApiDto){
 
 
         String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
@@ -151,7 +151,7 @@ public class RestApiService {
 
         String endDate = sdformat.format(date);
 
-        logger.info("현재 시간  : "+ endDate);
+        logger.debug("현재 시간  : "+ endDate);
 
         // 포맷변경 ( 년월일 시분초)
         // Java 시간 더하기
@@ -161,10 +161,10 @@ public class RestApiService {
         cal.setTime(date);
 
         // 10분 더하기
-        cal.add(Calendar.MINUTE, -120);
+        cal.add(Calendar.MINUTE, time);
 
         String startDate = sdformat.format(cal.getTime());
-        logger.info("120분 전 : " + startDate);
+        logger.debug("120분 전 : " + startDate);
 
        /* cal.setTime(date);
 
@@ -210,6 +210,93 @@ public class RestApiService {
         return res;
     }
 
+    public ResponseEntity<String> getHistoricalData(String componentName,String componentType , String test, String  measure , HyperRestApiDto hyperRestApiDto) {
+        //Spring restTemplate
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        ResponseEntity<String> resultMap = new ResponseEntity<>(null,null,200);
+
+        String apiUrl = hyperRestApiDto.getRestServer()+hyperRestApiDto.getRestFunction();//"http://192.168.10.62:7077/api/eg/analytics/getAlarmCount";    // 각자 상황에 맞는 IP & url 사용
+        // String managerurl = "http://172.30.1.109:7077";
+        String managerurl =  hyperRestApiDto.getManagerurl();//"http://192.168.10.62:7077";
+        String user =  hyperRestApiDto.getUsrEn();//"admin";
+        String pwd =hyperRestApiDto.getUsrPw();//"c25zMTIzNCE=";){
+
+        logger.info("Rest getTestData URL :" + apiUrl);
+
+
+
+       /*
+        {
+"":"",
+"componentName": "MES_Tibero_1_t:1521",
+"componentType":"Tibero Database",
+"test":"Tibero Database Growth",
+"measure":"Used space in database"
+}
+        */
+
+
+        String requestJson = "{\n" +
+                "  \"componentName\": \""+componentName+"\",\n" +
+                "  \"timeline\":\"24 hour\",\n"+
+                "  \"componentType\":\""+ componentType + "\",\n"+
+                "  \"test\":\""+ test + "\",\n"+
+                "  \"measure\":\""+ measure + "\"\n"+
+                "}";
+
+        logger.info("requestJson : " + requestJson);
+
+
+        try {
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.add("managerurl", managerurl);
+            headers.add("user", user);
+            headers.add("pwd", pwd);
+
+            HttpEntity<String> req = new HttpEntity<>(requestJson, headers);
+
+            CloseableHttpClient httpClient = HttpClients.custom()
+                    .setMaxConnTotal(100)
+                    .setMaxConnPerRoute(10)
+                    .disableCookieManagement()
+                    .build();
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setHttpClient(httpClient);
+            RestTemplate loginRestTemplate = new RestTemplate(requestFactory);
+
+            resultMap = loginRestTemplate.exchange(apiUrl, HttpMethod.POST, req, String.class);
+
+            //resultMap = restTemplate.exchange(uri.toString(), HttpMethod.GET, entity, Object.class);
+
+            result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
+            result.put("header", resultMap.getHeaders()); //헤더 정보 확인
+            result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+
+            //에러처리해야댐
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
+            logger.info("error :" + e.toString());
+
+            return resultMap;
+        }
+        catch (Exception e) {
+            result.put("statusCode", "999");
+            result.put("body"  , "excpetion오류");
+            logger.info("excpetion 오류 :" + e.toString());
+
+            return resultMap;
+
+        }
+
+        return resultMap;
+
+    }
+
 
 
 
@@ -232,7 +319,7 @@ public class RestApiService {
 
         String endDate = sdformat.format(date);
 
-        logger.info("현재 시간  : "+ endDate);
+        logger.debug("현재 시간  : "+ endDate);
 
         // 포맷변경 ( 년월일 시분초)
         // Java 시간 더하기
@@ -245,7 +332,7 @@ public class RestApiService {
         cal.add(Calendar.MINUTE, -60);
 
         String startDate = sdformat.format(cal.getTime());
-        logger.info("60분후 : " + startDate);
+        logger.debug("60분후 : " + startDate);
 
        /* cal.setTime(date);
 
@@ -267,7 +354,6 @@ public class RestApiService {
                 "}";
 
         logger.info("requestJson : " + requestJson);
-
 
 
         try {
@@ -340,7 +426,7 @@ public class RestApiService {
 
         String endDate = sdformat.format(date);
 
-        logger.info("현재 시간  : "+ endDate);
+        logger.debug("현재 시간  : "+ endDate);
 
         // 포맷변경 ( 년월일 시분초)
         // Java 시간 더하기
@@ -451,7 +537,7 @@ public class RestApiService {
 
         String endDate = sdformat.format(date);
 
-        logger.info("현재 시간  : "+ endDate);
+        logger.debug("현재 시간  : "+ endDate);
 
         // 포맷변경 ( 년월일 시분초)
         // Java 시간 더하기
@@ -464,7 +550,7 @@ public class RestApiService {
         cal.add(Calendar.MINUTE, min);
 
         String startDate = sdformat.format(cal.getTime());
-        logger.info("60분후 : " + startDate);
+        logger.debug("60분후 : " + startDate);
 
        /* cal.setTime(date);
 

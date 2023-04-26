@@ -298,7 +298,7 @@
                                 <label>사원 번호</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" name="identityNo" id="identityNo" placeholder="사번">
-                                    <input type="hidden" name="identityNo_value" id="identityNo_value" value="1"/>
+                                    <input type="text" name="identityNo_value" id="identityNo_value" value="1"/>
                                     <span class="input-group-append"><button type="button" id="identityNo_check" class="btn btn-info btn-flat">중복 검사</button></span>
                                 </div>
 
@@ -353,7 +353,7 @@
                                 <label>부서 ID</label>
                                 <select name="departmentId" id="departmentId" class="form-control select2" style="width: 100%;" >
                                     <option value="">부서 ID 선택</option>
-                                    <option th:each="departmentId : ${departmentlist}" th:value="${departmentId.name +'('+departmentId.uid+')'}"
+                                    <option th:each="departmentId : ${departmentlist}" th:value="${departmentId.uid}"
                                             th:text="${departmentId.name +'('+departmentId.uid+')'}">FAST</option>
                                 </select>
                             </div>
@@ -373,7 +373,7 @@
                                 <label>직책 ID</label>
                                 <select name="positionId"  class="form-control select2" style="width: 100%;">
                                     <option value="">직책 ID 선택</option>
-                                    <option th:each="positionId : ${positionlist}" th:value="${positionId.name +'('+positionId.uid+')'}"
+                                    <option th:each="positionId : ${positionlist}" th:value="${positionId.uid}"
                                             th:text="${positionId.name +'('+positionId.uid+')'}">FAST</option>
                                 </select>
                             </div>
@@ -384,7 +384,7 @@
                                 <label>직급 ID</label>
                                 <select name="rankId"  class="form-control select2" style="width: 100%;">
                                     <option value="">직급 ID 선택</option>
-                                    <option th:each="rankId : ${ranklist}" th:value="${rankId.name +'('+rankId.uid+')'}"
+                                    <option th:each="rankId : ${ranklist}" th:value="${rankId.uid}"
                                             th:text="${rankId.name +'('+rankId.uid+')'}">FAST</option>
                                 </select>
                             </div>

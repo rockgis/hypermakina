@@ -163,6 +163,10 @@ public class StaffController {
     @PostMapping("/snsad/staffpost")
     public String userpost(Principal principal, StaffDto staffDto) throws NoSuchAlgorithmException {
 
+        logger.info("staffDto.getPw() ===>  pw : "+ staffDto.getPw().toString());
+        logger.info("staffDto.getPassword() ===>  password : "+ staffDto.getPassword().toString());
+
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         staffDto.setPassword(passwordEncoder.encode(staffDto.getPw()));
         SHA256 sha256 = new SHA256();

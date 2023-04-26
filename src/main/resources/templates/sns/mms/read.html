@@ -86,6 +86,7 @@
                                     <option value="">알람 조건 선택</option>
                                     <option th:each="codemng : ${codeMngList}"
                                             th:value="${codemng.id}"
+                                            th:selected="${codemng.id} == ${mmsDto.codemng_id}"
                                             th:text="${codemng.codeWm}">FAST
                                     </option>
                                 </select>
@@ -136,8 +137,10 @@
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select class="form-control select2" name="type" style="width: 100%;">
-                                        <option th:selected="${mmsDto.type} == '0'" value="0">Type 0 </option>
-                                        <option th:selected="${mmsDto.type} == '1'" value="1">Type 1</option>
+                                        <option th:selected="${mmsDto.type} == '0'" value="0">CPU </option>
+                                        <option th:selected="${mmsDto.type} == '1'" value="1">RAM</option>
+                                        <option th:selected="${mmsDto.type} == '2'" value="2">DISK </option>
+                                        <option th:selected="${mmsDto.type} == '3'" value="3">NETWORK</option>
                                     </select>
                                 </div>
                             </div>

@@ -131,7 +131,11 @@
                                     </td>
                                     <td><span th:text="${mms.phone}"></span></td>
                                     <td><span th:text="${mms.callback}"></span></td>
-                                    <td><span th:text="${mms.status}"></span></td>
+                                    <td> <span th:if="${mms.type == '0'}">CPU</span>
+                                         <span th:if="${mms.type == '1'}">RAM</span>
+                                        <span th:if="${mms.type == '2'}">DISK</span>
+                                        <span th:if="${mms.type == '3'}">NETWORK</span>
+                                    </td>
 
                                 </tr>
                                 </tbody>
@@ -280,7 +284,9 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">메세지 내용 </label>
                         <div class="offset-sm-2 col-sm-10">
-                            <textarea name="msg" id="msg"  ></textarea>
+                            <textarea name="msg" id="msg"  >
+                                <p>대상 시스템 :&nbsp; 컨포넌트 네임(컨포넌 타입)&nbsp;</p><p>임계값 :&nbsp; 90%</p><p>발생 원인 :&nbsp;90%&nbsp;</p><p>발생 시간 :&nbsp;</p>
+                            </textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -298,8 +304,10 @@
                             <div class="form-group">
                                 <label>Type</label>
                                 <select class="form-control select2" name="type" style="width: 100%;">
-                                    <option selected="selected" value="0">Type 0 </option>
-                                    <option value="1">Type 1</option>
+                                    <option selected="selected" value="0">CPU </option>
+                                    <option value="1">RAM</option>
+                                    <option value="2">DISK</option>
+                                    <option value="3">NETWORK</option>
                                 </select>
                             </div>
                         </div>

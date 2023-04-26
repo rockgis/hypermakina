@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HyperMSLK 서비스</title>
+
+    <!-- Theme style -->
+    <link href="/webjars/AdminLTE/dist/css/adminlte.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/sns/css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -166,27 +170,79 @@
         <!-- 4분할 대시보드 -->
         <div class="dashboardBtm">
             <div class="b-blakBox">
-                <div><em>CPU Basic</em></div>
+                <div><em>Tibero Tablespaces</em></div>
                 <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 682px; height: 228px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
-                    <canvas id="cpulineChart" style=" height: 228px; width: 682px"></canvas>
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead style="background-color: #414e61">
+                            <tr>
+                                <th>테이블 스페이스 명</th>
+                                <th>Auto extensible</th>
+                                <th>Current usage (%)</th>
+                                <th>Current size (MB)</th>
+                                <th>Free space (MB)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- CONTENTS !-->
+                            <tr th:each="mms, i : ${tiberoTablespacesList}">
+                                <td><span th:text="${mms.info}"></span></td>
+                                <td><span th:if="${mms.autoextensible == '1.0000'}">적용</span>
+                                    <span th:if="${mms.autoextensible != '1.0000'}">비적용</span>
+                                </td>
+                                <td><span th:text="${mms.current_usage}"></span></td>
+                                <td><span th:text="${mms.current_size}"></span></td>
+                                <td><span th:text="${mms.free_space}"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
                 </div>
             </div>
             <div class="b-blakBox">
-                <div><em>Memory Basic</em></div>
+                <div><em>Tibero Database Growth </em></div>
                 <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 682px; height: 228px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
-                    <canvas id="ramChart" style=" height: 228px; width: 682px"></canvas>
+                    <canvas id="growthChart" style=" height: 228px; width: 682px"></canvas>
                 </div>
             </div>
             <div class="b-blakBox">
-                <div><em>Disk Usage</em></div>
+                <div><em>Mysql Tablespaces</em></div>
                 <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 779px; height: 317px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
-                    <canvas id="disklineChart" style=" height: 228px; width: 682px"></canvas>
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <thead style="background-color: #414e61">
+                            <tr>
+                                <th>테이블 스페이스 명</th>
+                                <th>Auto extensible</th>
+                                <th>Current usage (%)</th>
+                                <th>Current size (MB)</th>
+                                <th>Free space (MB)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- CONTENTS !-->
+                            <tr th:each="mms, i : ${tiberoTablespacesList}">
+                                <td><span th:text="${mms.info}"></span></td>
+                                <td><span th:if="${mms.autoextensible == '1.0000'}">적용</span>
+                                    <span th:if="${mms.autoextensible != '1.0000'}">비적용</span>
+                                </td>
+                                <td><span th:text="${mms.current_usage}"></span></td>
+                                <td><span th:text="${mms.current_size}"></span></td>
+                                <td><span th:text="${mms.free_space}"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
             <div class="b-blakBox">
-                <div><em>Disk Space Used</em></div>
+                <div><em>Mysql Database Growth</em></div>
                 <div class="mgA"><!-- 그래프영역입니다 사이즈는 width: 779px; height: 317px; 고정입니다. 영역 벗어나지 않게끔 꼭 사이즈 맞춰주세요 -->
-                    <canvas id="networkChart" style=" height: 228px; width: 682px"></canvas>
+                    <canvas id="mysqlChart" style=" height: 228px; width: 682px"></canvas>
                 </div>
             </div>
         </div>
@@ -213,43 +269,29 @@
 
         let datasets = new Array();
         let datasets2 = new Array();
-        let datasets3 = new Array();
-        let datasets4 = new Array();
+
         let lineX = [];
 
-        let cpu_data  = [];
-        let ram_data  = [];
-        let disk_data  = [];
+        let used_space  = [];
+        let free_space  = [];
+        let total_size  = [];
         let newtwork_data  = [];
 
-        /*[# th:each="article : ${systemSummarylist}"]*/
-        lineX.push(/*[[${article.msmt_time}]]*/);
-        cpu_data.push(/*[[${article.cpu_util}]]*/)
-        ram_data.push(/*[[${article.free_mem_avail}]]*/)
-        disk_data.push(/*[[${article.swap_avail}]]*/)
-        newtwork_data.push(/*[[${article.free_mem_avail}]]*/)
+        /*[# th:each="article : ${tiberoGrowthList}"]*/
+        used_space.push(/*[[${article.used_space}]]*/)
+        free_space.push(/*[[${article.free_space}]]*/)
+        total_size.push(/*[[${article.total_size}]]*/)
         /*[/]*/
 
-        datasets.push(new DataElement("MES_Tibero_1_t ",cpu_data));
-        //datasets.push(new DataElement("Server 2 ",ram_data));
-        //datasets.push(new DataElement("Server 3 ",disk_data));
-        //datasets.push(new DataElement("Server 4 ",newtwork_data));
+        datasets.push(new DataElement("USE Space",used_space));
+        datasets.push(new DataElement("Free Space",free_space));
+        datasets.push(new DataElement("Total Size",total_size));
 
         //datasets2.push(new DataElement("MES_App_1_t ",cpu_data));
-        datasets2.push(new DataElement("MES_Tibero_1_t",ram_data));
+        //datasets2.push(new DataElement("MES_Tibero_1_t",ram_data));
         //datasets2.push(new DataElement("Server 3 ",disk_data));
         //datasets2.push(new DataElement("Server 4 ",newtwork_data));
 
-
-        //datasets3.push(new DataElement("MES_App_1_t ",cpu_data));
-        //datasets3.push(new DataElement("Server 2 ",ram_data));
-        datasets3.push(new DataElement("MES_Tibero_1_t ",disk_data));
-        //datasets3.push(new DataElement("Server 4 ",newtwork_data));
-
-        //datasets4.push(new DataElement("MES_App_1_t ",cpu_data));
-        //datasets4.push(new DataElement("Server 2 ",ram_data));
-        //datasets4.push(new DataElement("Server 3 ",disk_data));
-        datasets4.push(new DataElement("MES_Tibero_1_t ",newtwork_data));
 
         let ajectdata = [];
 
@@ -285,8 +327,7 @@
 
             check_go("MES_Tibero_1_t","uptime","8", "16GB");
 
-
-            lineCart(lineX,datasets,datasets2,datasets3,datasets4);
+            GrowthlineCart(lineX,datasets);
 
             setTimeout(function () {
                 location.reload();
@@ -373,7 +414,8 @@
 
         }
 
-        function lineCart(lineX,datasets,datasets2,datasets3,datasets4) {
+
+        function GrowthlineCart(lineX,datasets) {
 
             var i = 0;
 
@@ -387,21 +429,13 @@
 
             var configMaker = new ConfigMaker();
 
-            var config = configMaker.createLineChartConfig(lineX,datasets,false,"%");
-            var lineChartCanvas          = document.getElementById('cpulineChart').getContext('2d');
+            var config = configMaker.createLineChartConfig(lineX,datasets,true,"GB");
+            var lineChartCanvas          = document.getElementById('growthChart').getContext('2d');
             var lineChart                = new Chart(lineChartCanvas,config);
 
-            var config2 = configMaker.createLineChartConfig(lineX,datasets2,false,"GB");
-            var lineChartCanvas2          = document.getElementById('ramChart').getContext('2d');
-            var lineChart2                = new Chart(lineChartCanvas2,config2);
-
-            var config3 = configMaker.createLineChartConfig(lineX,datasets3,false,"GB");
-            var lineChartCanvas3          = document.getElementById('disklineChart').getContext('2d');
-            var lineChart3                = new Chart(lineChartCanvas3,config3);
-
-            var config4 = configMaker.createLineChartConfig(lineX,datasets4,false,"Packets/sec");
-            var lineChartCanvas4          = document.getElementById('networkChart').getContext('2d');
-            var lineChart4                = new Chart(lineChartCanvas4,config4);
+            var config1 = configMaker.createLineChartConfig(lineX,datasets,true,"GB");
+            var lineChartCanvas1          = document.getElementById('mysqlChart').getContext('2d');
+            var lineChart1                = new Chart(lineChartCanvas1,config1);
 
         }
 
